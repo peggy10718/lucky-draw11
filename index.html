@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>每日運勢 - 求籤</title>
+    <title>321 世界唐氏症日 - 求籤活動</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         /* --- 全局設定 --- */
@@ -13,8 +13,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #1a1f33; 
-            background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.2)), url('bg.jpg');
+            /* 配合你的圖片背景色系調整預設底色 */
+            background-color: #8da4b7; 
+            /* 這裡請換回你的背景圖路徑 */
+            background-image: url('bg.jpg'); 
             background-size: cover;       
             background-position: center;  
             background-repeat: no-repeat; 
@@ -33,7 +35,8 @@
             transition: transform 0.1s;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6));
+            /* 加強陰影讓它跟背景分開 */
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
             z-index: 5;
             transform-origin: center bottom;
         }
@@ -41,13 +44,8 @@
         @media (max-width: 600px) {
             .shaker-container {
                 transform: scale(0.75); 
-                margin-top: -30px;
-                margin-bottom: 0px; 
-            }
-            .hint {
-                margin-top: 10px !important;
-                position: relative; 
-                z-index: 20;
+                /* 配合你的背景圖調整位置，如果不夠高可以改這裡 */
+                margin-top: 0px; 
             }
         }
 
@@ -73,15 +71,16 @@
             }
         }
 
-        /* --- 籤筒本體 --- */
+        /* --- 籤筒本體 (紅色) --- */
         .cylinder-body {
             position: absolute;
             bottom: 0;
             width: 100%;
             height: 240px;
+            /* 調整為類似你圖片的深紅色漸層 */
             background: linear-gradient(to right, 
-                #2a0000 0%, #5a0000 15%, #a80000 40%, #ff4d4d 50%, 
-                #a80000 60%, #5a0000 85%, #2a0000 100%
+                #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, 
+                #b30000 60%, #7a0000 85%, #4a0000 100%
             );
             border-radius: 10px;
             box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3);
@@ -90,34 +89,36 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-bottom: 3px solid #1a0000;
+            border-bottom: 3px solid #2a0000;
         }
         
+        /* 金色環 */
         .cylinder-ring-top {
             position: absolute;
             top: 70px;
             width: 102%;
             left: -1%;
-            height: 18px;
-            background: linear-gradient(to right, #8a6000, #fcf6ba, #bf953f, #fcf6ba, #8a6000);
+            height: 20px;
+            /* 更亮的金色 */
+            background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
             z-index: 3;
             pointer-events: none;
-            border-top: 2px solid #ffffca;
-            border-bottom: 2px solid #5a3a00;
-            box-shadow: 0 3px 5px rgba(0,0,0,0.5);
-            border-radius: 2px;
+            border-top: 1px solid #ffffca;
+            border-bottom: 1px solid #5a3a00;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+            border-radius: 4px;
         }
 
         .cylinder-text {
-            color: #fcf6ba;
+            color: #fffacd; /* 亮黃色文字 */
             font-size: 3.5rem;
             font-weight: bold;
             writing-mode: vertical-rl;
             text-orientation: upright;
             letter-spacing: 15px;
-            text-shadow: 2px 2px 4px #3a0000, -1px -1px 1px #ffcccc;
+            /* 加強文字立體感 */
+            text-shadow: 2px 2px 0px #3a0000, 3px 3px 5px rgba(0,0,0,0.5);
             font-family: "Kaiti TC", "楷體", "STKaiti", serif;
-            opacity: 0.9;
         }
 
         .cylinder-mouth {
@@ -130,12 +131,12 @@
             border-radius: 50%;
             z-index: 1;
             border: 4px solid #8a0000;
-            border-top-color: #c90000; 
+            border-top-color: #b30000; 
             box-shadow: inset 0 10px 20px rgba(0,0,0,0.9);
             pointer-events: none;
         }
 
-        /* --- 籤支設定 (包含新的動態邏輯) --- */
+        /* --- 籤支設定 --- */
         .sticks-group {
             position: absolute;
             top: 15px;
@@ -151,24 +152,18 @@
             position: absolute;
             bottom: 0;
             width: 16px;
-            /* 高度由 nth-child 設定 */
             background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
             transform-origin: bottom center;
             box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
-            
-            /* 【新增】這裡使用變數來控制初始位置，方便動畫使用 */
             transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
-            transition: transform 0.2s ease-out; /* 搖完後平滑歸位 */
+            transition: transform 0.2s ease-out;
         }
 
         /* 籤支內部的立體凹槽 */
         .stick::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50px; 
+            top: 0; left: 0; width: 100%; height: 50px; 
             background-color: #d32f2f; 
             background-image: 
                 radial-gradient(circle at -2px 50%, rgba(0,0,0,0.7) 4px, transparent 5px), 
@@ -185,120 +180,122 @@
             mask-repeat: repeat-y;
         }
 
-        .stick::after {
-            content: '';
+        /* --- 手指引導動畫 (新增部分) --- */
+        .hand-guide {
             position: absolute;
-            top: 0;
-            left: 2px;
-            width: 12px;
-            height: 2px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 2px;
+            top: 60%;  /* 垂直置中偏下 */
+            left: 50%; /* 水平置中 */
+            width: 60px;
+            height: 60px;
+            z-index: 10;
+            /* 讓點擊穿透手指直接點到籤筒 */
+            pointer-events: none; 
+            opacity: 0; /* 預設隱藏，載入後透過動畫淡入 */
+            animation: tap-gesture 2s infinite ease-in-out;
         }
 
-        /* 【新增】籤支跳動的動畫 Keyframes */
-        /* 讓籤在原本的角度(--r)基礎上，垂直往上跳 (translateY 變更負值) */
+        .hand-guide svg {
+            width: 100%;
+            height: 100%;
+            fill: rgba(255, 255, 255, 0.9); /* 白色半透明 */
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); /* 陰影讓手更清楚 */
+        }
+
+        /* 手指點擊動畫 Keyframes */
+        @keyframes tap-gesture {
+            0% { 
+                transform: translate(-30%, -30%) scale(1); 
+                opacity: 0; 
+            }
+            20% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1); 
+            }
+            50% { 
+                /* 往下按壓的效果 */
+                transform: translate(-50%, -45%) scale(0.9); 
+            }
+            80% { 
+                transform: translate(-50%, -50%) scale(1); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(1); 
+                opacity: 0; 
+            }
+        }
+
+        /* 當正在搖動時，隱藏手指 */
+        .shaker-container.is-shaking .hand-guide {
+            display: none;
+        }
+
+        /* --- 籤支動態 --- */
         @keyframes stick-jump {
             0% { transform: rotate(var(--r)) translateY(var(--y)); }
-            50% { transform: rotate(var(--r)) translateY(calc(var(--y) - 15px)); } /* 往上跳 */
+            50% { transform: rotate(var(--r)) translateY(calc(var(--y) - 15px)); }
             100% { transform: rotate(var(--r)) translateY(var(--y)); }
         }
-
-        /* 【新增】當父層有 .is-shaking 時，觸發內部籤支動畫 */
-        .is-shaking .stick {
-            animation: stick-jump 0.2s ease-in-out infinite alternate;
-        }
-
-        /* 【新增】隨機化每個籤的跳動速度與延遲，看起來比較自然 */
+        .is-shaking .stick { animation: stick-jump 0.2s ease-in-out infinite alternate; }
         .is-shaking .stick:nth-child(odd) { animation-duration: 0.18s; }
         .is-shaking .stick:nth-child(even) { animation-duration: 0.22s; animation-delay: 0.05s; }
-        .is-shaking .stick:nth-child(3n) { animation-duration: 0.25s; animation-delay: 0.02s; }
 
-        /* 【修改】使用 CSS 變數定義每個籤的位置與角度 */
-        /* --r: 旋轉角度, --y: 垂直偏移 */
         .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; z-index: 1; }
         .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; z-index: 3; }
         .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; z-index: 4; }
         .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; z-index: 2; }
         .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; z-index: 1; }
-        
-        /* 後面暗色的籤 */
         .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; z-index: 0; filter: brightness(0.7); }
         .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; z-index: 0; filter: brightness(0.7); }
         .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; z-index: 2; }
 
-
         .hint {
             margin-top: 50px;
-            color: #bf953f;
-            font-size: 1rem;
+            color: #fffacd;
+            font-size: 1.1rem;
             letter-spacing: 2px;
             animation: pulse 2s infinite;
             user-select: none;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.8);
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
             font-weight: bold;
+            z-index: 10;
         }
         @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
 
-        /* --- 結果彈窗 --- */
+        /* --- 彈窗 --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); display: none;
             justify-content: center; align-items: center; z-index: 100;
             backdrop-filter: blur(10px);
-            padding: 20px;
-            box-sizing: border-box;
+            padding: 20px; box-sizing: border-box;
         }
-        
         .modal-content {
-            background: transparent;
-            text-align: center;
-            width: auto;
-            max-width: 100%; 
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: transparent; text-align: center; width: auto; max-width: 100%; 
+            position: relative; display: flex; flex-direction: column; align-items: center;
             animation: popInElastic 0.6s ease-out;
         }
-
         @keyframes popInElastic {
             0% { transform: scale(0.5); opacity: 0; }
             60% { transform: scale(1.1); opacity: 1; }
             100% { transform: scale(1); }
         }
-        
         .result-image {
-            max-width: 100%;
-            max-height: 70vh; 
-            width: auto;     
-            height: auto;
-            border-radius: 12px;
-            border: 4px solid #bf953f;
-            display: block; 
-            margin-bottom: 15px;
-            object-fit: contain;
-            z-index: 2;
+            max-width: 100%; max-height: 70vh; width: auto; height: auto;
+            border-radius: 12px; border: 4px solid #bf953f; display: block; 
+            margin-bottom: 15px; object-fit: contain; z-index: 2;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-            animation: glowingPulse 3s infinite alternate;
         }
-
-        @keyframes glowingPulse {
-            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(191, 149, 63, 0.2); }
-            100% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.9), 0 0 80px rgba(255, 223, 0, 0.5); }
-        }
-        
         .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; opacity: 0.9; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         .btn-group { display: flex; justify-content: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; z-index: 2;}
         .action-btn {
             border: none; padding: 12px 30px; border-radius: 50px; font-size: 1rem;
             cursor: pointer; font-weight: bold; letter-spacing: 1px;
-            transition: transform 0.2s, box-shadow 0.2s, filter 0.2s; text-decoration: none; display: inline-block;
-            white-space: nowrap;
+            transition: transform 0.2s; text-decoration: none; display: inline-block; white-space: nowrap;
         }
-        .close-btn { background: #555; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
-        .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; box-shadow: 0 5px 15px rgba(191, 149, 63, 0.4); }
-        .action-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); filter: brightness(1.1); }
+        .close-btn { background: #555; color: white; }
+        .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
+        .action-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
 
     </style>
 </head>
@@ -320,9 +317,19 @@
         <div class="cylinder-body">
             <div class="cylinder-text">求籤</div>
         </div>
+        
+        <div class="hand-guide" id="handGuide">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.502,13.064c0-0.574-0.199-1.074-0.568-1.465c0.236-0.34,0.375-0.756,0.375-1.205c0-0.908-0.605-1.666-1.436-1.881
+                c0.166-0.379,0.26-0.801,0.26-1.246c0-1.7-1.379-3.078-3.078-3.078c-0.197,0-0.389,0.021-0.576,0.057V2.5
+                c0-1.381-1.119-2.5-2.5-2.5s-2.5,1.119-2.5,2.5v7.266c-0.297-0.09-0.611-0.141-0.938-0.141c-1.7,0-3.078,1.379-3.078,3.078
+                c0,0.613,0.186,1.182,0.5,1.656L0.5,12.5v1.289l5.064,7.633C6.34,22.656,7.574,23.398,8.875,23.398h4.25
+                c2.09,0,3.797-1.637,3.926-3.701l0.316-5.111C18.061,14.34,18.5,13.791,18.5,13.148C18.5,12.289,17.805,11.594,16.945,11.594H14.502z" />
+            </svg>
+        </div>
     </div>
 
-    <p class="hint">👆 點擊籤筒求一支籤</p>
+    <p class="hint">👇 點擊籤筒求一支籤</p>
 
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
@@ -337,7 +344,7 @@
 
     <script>
         // ==========================================
-        //  圖片設定
+        //  圖片設定 (請替換成你的真實圖片路徑)
         // ==========================================
         const fortuneImages = [
             '1.png', 
@@ -351,6 +358,8 @@
         const modal = document.getElementById('modal');
         const resultImage = document.getElementById('resultImage');
         const downloadLink = document.getElementById('downloadLink');
+        const handGuide = document.getElementById('handGuide'); // 取得手指元素
+        
         let isShaking = false;
         let lastIndex = -1;
 
@@ -359,11 +368,16 @@
         function startShaking() {
             if (isShaking) return;
             isShaking = true;
+            
+            // 點擊後，永久隱藏手指引導（因為使用者已經知道怎麼點了）
+            if(handGuide) {
+                handGuide.style.display = 'none'; 
+            }
+
             resultImage.src = ''; 
             shaker.classList.add('is-shaking');
             if (navigator.vibrate) navigator.vibrate(200);
             
-            // 搖動時間
             setTimeout(() => {
                 shaker.classList.remove('is-shaking');
                 showResult();
@@ -386,7 +400,6 @@
             resultImage.src = randomImagePath;
             downloadLink.href = randomImagePath;
             modal.style.display = 'flex';
-
             fireConfetti();
         }
 
@@ -396,16 +409,12 @@
 
         function fireConfetti() {
             var count = 200;
-            var defaults = {
-                origin: { y: 0.7 }
-            };
-
+            var defaults = { origin: { y: 0.7 } };
             function fire(particleRatio, opts) {
                 confetti(Object.assign({}, defaults, opts, {
                     particleCount: Math.floor(count * particleRatio)
                 }));
             }
-
             fire(0.25, { spread: 26, startVelocity: 55, colors: ['#bf953f', '#fcf6ba'] });
             fire(0.2, { spread: 60, colors: ['#ffffff'] });
             fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
