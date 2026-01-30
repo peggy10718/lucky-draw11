@@ -174,7 +174,7 @@
             mask-repeat: repeat-y;
         }
 
-        /* --- 【修改】回歸經典透明手指 --- */
+        /* --- 【修改】回歸經典透明手指 (加入旋轉) --- */
         .hand-guide {
             position: absolute;
             /* 初始位置：右下角外部 */
@@ -185,7 +185,7 @@
             z-index: 10;
             pointer-events: none;
             opacity: 0;
-            /* 調整動畫時間為 2s */
+            /* 動畫時間 */
             animation: simple-click 2s infinite ease-in-out;
         }
 
@@ -194,35 +194,35 @@
             height: 100%;
             /* 半透明白色填充 */
             fill: rgba(255, 255, 255, 0.7); 
-            /* 增加白色發光陰影，讓它在紅色背景上清楚，但又像鬼影般柔和 */
+            /* 增加白色發光陰影，讓它在紅色背景上清楚 */
             filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
         }
 
-        /* 【修改】從右下角往中間偏右的動畫路徑 */
+        /* 【修改】加入 rotate(-45deg) 讓手指傾斜 */
         @keyframes simple-click {
             0% {
                 opacity: 0;
-                /* 右下角 */
-                transform: translate(0, 0) scale(1);
+                /* 起始：位移0 + 旋轉45度 + 大小正常 */
+                transform: translate(0, 0) rotate(-45deg) scale(1);
             }
             20% {
                 opacity: 1;
-                /* 移動到藍色圈圈位置 (大約在籤筒右中) */
-                transform: translate(-70px, -110px) scale(1);
+                /* 移動到藍圈位置：保持旋轉 */
+                transform: translate(-70px, -110px) rotate(-45deg) scale(1);
             }
             50% {
-                /* 點擊：稍微縮小 */
-                transform: translate(-70px, -110px) scale(0.9);
+                /* 點擊瞬間：縮小 (模擬按壓感)，保持旋轉 */
+                transform: translate(-70px, -110px) rotate(-45deg) scale(0.9);
             }
             80% {
                  opacity: 1;
-                 /* 恢復大小 */
-                 transform: translate(-70px, -110px) scale(1);
+                 /* 放開：恢復大小，保持旋轉 */
+                 transform: translate(-70px, -110px) rotate(-45deg) scale(1);
             }
             100% {
                 opacity: 0;
-                /* 消失並重置 */
-                transform: translate(-70px, -110px) scale(1);
+                /* 結束：保持位置與旋轉，淡出 */
+                transform: translate(-70px, -110px) rotate(-45deg) scale(1);
             }
         }
 
@@ -413,3 +413,4 @@
     </script>
 </body>
 </html>
+
