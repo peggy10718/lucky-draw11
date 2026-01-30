@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日運勢 - 求籤</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        /* --- 全局設定 --- */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            /* 【修改】背景圖設定 */
+            /* 預設是深色漸層 (如果沒有 bg.jpg 或是載入失敗會顯示這個) */
+            background-color: #1a1f33; 
+            /* 載入 bg.jpg，並加上一層半透明黑罩，確保文字看得清楚 */
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('bg.jpg');
+            background-size: cover;       /* 讓圖片充滿整個螢幕 */
+            background-position: center;  /* 圖片置中 */
+            background-repeat: no-repeat; /* 不要重複 */
+            
+            font-family: "Microsoft JhengHei", sans-serif;
+            color: white;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 5px;
+            color: #fcf6ba;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); /* 陰影加重，怕背景圖太花 */
+            z-index: 10;
+        }
+
+        /* --- 籤筒設定 --- */
+        .shaker-container {
+            position: relative;
+            width: 200px;
+            height: 320px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6)); /* 陰影加深 */
+            z-index: 5;
+            transform-origin: center bottom;
+        }
+
+        /* 手機版縮放與間距修正 */
+        @media (max-width: 600px) {
+            .shaker-container {
+                transform: scale(0.75); 
+                margin-top: -30px;
+                margin-bottom: 0px; 
+            }
+            .hint {
+                margin-top: 10px !important;
+                position: relative; 
+                z-index: 20;
+            }
+        }
+
+        .is-shaking { animation: shake 0.5s ease-in-out infinite; }
+        
+        @media (max-width: 600px) {
+            @keyframes shake {
+                0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
+                25% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
+                50% { transform: scale(0.75) translate(5px, 0) rotate(3deg); }
+                75% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
+                100% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
+            }
+        }
+        @media (min-width: 601px) {
+            @keyframes shake {
+                0% { transform: translate(0, 0) rotate(0deg); }
+                25% { transform: translate(-5px, 0) rotate(-3deg); }
+                50% { transform: translate(5px, 0) rotate(3deg); }
+                75% { transform: translate(-5px, 0) rotate(-3deg); }
+                100% { transform: translate(0, 0) rotate(0deg); }
+            }
+        }
+
+        /* --- 籤筒本體 --- */
+        .cylinder-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(to right, 
+                #2a0000 0%, #5a0000 15%, #a80000 40%, #ff4d4d 50%, 
+                #a80000 60%, #5a0000 85%, #2a0000 100%
+            );
+            border-radius: 10px;
+            box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 2;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 3px solid #1a0000;
+        }
+        
+        .cylinder-ring-top {
+            position: absolute;
+            top: 70px;
+            width: 102%;
+            left: -1%;
+            height: 18px;
+            background: linear-gradient(to right, #8a6000, #fcf6ba, #bf953f, #fcf6ba, #8a6000);
+            z-index: 3;
+            pointer-events: none;
+            border-top: 2px solid #ffffca;
+            border-bottom: 2px solid #5a3a00;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.5);
+            border-radius: 2px;
+        }
+
+        .cylinder-text {
+            color: #fcf6ba;
+            font-size: 3.5rem;
+            font-weight: bold;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 15px;
+            text-shadow: 2px 2px 4px #3a0000, -1px -1px 1px #ffcccc;
+            font-family: "Kaiti TC", "楷體", "STKaiti", serif;
+            opacity: 0.9;
+        }
+
+        .cylinder-mouth {
+            position: absolute;
+            top: 55px;
+            left: 2%;
+            width: 96%;
+            height: 40px;
+            background: radial-gradient(ellipse at center, #1a0000 0%, #3a0000 60%, #5a0000 100%);
+            border-radius: 50%;
+            z-index: 1;
+            border: 4px solid #8a0000;
+            border-top-color: #c90000; 
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.9);
+            pointer-events: none;
+        }
+
+        /* --- 籤支設定 --- */
+        .sticks-group {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 200px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .stick {
+            position: absolute;
+            bottom: 0;
+            width: 16px;
+            height: 200px;
+            background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
+            transform-origin: bottom center;
+            box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+
+        /* 【修正】凹凸感加深 */
+        .stick::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px; 
+            background-color: #d32f2f; 
+
+            /* 增加內部陰影的對比度，讓立體感更強 */
+            background-image: 
+                radial-gradient(circle at -2px 50%, rgba(0,0,0,0.7) 4px, transparent 5px), 
+                radial-gradient(circle at 100% 50%, rgba(255,255,255,0.4) 3px, transparent 4px);
+            
+            /* 【關鍵】把挖洞的半徑加大，讓凹槽更深 */
+            -webkit-mask-image: 
+                radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px),
+                radial-gradient(circle at 20px 50%, transparent 6px, black 6.5px);
+            mask-image: 
+                radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px),
+                radial-gradient(circle at 20px 50%, transparent 6px, black 6.5px);
+
+            -webkit-mask-size: 100% 12px;
+            mask-size: 100% 12px;
+            -webkit-mask-repeat: repeat-y;
+            mask-repeat: repeat-y;
+        }
+
+        .stick::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 2px;
+            width: 12px;
+            height: 2px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 2px;
+        }
+
+        /* 排列調整 */
+        .stick:nth-child(1) { left: 25px; height: 210px; transform: rotate(-12deg) translateY(15px); z-index: 1; }
+        .stick:nth-child(2) { left: 50px; height: 225px; transform: rotate(-6deg) translateY(8px); z-index: 3; }
+        .stick:nth-child(3) { left: 75px; height: 215px; transform: rotate(0deg) translateY(5px); z-index: 4; }
+        .stick:nth-child(4) { left: 100px; height: 220px; transform: rotate(6deg) translateY(6px); z-index: 2; }
+        .stick:nth-child(5) { left: 125px; height: 205px; transform: rotate(12deg) translateY(14px); z-index: 1;}
+        .stick:nth-child(6) { left: 40px; height: 200px; transform: rotate(-8deg) translateY(20px); z-index: 0; filter: brightness(0.7); }
+        .stick:nth-child(7) { left: 90px; height: 205px; transform: rotate(4deg) translateY(18px); z-index: 0; filter: brightness(0.7); }
+        .stick:nth-child(8) { left: 65px; height: 230px; transform: rotate(-2deg) translateY(2px); z-index: 2; }
+
+        .hint {
+            margin-top: 50px;
+            color: #bf953f;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+            user-select: none;
+            /* 增加文字陰影，確保在背景圖上清楚 */
+            text-shadow: 0 0 5px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.8);
+            font-weight: bold;
+        }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+
+        /* --- 結果彈窗 --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none;
+            justify-content: center; align-items: center; z-index: 100;
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .modal-content {
+            background: transparent;
+            text-align: center;
+            width: auto;
+            max-width: 100%; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: popInElastic 0.6s ease-out;
+        }
+
+        @keyframes popInElastic {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        
+        .result-image {
+            max-width: 100%;
+            max-height: 70vh; 
+            width: auto;     
+            height: auto;
+            border-radius: 12px;
+            border: 4px solid #bf953f;
+            display: block; 
+            margin-bottom: 15px;
+            object-fit: contain;
+            z-index: 2;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            animation: glowingPulse 3s infinite alternate;
+        }
+
+        @keyframes glowingPulse {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(191, 149, 63, 0.2); }
+            100% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.9), 0 0 80px rgba(255, 223, 0, 0.5); }
+        }
+        
+        .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; opacity: 0.9; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        .btn-group { display: flex; justify-content: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; z-index: 2;}
+        .action-btn {
+            border: none; padding: 12px 30px; border-radius: 50px; font-size: 1rem;
+            cursor: pointer; font-weight: bold; letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s, filter 0.2s; text-decoration: none; display: inline-block;
+            white-space: nowrap;
+        }
+        .close-btn { background: #555; color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; box-shadow: 0 5px 15px rgba(191, 149, 63, 0.4); }
+        .action-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.4); filter: brightness(1.1); }
+
+    </style>
+</head>
+<body>
+
+    <h2>✨ 誠心求籤 ✨</h2>
+
+    <div class="shaker-container" id="shaker">
+        <div class="sticks-group">
+            <div class="stick"></div>
+            <div class="stick"></div>
+            <div class="stick"></div>
+            <div class="stick"></div>
+            <div class="stick"></div>
+            <div class="stick"></div>
+            <div class="stick"></div>
+            <div class="stick"></div>
+        </div>
+        <div class="cylinder-mouth"></div>
+        <div class="cylinder-ring-top"></div>
+        <div class="cylinder-body">
+            <div class="cylinder-text">求籤</div>
+        </div>
+    </div>
+
+    <p class="hint">👆 點擊籤筒求一支籤</p>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <img id="resultImage" class="result-image" src="" alt="運勢結果">
+            <div class="save-hint">（長按圖片即可儲存到相簿）</div>
+            <div class="btn-group">
+                <a id="downloadLink" class="action-btn download-btn" href="#" download="我的運勢籤.png">下載圖片</a>
+                <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        //  圖片設定
+        // ==========================================
+        const fortuneImages = [
+            '1.png', 
+            '2.png',
+            '3.png',
+            '4.png'
+        ];
+        // ==========================================
+
+        const shaker = document.getElementById('shaker');
+        const modal = document.getElementById('modal');
+        const resultImage = document.getElementById('resultImage');
+        const downloadLink = document.getElementById('downloadLink');
+        let isShaking = false;
+        let lastIndex = -1;
+
+        shaker.addEventListener('click', startShaking);
+
+        function startShaking() {
+            if (isShaking) return;
+            isShaking = true;
+            resultImage.src = ''; 
+            shaker.classList.add('is-shaking');
+            if (navigator.vibrate) navigator.vibrate(200);
+            setTimeout(() => {
+                shaker.classList.remove('is-shaking');
+                showResult();
+                isShaking = false;
+            }, 1500);
+        }
+
+        function showResult() {
+            if (fortuneImages.length === 0) return;
+            let newIndex;
+            if (fortuneImages.length === 1) {
+                newIndex = 0;
+            } else {
+                do {
+                    newIndex = Math.floor(Math.random() * fortuneImages.length);
+                } while (newIndex === lastIndex);
+            }
+            lastIndex = newIndex;
+            const randomImagePath = fortuneImages[newIndex];
+            resultImage.src = randomImagePath;
+            downloadLink.href = randomImagePath;
+            modal.style.display = 'flex';
+
+            fireConfetti();
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function fireConfetti() {
+            var count = 200;
+            var defaults = {
+                origin: { y: 0.7 }
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55, colors: ['#bf953f', '#fcf6ba'] });
+            fire(0.2, { spread: 60, colors: ['#ffffff'] });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2, colors: ['#bf953f'] });
+        }
+    </script>
+</body>
+</html>
