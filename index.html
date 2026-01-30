@@ -203,26 +203,26 @@
             0% {
                 opacity: 0;
                 /* 起始：位移0 + 旋轉45度 + 大小正常 */
-                transform: translate(0, 0) rotate(-45deg) scale(1);
+                transform: translate(0, 0) rotate(-45deg) scale(1.5);
             }
             20% {
                 opacity: 1;
                 /* 移動到藍圈位置：保持旋轉 */
-                transform: translate(-70px, -110px) rotate(-45deg) scale(1);
+                transform: translate(-70px, -110px) rotate(-45deg) scale(1.5);
             }
             50% {
                 /* 點擊瞬間：縮小 (模擬按壓感)，保持旋轉 */
-                transform: translate(-70px, -110px) rotate(-45deg) scale(0.9);
+                transform: translate(-70px, -110px) rotate(-45deg) scale(1);
             }
             80% {
                  opacity: 1;
                  /* 放開：恢復大小，保持旋轉 */
-                 transform: translate(-70px, -110px) rotate(-45deg) scale(1);
+                 transform: translate(-70px, -110px) rotate(-45deg) scale(1.5);
             }
             100% {
                 opacity: 0;
                 /* 結束：保持位置與旋轉，淡出 */
-                transform: translate(-70px, -110px) rotate(-45deg) scale(1);
+                transform: translate(-70px, -110px) rotate(-45deg) scale(1.5);
             }
         }
 
@@ -413,4 +413,5 @@
     </script>
 </body>
 </html>
+
 
