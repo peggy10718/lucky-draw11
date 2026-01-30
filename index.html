@@ -39,12 +39,13 @@
             filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
             z-index: 5;
             transform-origin: center bottom;
+            /* 讓手指可以超出邊界顯示 */
+            overflow: visible;
         }
 
         @media (max-width: 600px) {
             .shaker-container {
                 transform: scale(0.75); 
-                /* 配合你的背景圖調整位置，如果不夠高可以改這裡 */
                 margin-top: 0px; 
             }
         }
@@ -77,7 +78,6 @@
             bottom: 0;
             width: 100%;
             height: 240px;
-            /* 調整為類似你圖片的深紅色漸層 */
             background: linear-gradient(to right, 
                 #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, 
                 #b30000 60%, #7a0000 85%, #4a0000 100%
@@ -99,7 +99,6 @@
             width: 102%;
             left: -1%;
             height: 20px;
-            /* 更亮的金色 */
             background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
             z-index: 3;
             pointer-events: none;
@@ -110,13 +109,12 @@
         }
 
         .cylinder-text {
-            color: #fffacd; /* 亮黃色文字 */
+            color: #fffacd;
             font-size: 3.5rem;
             font-weight: bold;
             writing-mode: vertical-rl;
             text-orientation: upright;
             letter-spacing: 15px;
-            /* 加強文字立體感 */
             text-shadow: 2px 2px 0px #3a0000, 3px 3px 5px rgba(0,0,0,0.5);
             font-family: "Kaiti TC", "楷體", "STKaiti", serif;
         }
@@ -159,7 +157,6 @@
             transition: transform 0.2s ease-out;
         }
 
-        /* 籤支內部的立體凹槽 */
         .stick::before {
             content: '';
             position: absolute;
@@ -180,52 +177,64 @@
             mask-repeat: repeat-y;
         }
 
-        /* --- 手指引導動畫 (新增部分) --- */
+        /* --- 【修改】新的手指引導動畫 --- */
         .hand-guide {
             position: absolute;
-            top: 60%;  /* 垂直置中偏下 */
-            left: 50%; /* 水平置中 */
-            width: 60px;
-            height: 60px;
+            /* 初始位置設定在右下角 */
+            right: -20px;
+            bottom: 0px;
+            width: 65px;
+            height: 65px;
             z-index: 10;
-            /* 讓點擊穿透手指直接點到籤筒 */
             pointer-events: none; 
-            opacity: 0; /* 預設隱藏，載入後透過動畫淡入 */
-            animation: tap-gesture 2s infinite ease-in-out;
+            opacity: 0;
+            /* 調整動畫時間為 2.5s，動作更緩和清楚 */
+            animation: tap-angled-path 2.5s infinite ease-in-out;
+            /* 增加一點旋轉角度，看起來更自然 */
+            transform: rotate(15deg);
         }
 
         .hand-guide svg {
             width: 100%;
             height: 100%;
-            fill: rgba(255, 255, 255, 0.9); /* 白色半透明 */
-            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); /* 陰影讓手更清楚 */
+            /* 使用更亮的白色，稍微提高不透明度 */
+            fill: rgba(255, 255, 255, 0.95);
+            /* 增加更柔和的發光陰影效果，提升質感 */
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.4)) drop-shadow(0 4px 4px rgba(0,0,0,0.3));
         }
 
-        /* 手指點擊動畫 Keyframes */
-        @keyframes tap-gesture {
-            0% { 
-                transform: translate(-30%, -30%) scale(1); 
-                opacity: 0; 
+        /* 【修改】新的路徑動畫 Keyframes */
+        @keyframes tap-angled-path {
+            0% {
+                opacity: 0;
+                /* 初始狀態：在右下角，稍微縮小 */
+                transform: translate(0, 0) rotate(15deg) scale(0.8);
             }
-            20% { 
-                opacity: 1; 
-                transform: translate(-50%, -50%) scale(1); 
+            20% {
+                opacity: 1;
+                /* 移動到中間：往左上移動 (負X, 負Y)，恢復正常大小 */
+                /* 這裡的數值是根據容器大小抓的大概中心點 */
+                transform: translate(-90px, -130px) rotate(0deg) scale(1);
             }
-            50% { 
-                /* 往下按壓的效果 */
-                transform: translate(-50%, -45%) scale(0.9); 
+            40% {
+                /* 點擊動作：稍微縮小並往下按壓 */
+                transform: translate(-90px, -125px) rotate(0deg) scale(0.85);
             }
-            80% { 
-                transform: translate(-50%, -50%) scale(1); 
-                opacity: 1; 
+            60% {
+                opacity: 1;
+                /* 放開：回到點擊前的位置 */
+                transform: translate(-90px, -130px) rotate(0deg) scale(1);
             }
-            100% { 
-                transform: translate(-50%, -50%) scale(1); 
-                opacity: 0; 
+            85% {
+                 opacity: 0;
+                 /* 返回右下角 */
+                 transform: translate(0, 0) rotate(15deg) scale(0.8);
+            }
+            100% {
+                opacity: 0;
             }
         }
 
-        /* 當正在搖動時，隱藏手指 */
         .shaker-container.is-shaking .hand-guide {
             display: none;
         }
@@ -320,11 +329,9 @@
         
         <div class="hand-guide" id="handGuide">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.502,13.064c0-0.574-0.199-1.074-0.568-1.465c0.236-0.34,0.375-0.756,0.375-1.205c0-0.908-0.605-1.666-1.436-1.881
-                c0.166-0.379,0.26-0.801,0.26-1.246c0-1.7-1.379-3.078-3.078-3.078c-0.197,0-0.389,0.021-0.576,0.057V2.5
-                c0-1.381-1.119-2.5-2.5-2.5s-2.5,1.119-2.5,2.5v7.266c-0.297-0.09-0.611-0.141-0.938-0.141c-1.7,0-3.078,1.379-3.078,3.078
-                c0,0.613,0.186,1.182,0.5,1.656L0.5,12.5v1.289l5.064,7.633C6.34,22.656,7.574,23.398,8.875,23.398h4.25
-                c2.09,0,3.797-1.637,3.926-3.701l0.316-5.111C18.061,14.34,18.5,13.791,18.5,13.148C18.5,12.289,17.805,11.594,16.945,11.594H14.502z" />
+                <path d="M18.5,10.5c0-2.2-1.8-4-4-4h-1.3C13,4.3,11.9,2.5,10.4,1.2c-0.3-0.2-0.6-0.2-0.9,0c-0.3,0.2-0.4,0.6-0.3,0.9
+	l1.1,4.7c-0.9-0.3-1.9-0.2-2.8,0.3c-0.9,0.5-1.4,1.4-1.5,2.4c-0.5-0.3-1.1-0.3-1.6-0.1c-0.9,0.4-1.5,1.3-1.5,2.3
+	v4.1c0,3.5,2.7,6.4,6.1,6.7c0.2,0,0.4,0,0.6,0h4.4c3.1,0,5.7-2.4,5.9-5.5l0.2-3.7C20,12.2,19.4,11.1,18.5,10.5z"/>
             </svg>
         </div>
     </div>
@@ -333,93 +340,4 @@
 
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
-            <img id="resultImage" class="result-image" src="" alt="運勢結果">
-            <div class="save-hint">（長按圖片即可儲存到相簿）</div>
-            <div class="btn-group">
-                <a id="downloadLink" class="action-btn download-btn" href="#" download="我的運勢籤.png">下載圖片</a>
-                <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ==========================================
-        //  圖片設定 (請替換成你的真實圖片路徑)
-        // ==========================================
-        const fortuneImages = [
-            '1.png', 
-            '2.png',
-            '3.png',
-            '4.png'
-        ];
-        // ==========================================
-
-        const shaker = document.getElementById('shaker');
-        const modal = document.getElementById('modal');
-        const resultImage = document.getElementById('resultImage');
-        const downloadLink = document.getElementById('downloadLink');
-        const handGuide = document.getElementById('handGuide'); // 取得手指元素
-        
-        let isShaking = false;
-        let lastIndex = -1;
-
-        shaker.addEventListener('click', startShaking);
-
-        function startShaking() {
-            if (isShaking) return;
-            isShaking = true;
-            
-            // 點擊後，永久隱藏手指引導（因為使用者已經知道怎麼點了）
-            if(handGuide) {
-                handGuide.style.display = 'none'; 
-            }
-
-            resultImage.src = ''; 
-            shaker.classList.add('is-shaking');
-            if (navigator.vibrate) navigator.vibrate(200);
-            
-            setTimeout(() => {
-                shaker.classList.remove('is-shaking');
-                showResult();
-                isShaking = false;
-            }, 1500);
-        }
-
-        function showResult() {
-            if (fortuneImages.length === 0) return;
-            let newIndex;
-            if (fortuneImages.length === 1) {
-                newIndex = 0;
-            } else {
-                do {
-                    newIndex = Math.floor(Math.random() * fortuneImages.length);
-                } while (newIndex === lastIndex);
-            }
-            lastIndex = newIndex;
-            const randomImagePath = fortuneImages[newIndex];
-            resultImage.src = randomImagePath;
-            downloadLink.href = randomImagePath;
-            modal.style.display = 'flex';
-            fireConfetti();
-        }
-
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-
-        function fireConfetti() {
-            var count = 200;
-            var defaults = { origin: { y: 0.7 } };
-            function fire(particleRatio, opts) {
-                confetti(Object.assign({}, defaults, opts, {
-                    particleCount: Math.floor(count * particleRatio)
-                }));
-            }
-            fire(0.25, { spread: 26, startVelocity: 55, colors: ['#bf953f', '#fcf6ba'] });
-            fire(0.2, { spread: 60, colors: ['#ffffff'] });
-            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
-            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2, colors: ['#bf953f'] });
-        }
-    </script>
-</body>
-</html>
+            <img id="resultImage" class="result-image" src
