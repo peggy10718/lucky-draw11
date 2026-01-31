@@ -13,9 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* 預設背景色 */
             background-color: #8da4b7; 
-            /* 背景圖路徑 */
             background-image: url('bg.jpg'); 
             background-size: cover;       
             background-position: center;  
@@ -174,55 +172,57 @@
             mask-repeat: repeat-y;
         }
 
-        /* --- 【修改】回歸經典透明手指 (加入旋轉) --- */
+        /* --- 【修改】完整的手指 SVG --- */
         .hand-guide {
             position: absolute;
-            /* 初始位置：右下角外部 */
-            right: -30px;
-            bottom: -30px;
-            width: 60px; 
-            height: 60px;
+            /* 調整初始位置 */
+            right: -40px;
+            bottom: -40px;
+            /* 加大容器尺寸，避免圖案被切 */
+            width: 80px; 
+            height: 80px;
             z-index: 10;
             pointer-events: none;
             opacity: 0;
-            /* 動畫時間 */
             animation: simple-click 2s infinite ease-in-out;
         }
 
         .hand-guide svg {
             width: 100%;
             height: 100%;
-            /* 半透明白色填充 */
-            fill: rgba(255, 255, 255, 0.7); 
-            /* 增加白色發光陰影，讓它在紅色背景上清楚 */
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.8));
+            /* 填充半透明白色 */
+            fill: rgba(255, 255, 255, 0.85); 
+            /* 增加描邊讓形狀更完整 */
+            stroke: rgba(255, 255, 255, 0.9);
+            stroke-width: 1;
+            /* 柔和發光陰影 */
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
         }
 
-        /* 【修改】加入 rotate(-45deg) 讓手指傾斜 */
+        /* 【修改】傾斜手指動畫 */
         @keyframes simple-click {
             0% {
                 opacity: 0;
-                /* 起始：位移0 + 旋轉45度 + 大小正常 */
-                transform: translate(0, 0) rotate(-45deg) scale(1.5);
+                /* 初始：旋轉 -45度 (指向左上)，稍微放大 */
+                transform: translate(0, 0) rotate(-45deg) scale(1);
             }
             20% {
                 opacity: 1;
-                /* 移動到藍圈位置：保持旋轉 */
-                transform: translate(-70px, -110px) rotate(-45deg) scale(1.5);
+                /* 移動到目標：籤筒中間偏右 */
+                transform: translate(-60px, -110px) rotate(-45deg) scale(1);
             }
             50% {
-                /* 點擊瞬間：縮小 (模擬按壓感)，保持旋轉 */
-                transform: translate(-70px, -110px) rotate(-45deg) scale(1);
+                /* 按壓：稍微縮小 */
+                transform: translate(-60px, -110px) rotate(-45deg) scale(0.85);
             }
             80% {
                  opacity: 1;
-                 /* 放開：恢復大小，保持旋轉 */
-                 transform: translate(-70px, -110px) rotate(-45deg) scale(1.5);
+                 /* 恢復 */
+                 transform: translate(-60px, -110px) rotate(-45deg) scale(1);
             }
             100% {
                 opacity: 0;
-                /* 結束：保持位置與旋轉，淡出 */
-                transform: translate(-70px, -110px) rotate(-45deg) scale(1.5);
+                transform: translate(-60px, -110px) rotate(-45deg) scale(1);
             }
         }
 
@@ -314,8 +314,8 @@
         </div>
         
         <div class="hand-guide" id="handGuide">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.4 12.8999V6.4999C14.4 5.2999 13.5 4.3999 12.3 4.3999C11.1 4.3999 10.2 5.2999 10.2 6.4999V14.6999L9.4 14.5999C8.8 14.4999 7.8 14.6999 7.4 15.0999L6.4 16.0999L11.5 21.1999C11.9 21.5999 12.5 21.8999 13.1 21.8999H18.2C19.3 21.8999 20.2 21.0999 20.3 19.9999L20.8 16.6999C20.8 16.5999 20.8 16.3999 20.8 16.1999C20.8 14.6999 19.8 13.3999 18.4 12.9999L14.4 12.8999Z" />
             </svg>
         </div>
     </div>
@@ -413,5 +413,3 @@
     </script>
 </body>
 </html>
-
-
