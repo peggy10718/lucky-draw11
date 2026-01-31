@@ -172,7 +172,7 @@
             mask-repeat: repeat-y;
         }
 
-        /* --- 【修改】手指引導 (使用您的範例圖) --- */
+        /* --- 【修改】手指引導 (黑框白底樣式) --- */
         .hand-guide {
             position: absolute;
             right: -40px;
@@ -188,13 +188,14 @@
         .hand-guide svg {
             width: 100%;
             height: 100%;
-            /* 黑色線條 */
-            fill: #333333; 
-            /* 增加一點點白色描邊，確保在深色籤筒上清楚 */
-            stroke: rgba(255, 255, 255, 0.8);
-            stroke-width: 0.5px;
-            /* 柔和發光陰影 */
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+            /* 【關鍵修改】填充改為白色 */
+            fill: #ffffff;
+            /* 【關鍵修改】描邊改為黑色 */
+            stroke: #000000;
+            /* 設定描邊寬度 */
+            stroke-width: 1px;
+            /* 增加一個柔和的白色發光，讓黑色邊框在深紅背景上更突出 */
+            filter: drop-shadow(0 0 3px rgba(255,255,255,0.8));
         }
 
         /* 【修改】傾斜手指動畫 */
@@ -417,3 +418,4 @@
     </script>
 </body>
 </html>
+
