@@ -20,7 +20,7 @@
             background-image: url('bg.jpg'); 
             background-size: cover;        
             background-position: center;   
-            background-repeat: no-repeat;
+            background-repeat: no-repeat; 
             font-family: "Microsoft JhengHei", sans-serif;
             color: white;
             overflow: hidden;
@@ -59,7 +59,7 @@
 
         @media (max-width: 600px) {
             .shaker-container {
-                transform: scale(0.75);
+                transform: scale(0.75); 
                 margin-top: 0px; 
             }
         }
@@ -257,16 +257,14 @@
 
         /* --- 彈窗設定 --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); display: none;
             justify-content: center; align-items: center; z-index: 100;
             backdrop-filter: blur(10px);
             padding: 20px; box-sizing: border-box;
         }
         .modal-content {
-            background: transparent;
-            text-align: center; max-width: 100%; 
+            background: transparent; text-align: center; max-width: 100%; 
             animation: popInElastic 0.6s ease-out;
         }
         @keyframes popInElastic {
@@ -277,7 +275,7 @@
 
         /* --- 會呼吸的金光外暈 --- */
         .result-image {
-            max-width: 100%;
+            max-width: 100%; 
             max-height: 70vh; 
             border-radius: 12px; 
             border: 4px solid #bf953f; 
@@ -295,8 +293,7 @@
         .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         
         .action-btn {
-            border: none;
-            padding: 12px 25px; border-radius: 50px; font-size: 1rem;
+            border: none; padding: 12px 25px; border-radius: 50px; font-size: 1rem;
             cursor: pointer; font-weight: bold; transition: transform 0.2s;
             text-decoration: none; display: inline-block;
         }
@@ -319,7 +316,6 @@
         </div>
         <div class="cylinder-mouth"></div>
         <div class="cylinder-ring-top"></div>
-     
         <div class="cylinder-body">
             <div class="cylinder-text">求籤</div>
         </div>
@@ -354,32 +350,6 @@
         const handGuide = document.getElementById('handGuide'); 
         const hintText = document.getElementById('hintText');
 
-        // --- 音效優化 (暖身機制) ---
-        const shakeAudio = new Audio('shake.mp3'); 
-        shakeAudio.loop = true; 
-        shakeAudio.preload = 'auto'; 
-        shakeAudio.load();
-
-        // 解決瀏覽器延遲：使用者第一次觸摸螢幕時，先靜音播放一次，把音效引擎叫醒
-        function enableAudioOnFirstTouch() {
-            shakeAudio.volume = 0; // 靜音
-            const promise = shakeAudio.play();
-            if (promise !== undefined) {
-                promise.then(() => {
-                    shakeAudio.pause();
-                    shakeAudio.currentTime = 0;
-                    shakeAudio.volume = 1; // 恢復音量
-                    // 成功喚醒後，移除監聽，避免重複執行
-                    document.body.removeEventListener('click', enableAudioOnFirstTouch);
-                    document.body.removeEventListener('touchstart', enableAudioOnFirstTouch);
-                }).catch(error => {});
-            }
-        }
-        // 綁定到任何觸碰事件
-        document.body.addEventListener('click', enableAudioOnFirstTouch);
-        document.body.addEventListener('touchstart', enableAudioOnFirstTouch);
-        // ------------------------
-
         let isShaking = false;
         const urlParams = new URLSearchParams(window.location.search);
         const isNewScan = urlParams.get('from') === 'pgy';
@@ -393,10 +363,12 @@
             console.log("圖片預載完成");
         }
         preloadImages();
+        // ------------------
 
         if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
 
         const savedFortune = localStorage.getItem('selected_fortune_img');
+
         if (savedFortune) {
             hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
             if(handGuide) handGuide.style.display = 'none';
@@ -407,33 +379,20 @@
 
         function startShaking() {
             if (isShaking) return;
-            
-            // --- 【極速播放】 ---
-            // 務必放在文字改變之前！
-            shakeAudio.currentTime = 0; 
-            shakeAudio.volume = 1; // 確保有聲音
-            shakeAudio.play().catch(e => console.log(e));
-            // ------------------
-
             isShaking = true;
             if(handGuide) handGuide.style.display = 'none';
-            
-            // 視覺動畫與文字
             shaker.classList.add('is-shaking');
-            hintText.innerHTML = "虔誠祈福中🙏";
             
+            // 加入祈福文字
+            hintText.innerHTML = "虔誠祈福中🙏";
+
             if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
             setTimeout(() => {
-                // --- 停止音效 ---
-                shakeAudio.pause();
-                shakeAudio.currentTime = 0;
-                // ---------------
-
                 shaker.classList.remove('is-shaking');
                 generateResult();
                 isShaking = false;
-            }, 1500); 
+            }, 1500);
         }
 
         function generateResult() {
