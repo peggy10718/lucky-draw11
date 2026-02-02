@@ -14,7 +14,6 @@
             justify-content: center;
             align-items: center;
             background-color: #8da4b7; 
-            /* 請確認背景圖路徑 */
             background-image: url('bg.jpg'); 
             background-size: cover;        
             background-position: center;  
@@ -25,7 +24,6 @@
             flex-direction: column;
         }
 
-        /* --- 測試按鈕樣式 --- */
         #testResetBtn {
             position: fixed;
             top: 10px;
@@ -46,48 +44,80 @@
             width: 200px;
             height: 320px;
             cursor: pointer;
-            transition: transform 0.1s;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
             z-index: 5;
             transform-origin: center bottom;
-            overflow: visible;
         }
 
-        .shaker-container.locked {
-            cursor: not-allowed;
-            filter: grayscale(0.5);
-        }
-
-        @media (max-width: 600px) {
-            .shaker-container {
-                transform: scale(0.75); 
-                margin-top: 0px; 
-            }
-        }
-
-        /* 搖動動畫 */
+        /* 搖動動畫：筒身左右晃動 */
         .is-shaking { animation: shake 0.5s ease-in-out infinite; }
         
         @keyframes shake {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-5px, 0) rotate(-3deg); }
-            50% { transform: translate(5px, 0) rotate(3deg); }
-            75% { transform: translate(-5px, 0) rotate(-3deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-8deg) translate(-5px, 0); }
+            50% { transform: rotate(8deg) translate(5px, 0); }
+            75% { transform: rotate(-8deg) translate(-5px, 0); }
+            100% { transform: rotate(0deg); }
         }
 
-        /* 行動裝置縮放後的動畫修正 */
-        @media (max-width: 600px) {
-            @keyframes shake {
-                0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
-                25% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
-                50% { transform: scale(0.75) translate(5px, 0) rotate(3deg); }
-                75% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
-                100% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
-            }
+        /* --- 籤支視覺：木紋與凹凸造型 --- */
+        .sticks-group {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 240px;
+            z-index: 0;
         }
+
+        .stick {
+            position: absolute;
+            bottom: 0;
+            width: 14px;
+            height: 250px;
+            /* 木頭質感漸層 */
+            background: #d4a76a;
+            background-image: 
+                linear-gradient(to right, rgba(0,0,0,0.2) 0%, transparent 50%, rgba(255,255,255,0.3) 100%),
+                repeating-linear-gradient(90deg, transparent 0px, transparent 1px, rgba(0,0,0,0.05) 2px);
+            transform-origin: bottom center;
+            transform: rotate(var(--r, 0deg));
+            transition: transform 0.2s ease-out;
+            
+            /* 關鍵：利用 clip-path 製作握柄處的凹凸形狀 (木雕感) */
+            clip-path: polygon(
+                25% 0%, 75% 0%, 
+                75% 15%, 100% 18%, 100% 22%, 75% 25%, 
+                75% 28%, 90% 30%, 90% 34%, 75% 36%, 
+                75% 100%, 25% 100%, 
+                25% 36%, 10% 34%, 10% 30%, 25% 28%, 
+                25% 25%, 0% 22%, 0% 18%, 25% 15%
+            );
+        }
+
+        /* 籤頭紅色漆面 */
+        .stick::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 45px; 
+            background: linear-gradient(to right, #8b0000, #e53935, #8b0000);
+            border-bottom: 1px solid rgba(0,0,0,0.3);
+        }
+
+        /* 籤支跳動動畫：在筒內交錯上下彈跳 */
+        @keyframes stick-bounce {
+            0%, 100% { transform: rotate(var(--r)) translateY(0); }
+            50% { transform: rotate(var(--r)) translateY(-45px); }
+        }
+
+        .is-shaking .stick {
+            animation: stick-bounce 0.35s infinite ease-in-out;
+        }
+        .stick:nth-child(even) { animation-delay: 0.1s; }
+        .stick:nth-child(3n) { animation-delay: 0.2s; }
 
         /* --- 籤筒視覺 --- */
         .cylinder-body {
@@ -99,7 +129,6 @@
             border-radius: 10px;
             box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3);
             z-index: 2;
-            pointer-events: none;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -108,141 +137,60 @@
         
         .cylinder-ring-top {
             position: absolute;
-            top: 70px;
-            width: 102%;
-            left: -1%;
-            height: 20px;
+            top: 70px; width: 102%; left: -1%; height: 20px;
             background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
-            z-index: 3;
-            pointer-events: none;
-            border-radius: 4px;
+            z-index: 3; border-radius: 4px;
         }
 
         .cylinder-text {
-            color: #fffacd;
-            font-size: 3.5rem;
-            font-weight: bold;
-            writing-mode: vertical-rl;
-            text-orientation: upright;
-            letter-spacing: 15px;
-            text-shadow: 2px 2px 0px #3a0000;
+            color: #fffacd; font-size: 3.5rem; font-weight: bold;
+            writing-mode: vertical-rl; text-orientation: upright;
+            letter-spacing: 15px; text-shadow: 2px 2px 0px #3a0000;
             font-family: "Kaiti TC", "楷體", serif;
         }
 
         .cylinder-mouth {
             position: absolute;
-            top: 55px;
-            left: 2%;
-            width: 96%;
-            height: 40px;
+            top: 55px; left: 2%; width: 96%; height: 40px;
             background: radial-gradient(ellipse at center, #1a0000 0%, #3a0000 60%, #5a0000 100%);
-            border-radius: 50%;
-            z-index: 1;
-            border: 4px solid #8a0000;
+            border-radius: 50%; z-index: 1; border: 4px solid #8a0000;
         }
 
-        /* --- 籤支 --- */
-        .sticks-group {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 180px;
-            height: 200px;
-            z-index: 0;
-        }
-
-        .stick {
-            position: absolute;
-            bottom: 0;
-            width: 16px;
-            background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
-            transform-origin: bottom center;
-            transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
-        }
-
-        .stick::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 50px; 
-            background-color: #d32f2f;
-            -webkit-mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
-            mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
-        }
-
-        /* --- 手指引導 --- */
+        /* --- UI 其他組件 --- */
         .hand-guide {
-            position: absolute;
-            right: -30px;
-            bottom: -30px;
-            width: 60px; height: 60px;
-            z-index: 10;
-            animation: simple-click 2s infinite ease-in-out;
+            position: absolute; right: -30px; bottom: -30px; width: 60px; height: 60px;
+            z-index: 10; animation: simple-click 2s infinite ease-in-out;
         }
-
         @keyframes simple-click {
-            0% { opacity: 0; transform: translate(0, 0) rotate(-45deg) scale(1.5); }
-            20% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
-            50% { transform: translate(-70px, -110px) rotate(-45deg) scale(1); }
-            80% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
-            100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
+            0%, 100% { opacity: 0; transform: translate(0, 0) scale(1.5); }
+            20%, 80% { opacity: 1; transform: translate(-70px, -110px) scale(1); }
         }
+        .hint { margin-top: 50px; color: #fffacd; font-size: 1.1rem; animation: pulse 2s infinite; font-weight: bold; z-index: 10; }
+        @keyframes pulse { 0%, 100% { opacity: 0.8; } 50% { opacity: 1; } }
 
-        /* --- 提示文字 --- */
-        .hint {
-            margin-top: 50px;
-            color: #fffacd;
-            font-size: 1.1rem;
-            animation: pulse 2s infinite;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
-            font-weight: bold;
-            z-index: 10;
-        }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
-
-        /* --- 彈窗設定 --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); display: none;
             justify-content: center; align-items: center; z-index: 100;
-            backdrop-filter: blur(10px);
-            padding: 20px; box-sizing: border-box;
+            backdrop-filter: blur(10px); padding: 20px;
         }
-        .modal-content {
-            background: transparent; text-align: center; max-width: 100%; 
-            animation: popInElastic 0.6s ease-out;
-        }
-        @keyframes popInElastic {
-            0% { transform: scale(0.5); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-        .result-image {
-            max-width: 100%; max-height: 70vh; border-radius: 12px; 
-            border: 4px solid #bf953f; margin-bottom: 15px;
-        }
-        .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
-        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        
-        .action-btn {
-            border: none; padding: 12px 25px; border-radius: 50px; font-size: 1rem;
-            cursor: pointer; font-weight: bold; transition: transform 0.2s;
-            text-decoration: none; display: inline-block;
-        }
-        .close-btn { background: #555; color: white; }
+        .modal-content { animation: popIn 0.6s cubic-bezier(0.17, 0.89, 0.32, 1.49); text-align: center; }
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .result-image { max-width: 100%; max-height: 70vh; border-radius: 12px; border: 4px solid #bf953f; margin-bottom: 15px; }
+        .action-btn { border: none; padding: 12px 25px; border-radius: 50px; font-size: 1rem; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin: 5px; }
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
-        .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); color: white; }
-        .action-btn:hover { transform: translateY(-3px); }
+        .line-btn { background: #06C755; color: white; }
+        .close-btn { background: #555; color: white; }
 
-        /* 籤支個別位置設定 */
-        .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; }
-        .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; }
-        .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; }
-        .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; }
-        .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; }
-        .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; filter: brightness(0.7); }
-        .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; filter: brightness(0.7); }
-        .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; }
+        /* 籤支初始位置設定 */
+        .stick:nth-child(1) { --r: -15deg; left: 20px; }
+        .stick:nth-child(2) { --r: -8deg;  left: 45px; }
+        .stick:nth-child(3) { --r: -2deg;  left: 70px; }
+        .stick:nth-child(4) { --r: 5deg;   left: 95px; }
+        .stick:nth-child(5) { --r: 14deg;  left: 120px; }
+        .stick:nth-child(6) { --r: -10deg; left: 35px; filter: brightness(0.8); }
+        .stick:nth-child(7) { --r: 8deg;   left: 85px; filter: brightness(0.8); }
+        .stick:nth-child(8) { --r: 0deg;   left: 60px; height: 260px; }
     </style>
 </head>
 <body>
@@ -260,11 +208,8 @@
         <div class="cylinder-body">
             <div class="cylinder-text">求籤</div>
         </div>
-        
         <div class="hand-guide" id="handGuide">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
-                <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="white"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/></svg>
         </div>
     </div>
 
@@ -273,7 +218,7 @@
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
             <img id="resultImage" class="result-image" src="" alt="運勢結果">
-            <div class="save-hint">（長按圖片即可儲存到相簿）</div>
+            <div style="color: #fcf6ba; font-size: 0.8rem; margin-bottom: 15px;">（長按圖片即可儲存到相簿）</div>
             <div class="btn-group">
                 <a id="downloadLink" class="action-btn download-btn" href="#" download="我的運勢籤.png">下載圖片</a>
                 <button class="action-btn line-btn" onclick="shareToLine()">LINE 分享</button>
@@ -292,11 +237,6 @@
         const hintText = document.getElementById('hintText');
 
         let isShaking = false;
-        const urlParams = new URLSearchParams(window.location.search);
-        const isNewScan = urlParams.get('from') === 'pgy';
-
-        if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
-
         const savedFortune = localStorage.getItem('selected_fortune_img');
 
         if (savedFortune) {
@@ -311,8 +251,9 @@
             if (isShaking) return;
             isShaking = true;
             if(handGuide) handGuide.style.display = 'none';
+            
             shaker.classList.add('is-shaking');
-            if (navigator.vibrate) navigator.vibrate(200);
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
             
             setTimeout(() => {
                 shaker.classList.remove('is-shaking');
@@ -340,32 +281,21 @@
 
         function closeModal() { modal.style.display = 'none'; }
 
-        // --- LINE 分享功能 (更新版) ---
         function shareToLine() {
-            const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？看看神明跟你說什麼👇";
+            const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？👇";
             const url = window.location.href; 
-            const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text + "\n" + url)}`;
-            window.open(lineUrl, '_blank');
+            window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text + "\n" + url)}`, '_blank');
         }
 
         function testReset() {
             if(confirm('確定要清除紀錄並重置嗎？')) {
                 localStorage.removeItem('selected_fortune_img');
-                window.location.href = window.location.pathname; 
+                window.location.reload(); 
             }
         }
 
         function fireConfetti() {
-            var count = 200;
-            var defaults = { origin: { y: 0.7 } };
-            function fire(particleRatio, opts) {
-                confetti(Object.assign({}, defaults, opts, {
-                    particleCount: Math.floor(count * particleRatio)
-                }));
-            }
-            fire(0.25, { spread: 26, startVelocity: 55, colors: ['#bf953f', '#fcf6ba'] });
-            fire(0.2, { spread: 60, colors: ['#ffffff'] });
-            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#bf953f', '#fcf6ba', '#ffffff'] });
         }
     </script>
 </body>
