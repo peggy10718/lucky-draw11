@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>321 世界唐氏症日 - 求籤活動</title>
+    
+    <link rel="preload" as="image" href="bg.jpg">
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         /* --- 全局設定 --- */
@@ -13,7 +16,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            
+            /* 設定一個跟背景圖顏色接近的底色，圖片載入前才不會一片白 */
             background-color: #8da4b7; 
+            
             background-image: url('bg.jpg'); 
             background-size: cover;        
             background-position: center;   
@@ -232,15 +238,12 @@
         /* --- 提示文字 (香火暖橘 + 置中 + 靠近籤筒) --- */
         .hint {
             margin-top: 20px;
-            color: #fff5e6; /* 稍微帶暖的白 */
+            color: #fff5e6; 
             font-size: 1.1rem;
             font-weight: bold;
             z-index: 10;
-            
-            /* 置中設定 */
             text-align: center;
             line-height: 1.6;
-            
             animation: hint-glow-orange 2s infinite alternate;
         }
 
@@ -251,7 +254,6 @@
             }
             to {
                 opacity: 1;
-                /* 橘紅色的暖光，像燈籠的光暈 */
                 text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5);
             }
         }
@@ -355,7 +357,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const isNewScan = urlParams.get('from') === 'pgy';
 
-        // --- 預載圖片功能 (解決圖片卡頓) ---
+        // --- 預載圖片功能 ---
         function preloadImages() {
             fortuneImages.forEach((src) => {
                 const img = new Image();
@@ -364,14 +366,14 @@
             console.log("圖片預載完成");
         }
         preloadImages();
-        // --------------------------------
+        // ------------------
 
         if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
 
         const savedFortune = localStorage.getItem('selected_fortune_img');
 
         if (savedFortune) {
-            // 更新：雙行文字，移除手指
+            // 更新：雙行文字，無手指
             hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
             if(handGuide) handGuide.style.display = 'none';
             shaker.addEventListener('click', () => openModalWithImage(savedFortune));
@@ -385,7 +387,6 @@
             if(handGuide) handGuide.style.display = 'none';
             shaker.classList.add('is-shaking');
             
-            // 震動回饋
             if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
             setTimeout(() => {
@@ -400,7 +401,7 @@
             const selectedImg = fortuneImages[randomIndex];
             localStorage.setItem('selected_fortune_img', selectedImg);
             
-            // 更新：雙行文字，移除手指
+            // 更新：雙行文字，無手指
             hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
             
             shaker.removeEventListener('click', startShaking);
