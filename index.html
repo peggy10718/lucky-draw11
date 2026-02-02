@@ -55,11 +55,6 @@
             overflow: visible;
         }
 
-        .shaker-container.locked {
-            cursor: not-allowed;
-            filter: grayscale(0.5);
-        }
-
         @media (max-width: 600px) {
             .shaker-container {
                 transform: scale(0.75); 
@@ -67,7 +62,7 @@
             }
         }
 
-        /* 搖動動畫 */
+        /* 搖動動畫 (筒身) */
         .is-shaking { animation: shake 0.5s ease-in-out infinite; }
         
         @keyframes shake {
@@ -78,7 +73,6 @@
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        /* 行動裝置縮放後的動畫修正 */
         @media (max-width: 600px) {
             @keyframes shake {
                 0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
@@ -141,7 +135,7 @@
             border: 4px solid #8a0000;
         }
 
-        /* --- 籤支 --- */
+        /* --- 籤支與跳動動畫 --- */
         .sticks-group {
             position: absolute;
             top: 15px;
@@ -159,6 +153,19 @@
             background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
             transform-origin: bottom center;
             transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
+            transition: transform 0.1s;
+        }
+
+        /* 籤支跳動核心動畫 */
+        @keyframes stick-jump {
+            0% { transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px)); }
+            50% { transform: rotate(var(--r, 0deg)) translateY(calc(var(--y, 0px) - 20px)); } /* 向上跳 20px */
+            100% { transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px)); }
+        }
+
+        /* 當正在搖晃時，籤支執行動畫 */
+        .is-shaking .stick {
+            animation: stick-jump var(--d, 0.3s) ease-in-out infinite;
         }
 
         .stick::before {
@@ -169,6 +176,16 @@
             -webkit-mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
             mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
         }
+
+        /* 籤支個別設定 (加入不同的動畫延遲 --d) */
+        .stick:nth-child(1) { --r: -12deg; --y: 15px; --d: 0.25s; left: 25px; height: 210px; }
+        .stick:nth-child(2) { --r: -6deg;  --y: 8px;  --d: 0.35s; left: 50px; height: 225px; }
+        .stick:nth-child(3) { --r: 0deg;   --y: 5px;  --d: 0.2s;  left: 75px; height: 215px; }
+        .stick:nth-child(4) { --r: 6deg;   --y: 6px;  --d: 0.4s;  left: 100px; height: 220px; }
+        .stick:nth-child(5) { --r: 12deg;  --y: 14px; --d: 0.3s;  left: 125px; height: 205px; }
+        .stick:nth-child(6) { --r: -8deg;  --y: 20px; --d: 0.45s; left: 40px; height: 200px; filter: brightness(0.7); }
+        .stick:nth-child(7) { --r: 4deg;   --y: 18px; --d: 0.28s; left: 90px; height: 205px; filter: brightness(0.7); }
+        .stick:nth-child(8) { --r: -2deg;  --y: 2px;  --d: 0.32s; left: 65px; height: 230px; }
 
         /* --- 手指引導 --- */
         .hand-guide {
@@ -233,16 +250,6 @@
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
         .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); color: white; }
         .action-btn:hover { transform: translateY(-3px); }
-
-        /* 籤支個別位置設定 */
-        .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; }
-        .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; }
-        .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; }
-        .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; }
-        .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; }
-        .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; filter: brightness(0.7); }
-        .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; filter: brightness(0.7); }
-        .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; }
     </style>
 </head>
 <body>
@@ -314,6 +321,7 @@
             shaker.classList.add('is-shaking');
             if (navigator.vibrate) navigator.vibrate(200);
             
+            // 搖動 1.5 秒後出結果
             setTimeout(() => {
                 shaker.classList.remove('is-shaking');
                 generateResult();
@@ -340,7 +348,6 @@
 
         function closeModal() { modal.style.display = 'none'; }
 
-        // --- LINE 分享功能 (更新版) ---
         function shareToLine() {
             const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？看看神明跟你說什麼👇";
             const url = window.location.href; 
