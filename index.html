@@ -25,6 +25,21 @@
             flex-direction: column;
         }
 
+        /* --- 測試按鈕樣式 (測試完可刪除) --- */
+        #testResetBtn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 9999;
+            padding: 8px 15px;
+            background: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
         /* --- 籤筒容器 --- */
         .shaker-container {
             position: relative;
@@ -274,13 +289,24 @@
             transition: transform 0.2s; text-decoration: none; display: inline-block; white-space: nowrap;
         }
         .close-btn { background: #555; color: white; }
+        
+        /* 下載按鈕 (金色漸層) */
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
-        .line-btn { background-color: #06C755; color: white; }
+        
+        /* 【修改】LINE 按鈕 (綠色漸層，模擬金色按鈕的質感) */
+        .line-btn { 
+            background: linear-gradient(90deg, #06C755, #67e696, #06C755); 
+            color: white; 
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
         .action-btn:hover { transform: translateY(-3px); filter: brightness(1.1); }
 
     </style>
 </head>
 <body>
+
+    <button id="testResetBtn" onclick="testReset()">測試用：重置抽籤</button>
 
     <div class="shaker-container" id="shaker">
         <div class="sticks-group">
@@ -406,7 +432,7 @@
             const randomIndex = Math.floor(Math.random() * fortuneImages.length);
             const selectedImg = fortuneImages[randomIndex];
 
-            // ★ 重要：將結果存入 localStorage (移植 index.html 的邏輯)
+            // ★ 重要：將結果存入 localStorage
             localStorage.setItem('selected_fortune_img', selectedImg);
 
             // 改變介面狀態
@@ -439,6 +465,15 @@
             const url = window.location.href; // 自動抓取當前網址
             const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text)}%20${encodeURIComponent(url)}`;
             window.open(lineUrl, '_blank');
+        }
+
+        // --- 【新增】測試用重置功能 ---
+        function testReset() {
+            if(confirm('確定要清除紀錄並重置嗎？')) {
+                localStorage.removeItem('selected_fortune_img');
+                // 重新載入頁面，並移除網址參數以確保乾淨的重置
+                window.location.href = window.location.pathname; 
+            }
         }
 
         function fireConfetti() {
