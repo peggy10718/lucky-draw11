@@ -17,7 +17,7 @@
             /* 請確認背景圖路徑 */
             background-image: url('bg.jpg'); 
             background-size: cover;        
-            background-position: center;  
+            background-position: center;   
             background-repeat: no-repeat; 
             font-family: "Microsoft JhengHei", sans-serif;
             color: white;
@@ -67,7 +67,7 @@
             }
         }
 
-        /* 搖動動畫 */
+        /* --- 搖動動畫 (容器整體) --- */
         .is-shaking { animation: shake 0.5s ease-in-out infinite; }
         
         @keyframes shake {
@@ -78,7 +78,6 @@
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        /* 行動裝置縮放後的動畫修正 */
         @media (max-width: 600px) {
             @keyframes shake {
                 0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
@@ -158,7 +157,9 @@
             width: 16px;
             background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
             transform-origin: bottom center;
+            /* 預設位置 */
             transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
+            transition: transform 0.3s; /* 平滑過渡 */
         }
 
         .stick::before {
@@ -169,6 +170,39 @@
             -webkit-mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
             mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
         }
+
+        /* ====== 新增動畫邏輯 Start ====== */
+        
+        /* 1. 搖晃時的亂序跳動 */
+        .is-shaking .stick {
+            animation: stick-jump 0.25s ease-in-out infinite alternate;
+        }
+
+        @keyframes stick-jump {
+            0% { transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px)); }
+            100% { transform: rotate(var(--r, 0deg)) translateY(calc(var(--y, 0px) - 20px)); }
+        }
+
+        /* 給每根籤不同的跳動延遲，製造混亂感 */
+        .stick:nth-child(1) { animation-delay: 0.0s; }
+        .stick:nth-child(2) { animation-delay: 0.2s; }
+        .stick:nth-child(3) { animation-delay: 0.1s; }
+        .stick:nth-child(4) { animation-delay: 0.3s; }
+        .stick:nth-child(5) { animation-delay: 0.05s; }
+        .stick:nth-child(6) { animation-delay: 0.25s; }
+        .stick:nth-child(7) { animation-delay: 0.15s; }
+        .stick:nth-child(8) { animation-delay: 0.1s; }
+
+        /* 2. 結果出爐前的「單支升起」樣式 */
+        .stick.rising {
+            z-index: 20; /* 確保在最上層 */
+            /* 強制覆蓋原本的 transform，讓它轉正並升起 */
+            transform: rotate(0deg) translateY(-100px) scale(1.1) !important;
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 彈性緩動 */
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)) brightness(1.2); /* 金光 */
+        }
+        
+        /* ====== 新增動畫邏輯 End ====== */
 
         /* --- 手指引導 --- */
         .hand-guide {
@@ -238,7 +272,8 @@
         .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; }
         .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; }
         .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; }
-        .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; }
+        /* 讓這根(第4根)在中間一點，作為我們預設升起的籤 */
+        .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; } 
         .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; }
         .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; filter: brightness(0.7); }
         .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; filter: brightness(0.7); }
@@ -290,6 +325,7 @@
         const downloadLink = document.getElementById('downloadLink');
         const handGuide = document.getElementById('handGuide'); 
         const hintText = document.getElementById('hintText');
+        const sticks = document.querySelectorAll('.stick');
 
         let isShaking = false;
         const urlParams = new URLSearchParams(window.location.search);
@@ -304,20 +340,37 @@
             if(handGuide) handGuide.style.display = 'none';
             shaker.addEventListener('click', () => openModalWithImage(savedFortune));
         } else {
-            shaker.addEventListener('click', startShaking);
+            shaker.addEventListener('click', startShakingSequence);
         }
 
-        function startShaking() {
+        function startShakingSequence() {
             if (isShaking) return;
             isShaking = true;
+            
+            // 1. 開始搖動
             if(handGuide) handGuide.style.display = 'none';
             shaker.classList.add('is-shaking');
-            if (navigator.vibrate) navigator.vibrate(200);
+            hintText.innerText = "🙏 誠心祈求中...";
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
+            // 2. 搖動 1.5 秒後停止，並執行升起動畫
             setTimeout(() => {
                 shaker.classList.remove('is-shaking');
-                generateResult();
-                isShaking = false;
+                
+                // 選定一支籤 (這裡選第4支，視覺上在中間)
+                const chosenStick = sticks[3]; 
+                chosenStick.classList.add('rising');
+
+                // 3. 籤升起停留 1 秒後，顯示結果
+                setTimeout(() => {
+                    generateResult();
+                    // 結果顯示後，把籤放回去 (移除 class)
+                    setTimeout(() => {
+                        chosenStick.classList.remove('rising');
+                        isShaking = false; 
+                    }, 500); 
+                }, 1200);
+
             }, 1500);
         }
 
@@ -325,9 +378,11 @@
             const randomIndex = Math.floor(Math.random() * fortuneImages.length);
             const selectedImg = fortuneImages[randomIndex];
             localStorage.setItem('selected_fortune_img', selectedImg);
+            
             hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
-            shaker.removeEventListener('click', startShaking);
+            shaker.removeEventListener('click', startShakingSequence);
             shaker.addEventListener('click', () => openModalWithImage(selectedImg));
+            
             openModalWithImage(selectedImg);
         }
 
@@ -340,7 +395,7 @@
 
         function closeModal() { modal.style.display = 'none'; }
 
-        // --- LINE 分享功能 (更新版) ---
+        // --- LINE 分享功能 ---
         function shareToLine() {
             const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？看看神明跟你說什麼👇";
             const url = window.location.href; 
