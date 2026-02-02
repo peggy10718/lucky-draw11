@@ -229,26 +229,25 @@
             100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
         }
 
-        /* --- 提示文字 (更新：聖潔白光) --- */
+        /* --- 提示文字 (更新：香火暖橘) --- */
         .hint {
-            margin-top: 20px; /* 距離籤筒近一點 */
-            color: #ffffff;   /* 純白文字 */
+            margin-top: 20px;
+            color: #fff5e6; /* 稍微帶暖的白 */
             font-size: 1.1rem;
             font-weight: bold;
             z-index: 10;
-            animation: hint-glow-white 2s infinite alternate;
+            animation: hint-glow-orange 2s infinite alternate;
         }
 
-        /* 聖潔白光呼吸燈動畫 */
-        @keyframes hint-glow-white {
+        @keyframes hint-glow-orange {
             from {
                 opacity: 0.8;
-                text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+                text-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
             }
             to {
                 opacity: 1;
-                /* 白色的柔和光暈 */
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.5);
+                /* 橘紅色的暖光，像燈籠的光暈 */
+                text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5);
             }
         }
 
@@ -270,7 +269,7 @@
             100% { transform: scale(1); }
         }
 
-        /* --- 會呼吸的金光外暈 (結果圖) --- */
+        /* --- 會呼吸的金光外暈 --- */
         .result-image {
             max-width: 100%; 
             max-height: 70vh; 
