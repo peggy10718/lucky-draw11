@@ -16,10 +16,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            
-            /* 設定一個跟背景圖顏色接近的底色，圖片載入前才不會一片白 */
             background-color: #8da4b7; 
-            
             background-image: url('bg.jpg'); 
             background-size: cover;        
             background-position: center;   
@@ -373,7 +370,6 @@
         const savedFortune = localStorage.getItem('selected_fortune_img');
 
         if (savedFortune) {
-            // 更新：雙行文字，無手指
             hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
             if(handGuide) handGuide.style.display = 'none';
             shaker.addEventListener('click', () => openModalWithImage(savedFortune));
@@ -387,6 +383,9 @@
             if(handGuide) handGuide.style.display = 'none';
             shaker.classList.add('is-shaking');
             
+            // 加入祈福文字
+            hintText.innerHTML = "虔誠祈福中🙏";
+
             if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
             setTimeout(() => {
@@ -401,7 +400,6 @@
             const selectedImg = fortuneImages[randomIndex];
             localStorage.setItem('selected_fortune_img', selectedImg);
             
-            // 更新：雙行文字，無手指
             hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
             
             shaker.removeEventListener('click', startShaking);
