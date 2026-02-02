@@ -231,7 +231,9 @@
 
         /* --- 提示文字 --- */
         .hint {
-            margin-top: 50px;
+            /* 【修改】原本是 50px，改成 20px 讓文字往上靠近籤筒 */
+            margin-top: 20px;
+            
             color: #fffacd;
             font-size: 1.1rem;
             animation: pulse 2s infinite;
@@ -345,7 +347,6 @@
         const savedFortune = localStorage.getItem('selected_fortune_img');
 
         if (savedFortune) {
-            // 2. 修改：文字前後加星星，並移除多餘空格
             hintText.innerText = "✨您已經求過籤囉 (點擊查看)✨";
             if(handGuide) handGuide.style.display = 'none';
             shaker.addEventListener('click', () => openModalWithImage(savedFortune));
@@ -371,10 +372,7 @@
             const randomIndex = Math.floor(Math.random() * fortuneImages.length);
             const selectedImg = fortuneImages[randomIndex];
             localStorage.setItem('selected_fortune_img', selectedImg);
-            
-            // 2. 修改：文字前後加星星，並移除多餘空格
             hintText.innerText = "✨您已經求過籤囉 (點擊查看)✨";
-            
             shaker.removeEventListener('click', startShaking);
             shaker.addEventListener('click', () => openModalWithImage(selectedImg));
             openModalWithImage(selectedImg);
