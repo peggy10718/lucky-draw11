@@ -229,19 +229,31 @@
             100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
         }
 
-        /* --- 提示文字 --- */
+        /* --- 提示文字 (更新：柔和發光效果) --- */
         .hint {
-            /* 【修改】原本是 50px，改成 20px 讓文字往上靠近籤筒 */
             margin-top: 20px;
-            
-            color: #fffacd;
+            color: #fffacd; /* 淺黃奶油色 */
             font-size: 1.1rem;
-            animation: pulse 2s infinite;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
             font-weight: bold;
             z-index: 10;
+            
+            /* 新增：文字發光呼吸燈動畫 */
+            animation: hint-glow 2s infinite alternate;
         }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+
+        /* 呼吸燈動畫：在「微亮」和「稍亮」之間切換 */
+        @keyframes hint-glow {
+            from {
+                opacity: 0.85;
+                /* 淡淡的光暈 */
+                text-shadow: 0 0 5px rgba(255, 255, 255, 0.4), 0 0 10px rgba(0,0,0,0.5);
+            }
+            to {
+                opacity: 1;
+                /* 稍微明顯一點的金色光暈，但不刺眼 */
+                text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 223, 0, 0.5), 0 0 5px rgba(0,0,0,0.5);
+            }
+        }
 
         /* --- 彈窗設定 --- */
         .modal-overlay {
