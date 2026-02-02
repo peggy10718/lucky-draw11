@@ -354,13 +354,31 @@
         const handGuide = document.getElementById('handGuide'); 
         const hintText = document.getElementById('hintText');
 
-        // --- 音效優化設定 ---
+        // --- 音效優化 (暖身機制) ---
         const shakeAudio = new Audio('shake.mp3'); 
         shakeAudio.loop = true; 
-        // 強制預載：通知瀏覽器這聲音很重要，現在就下載好
         shakeAudio.preload = 'auto'; 
         shakeAudio.load();
-        // ----------------
+
+        // 解決瀏覽器延遲：使用者第一次觸摸螢幕時，先靜音播放一次，把音效引擎叫醒
+        function enableAudioOnFirstTouch() {
+            shakeAudio.volume = 0; // 靜音
+            const promise = shakeAudio.play();
+            if (promise !== undefined) {
+                promise.then(() => {
+                    shakeAudio.pause();
+                    shakeAudio.currentTime = 0;
+                    shakeAudio.volume = 1; // 恢復音量
+                    // 成功喚醒後，移除監聽，避免重複執行
+                    document.body.removeEventListener('click', enableAudioOnFirstTouch);
+                    document.body.removeEventListener('touchstart', enableAudioOnFirstTouch);
+                }).catch(error => {});
+            }
+        }
+        // 綁定到任何觸碰事件
+        document.body.addEventListener('click', enableAudioOnFirstTouch);
+        document.body.addEventListener('touchstart', enableAudioOnFirstTouch);
+        // ------------------------
 
         let isShaking = false;
         const urlParams = new URLSearchParams(window.location.search);
@@ -390,24 +408,20 @@
         function startShaking() {
             if (isShaking) return;
             
-            // --- 【極速播放關鍵】 ---
-            // 把播放邏輯移到函式的最最最上面
-            // 點擊觸發的第一瞬間就送出播放指令，不要等其他動畫運算
+            // --- 【極速播放】 ---
+            // 務必放在文字改變之前！
             shakeAudio.currentTime = 0; 
-            const playPromise = shakeAudio.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(error => { console.log("播放需要使用者互動", error); });
-            }
-            // ---------------------
+            shakeAudio.volume = 1; // 確保有聲音
+            shakeAudio.play().catch(e => console.log(e));
+            // ------------------
 
             isShaking = true;
             if(handGuide) handGuide.style.display = 'none';
             
-            // 開始畫面動畫
+            // 視覺動畫與文字
             shaker.classList.add('is-shaking');
             hintText.innerHTML = "虔誠祈福中🙏";
             
-            // 震動 (放在聲音之後執行，避免搶資源)
             if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
             setTimeout(() => {
