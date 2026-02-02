@@ -229,15 +229,15 @@
             100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
         }
 
-        /* --- 提示文字 (更新：香火暖橘) --- */
+        /* --- 提示文字 (香火暖橘 + 置中) --- */
         .hint {
             margin-top: 20px;
-            color: #fff5e6; /* 稍微帶暖的白 */
+            color: #fff5e6; 
             font-size: 1.1rem;
             font-weight: bold;
             z-index: 10;
             
-            /* 新增：多行置中設定 */
+            /* 置中設定 */
             text-align: center;
             line-height: 1.6;
             
@@ -251,7 +251,6 @@
             }
             to {
                 opacity: 1;
-                /* 橘紅色的暖光 */
                 text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5);
             }
         }
@@ -360,8 +359,8 @@
         const savedFortune = localStorage.getItem('selected_fortune_img');
 
         if (savedFortune) {
-            // 使用 innerHTML 來支援 <br> 換行
-            hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)👆";
+            // 更新：雙行文字，移除手指
+            hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
             if(handGuide) handGuide.style.display = 'none';
             shaker.addEventListener('click', () => openModalWithImage(savedFortune));
         } else {
@@ -387,8 +386,8 @@
             const selectedImg = fortuneImages[randomIndex];
             localStorage.setItem('selected_fortune_img', selectedImg);
             
-            // 使用 innerHTML 來支援 <br> 換行
-            hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)👆";
+            // 更新：雙行文字，移除手指
+            hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
             
             shaker.removeEventListener('click', startShaking);
             shaker.addEventListener('click', () => openModalWithImage(selectedImg));
