@@ -4,15 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>321 世界唐氏症日 - 求籤活動</title>
-
-    <meta property="og:title" content="321 世界唐氏症日 - 求籤活動" />
-    
-    <meta property="og:description" content="👇 點擊連結，測測你的今日運勢！" />
-    
-    <meta property="og:image" content="https://peggy10718.github.io/repo-name/cover.jpg" />
-    
-    <meta property="og:type" content="website" />
-    
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         /* --- 全局設定 --- */
@@ -302,7 +293,7 @@
         /* 下載按鈕 (金色漸層) */
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
         
-        /* LINE 按鈕 (綠色漸層) */
+        /* 【修改】LINE 按鈕 (綠色漸層，模擬金色按鈕的質感) */
         .line-btn { 
             background: linear-gradient(90deg, #06C755, #67e696, #06C755); 
             color: white; 
@@ -360,16 +351,6 @@
             '3.png',
             '4.png'
         ];
-
-        // ==========================================
-        //  LINE 分享時對應的文字
-        // ==========================================
-        const fortuneTexts = {
-            '1.png': '大吉！萬事如意',
-            '2.png': '平安！歲歲平安',
-            '3.png': '快樂！天天開心',
-            '4.png': '幸運！好運連連'
-        };
         // ==========================================
 
         const shaker = document.getElementById('shaker');
@@ -381,41 +362,62 @@
 
         let isShaking = false;
         
+        // --- 核心邏輯整合：從 index.html 移植過來的判斷 ---
+
+        // 1. 取得網址參數，判斷是否為重新掃碼
         const urlParams = new URLSearchParams(window.location.search);
         const isNewScan = urlParams.get('from') === 'pgy';
 
+        // 2. 如果是重新掃碼，清空紀錄
         if (isNewScan) {
             localStorage.removeItem('selected_fortune_img');
         }
 
+        // 3. 檢查是否有選擇過 (記憶功能)
         const savedFortune = localStorage.getItem('selected_fortune_img');
 
+        // 初始化
         if (savedFortune) {
+            // 如果已經抽過了：
+            // A. 直接顯示之前的結果，不用再搖
+            // B. 或是鎖定籤筒，點擊直接看結果
             hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
-            if(handGuide) handGuide.style.display = 'none'; 
+            if(handGuide) handGuide.style.display = 'none'; // 隱藏手指
             
+            // 點擊事件改為「直接開啟結果」，不再搖動
             shaker.addEventListener('click', function() {
                 openModalWithImage(savedFortune);
             });
             
+            // 也可以選擇一進來就自動彈出 (如果想要這麼做，把下面這行註解打開)
+            // setTimeout(() => openModalWithImage(savedFortune), 500);
+            
         } else {
+            // 如果沒抽過，綁定正常的搖動事件
             shaker.addEventListener('click', startShaking);
         }
 
+        // ---------------------------------------------
+
         function startShaking() {
             if (isShaking) return;
+            // 如果已經有紀錄，也不允許再搖 (雙重防護)
             if (localStorage.getItem('selected_fortune_img')) {
                 openModalWithImage(localStorage.getItem('selected_fortune_img'));
                 return;
             }
 
             isShaking = true;
-            if(handGuide) handGuide.style.display = 'none'; 
+            
+            if(handGuide) {
+                handGuide.style.display = 'none'; 
+            }
 
             resultImage.src = ''; 
             shaker.classList.add('is-shaking');
             if (navigator.vibrate) navigator.vibrate(200);
             
+            // 搖動 1.5 秒後出結果
             setTimeout(() => {
                 shaker.classList.remove('is-shaking');
                 generateResult();
@@ -426,18 +428,23 @@
         function generateResult() {
             if (fortuneImages.length === 0) return;
             
+            // 隨機選一張圖
             const randomIndex = Math.floor(Math.random() * fortuneImages.length);
             const selectedImg = fortuneImages[randomIndex];
 
+            // ★ 重要：將結果存入 localStorage
             localStorage.setItem('selected_fortune_img', selectedImg);
 
+            // 改變介面狀態
             hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
             
+            // 改變點擊行為 (下次點擊不搖了，直接開圖)
             shaker.removeEventListener('click', startShaking);
             shaker.addEventListener('click', function() {
                 openModalWithImage(selectedImg);
             });
 
+            // 顯示結果
             openModalWithImage(selectedImg);
         }
 
@@ -452,23 +459,19 @@
             modal.style.display = 'none';
         }
 
+        // --- LINE 分享功能 ---
         function shareToLine() {
-            const currentImg = localStorage.getItem('selected_fortune_img');
-            let fortuneResult = "一支運勢籤"; 
-
-            if (currentImg && fortuneTexts[currentImg]) {
-                fortuneResult = `「${fortuneTexts[currentImg]}」`;
-            }
-
-            const text = `我在參加321世界唐氏症日求籤活動，求到了${fortuneResult}！你也來試試：`;
-            const url = window.location.href; 
+            const text = "我在參加321世界唐氏症日求籤活動，獲得了一支運勢籤！你也來試試：";
+            const url = window.location.href; // 自動抓取當前網址
             const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text)}%20${encodeURIComponent(url)}`;
             window.open(lineUrl, '_blank');
         }
 
+        // --- 【新增】測試用重置功能 ---
         function testReset() {
             if(confirm('確定要清除紀錄並重置嗎？')) {
                 localStorage.removeItem('selected_fortune_img');
+                // 重新載入頁面，並移除網址參數以確保乾淨的重置
                 window.location.href = window.location.pathname; 
             }
         }
