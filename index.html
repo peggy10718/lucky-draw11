@@ -6,7 +6,7 @@
     
     <title>321 世界唐氏症日 - 求籤活動</title>
     <meta property="og:title" content="321 世界唐氏症日 - 求籤活動">
-    <meta property="og:description" content="點擊進入參與求籤活動，一起支持唐氏症基金會！">
+    <meta property="og:description" content="驚喜！！我在『唐氏症基金會』抽到神明運勢籤！🧧 快來求一支看看神明跟你說什麼👇">
     <meta property="og:image" content="https://peggy10718.github.io/lucky-draw11/bg.jpg">
     <meta property="og:type" content="website">
 
@@ -15,8 +15,11 @@
         /* --- 全局設定 --- */
         body {
             margin: 0;
+            padding: 0;
             height: 100vh;
+            width: 100vw;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             background-color: #8da4b7; 
@@ -27,10 +30,9 @@
             font-family: "Microsoft JhengHei", sans-serif;
             color: white;
             overflow: hidden;
-            flex-direction: column;
         }
 
-        /* --- 測試按鈕樣式 --- */
+        /* --- 測試按鈕 --- */
         #testResetBtn {
             position: fixed;
             top: 10px;
@@ -42,71 +44,57 @@
             border: 1px solid white;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
         }
 
-        /* --- 籤筒容器 --- */
+        /* --- 籤筒容器核心定位 --- */
         .shaker-container {
             position: relative;
             width: 200px;
             height: 320px;
             cursor: pointer;
-            transition: transform 0.1s;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
-            z-index: 5;
+            z-index: 10; /* 確保在最前面 */
             transform-origin: center bottom;
-            overflow: visible;
         }
 
         @media (max-width: 600px) {
-            .shaker-container { transform: scale(0.75); }
+            .shaker-container { transform: scale(0.85); }
         }
 
+        /* 搖動動畫 */
         .is-shaking { animation: shake 0.5s ease-in-out infinite; }
-        
         @keyframes shake {
             0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-5px, 0) rotate(-3deg); }
-            50% { transform: translate(5px, 0) rotate(3deg); }
-            75% { transform: translate(-5px, 0) rotate(-3deg); }
+            25% { transform: translate(-8px, 0) rotate(-4deg); }
+            50% { transform: translate(8px, 0) rotate(4deg); }
+            75% { transform: translate(-8px, 0) rotate(-4deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        @media (max-width: 600px) {
-            @keyframes shake {
-                0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
-                25% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
-                50% { transform: scale(0.75) translate(5px, 0) rotate(3deg); }
-                75% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
-                100% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
-            }
-        }
-
-        /* --- 籤筒視覺 --- */
+        /* --- 籤筒視覺組件 --- */
         .cylinder-body {
             position: absolute;
             bottom: 0;
             width: 100%;
             height: 240px;
-            background: linear-gradient(to right, #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, #b30000 60%, #7a0000 85%, #4a0000 100%);
+            background: linear-gradient(to right, #4a0000 0%, #b30000 50%, #4a0000 100%);
             border-radius: 10px;
-            box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7);
             z-index: 2;
-            pointer-events: none;
             display: flex;
             justify-content: center;
             align-items: center;
+            border-bottom: 3px solid #2a0000;
         }
         
         .cylinder-ring-top {
             position: absolute;
             top: 70px;
-            width: 102%;
-            left: -1%;
+            width: 104%;
+            left: -2%;
             height: 20px;
-            background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
+            background: linear-gradient(to right, #8a6000, #ffd700, #8a6000);
             z-index: 3;
             border-radius: 4px;
         }
@@ -119,27 +107,28 @@
             text-orientation: upright;
             letter-spacing: 15px;
             font-family: "Kaiti TC", "楷體", serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         .cylinder-mouth {
             position: absolute;
             top: 55px;
-            left: 2%;
-            width: 96%;
+            left: 0;
+            width: 100%;
             height: 40px;
-            background: radial-gradient(ellipse at center, #1a0000 0%, #3a0000 60%, #5a0000 100%);
+            background: #1a0000;
             border-radius: 50%;
             z-index: 1;
-            border: 4px solid #8a0000;
+            border: 2px solid #8a0000;
         }
 
         /* --- 籤支 --- */
         .sticks-group {
             position: absolute;
-            top: 15px;
+            top: 0px;
             left: 50%;
             transform: translateX(-50%);
-            width: 180px;
+            width: 160px;
             height: 200px;
             z-index: 0;
         }
@@ -147,71 +136,159 @@
         .stick {
             position: absolute;
             bottom: 0;
-            width: 16px;
+            width: 14px;
             background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
             transform-origin: bottom center;
             transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
+            height: var(--h, 200px);
         }
 
-        /* --- 手指引導 --- */
+        /* --- 手指 --- */
         .hand-guide {
             position: absolute;
-            right: -30px;
-            bottom: -30px;
+            right: -40px;
+            bottom: 0px;
             width: 60px; height: 60px;
-            z-index: 10;
-            animation: simple-click 2s infinite ease-in-out;
+            z-index: 15;
+            animation: hand-move 2s infinite;
         }
-
-        @keyframes simple-click {
-            0% { opacity: 0; transform: translate(0, 0) rotate(-45deg) scale(1.5); }
-            20% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
-            50% { transform: translate(-70px, -110px) rotate(-45deg) scale(1); }
-            80% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
-            100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
+        @keyframes hand-move {
+            0%, 100% { transform: translateY(0) scale(1.2); opacity: 0; }
+            50% { transform: translateY(-20px) scale(1); opacity: 1; }
         }
 
         .hint {
-            margin-top: 50px;
+            margin-top: 30px;
             color: #fffacd;
-            font-size: 1.1rem;
-            animation: pulse 2s infinite;
+            font-size: 1.2rem;
             font-weight: bold;
-            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            z-index: 20;
         }
 
-        /* --- 彈窗設定 --- */
+        /* --- 彈窗 --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); display: none;
+            background: rgba(0,0,0,0.9); display: none;
             justify-content: center; align-items: center; z-index: 100;
-            backdrop-filter: blur(10px);
-            padding: 20px; box-sizing: border-box;
+            backdrop-filter: blur(8px);
         }
-        .modal-content {
-            background: transparent; text-align: center; max-width: 100%; 
-            animation: popInElastic 0.6s ease-out;
-        }
+        .modal-content { text-align: center; max-width: 90%; }
         .result-image {
-            max-width: 100%; max-height: 70vh; border-radius: 12px; 
-            border: 4px solid #bf953f; margin-bottom: 15px;
+            max-width: 100%; max-height: 65vh; border-radius: 12px; 
+            border: 3px solid #bf953f; margin-bottom: 15px;
         }
-        .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
-        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        
+        .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .action-btn {
-            border: none; padding: 12px 25px; border-radius: 50px; font-size: 1rem;
-            cursor: pointer; font-weight: bold; transition: transform 0.2s;
-            text-decoration: none; display: inline-block;
+            border: none; padding: 12px 20px; border-radius: 50px; font-size: 1rem;
+            cursor: pointer; font-weight: bold; text-decoration: none;
         }
-        .close-btn { background: #555; color: white; }
-        .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
-        .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); color: white; }
+        .close-btn { background: #666; color: white; }
+        .download-btn { background: linear-gradient(to bottom, #fcf6ba, #bf953f); color: #3a0000; }
+        .line-btn { background: #06C755; color: white; }
 
-        /* 籤支個別位置設定 */
-        .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; }
-        .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; }
-        .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; }
-        .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; }
-        .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; }
-        .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height
+        /* 籤支位置 */
+        .stick:nth-child(1) { --r: -15deg; --y: 10px; --h: 210px; left: 20px; }
+        .stick:nth-child(2) { --r: -7deg;  --y: 5px;  --h: 220px; left: 50px; }
+        .stick:nth-child(3) { --r: 0deg;   --y: 0px;  --h: 230px; left: 80px; }
+        .stick:nth-child(4) { --r: 7deg;   --y: 5px;  --h: 220px; left: 110px; }
+        .stick:nth-child(5) { --r: 15deg;  --y: 10px; --h: 210px; left: 140px; }
+    </style>
+</head>
+<body>
+
+    <button id="testResetBtn" onclick="testReset()">重置測試</button>
+
+    <div class="shaker-container" id="shaker">
+        <div class="sticks-group">
+            <div class="stick"></div><div class="stick"></div><div class="stick"></div>
+            <div class="stick"></div><div class="stick"></div>
+        </div>
+        <div class="cylinder-mouth"></div>
+        <div class="cylinder-ring-top"></div>
+        <div class="cylinder-body">
+            <div class="cylinder-text">求籤</div>
+        </div>
+        <div class="hand-guide" id="handGuide">
+            <svg viewBox="0 0 24 24" fill="white"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/></svg>
+        </div>
+    </div>
+
+    <p class="hint" id="hintText">👇 點擊籤筒求一支籤</p>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <img id="resultImage" class="result-image" src="">
+            <div style="color: #fcf6ba; font-size: 0.8rem; margin-bottom: 10px;">（長按圖片即可儲存到相簿）</div>
+            <div class="btn-group">
+                <a id="downloadLink" class="action-btn download-btn" href="#" download="運勢籤.png">下載圖片</a>
+                <button class="action-btn line-btn" onclick="shareToLine()">LINE 分享</button>
+                <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const fortuneImages = ['1.png', '2.png', '3.png', '4.png'];
+        const shaker = document.getElementById('shaker');
+        const modal = document.getElementById('modal');
+        const resultImage = document.getElementById('resultImage');
+        const downloadLink = document.getElementById('downloadLink');
+        const hintText = document.getElementById('hintText');
+
+        let isShaking = false;
+        
+        // 判斷是否為新掃碼
+        if (new URLSearchParams(window.location.search).get('from') === 'pgy') {
+            localStorage.removeItem('selected_fortune_img');
+        }
+
+        const savedFortune = localStorage.getItem('selected_fortune_img');
+        if (savedFortune) {
+            hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
+            shaker.addEventListener('click', () => openModalWithImage(savedFortune));
+        } else {
+            shaker.addEventListener('click', startShaking);
+        }
+
+        function startShaking() {
+            if (isShaking) return;
+            isShaking = true;
+            document.getElementById('handGuide').style.display = 'none';
+            shaker.classList.add('is-shaking');
+            setTimeout(() => {
+                shaker.classList.remove('is-shaking');
+                const selectedImg = fortuneImages[Math.floor(Math.random() * fortuneImages.length)];
+                localStorage.setItem('selected_fortune_img', selectedImg);
+                hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
+                shaker.removeEventListener('click', startShaking);
+                shaker.addEventListener('click', () => openModalWithImage(selectedImg));
+                openModalWithImage(selectedImg);
+                isShaking = false;
+            }, 1500);
+        }
+
+        function openModalWithImage(imgSrc) {
+            resultImage.src = imgSrc;
+            downloadLink.href = imgSrc;
+            modal.style.display = 'flex';
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        }
+
+        function closeModal() { modal.style.display = 'none'; }
+
+        function shareToLine() {
+            const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？看看神明跟你說什麼👇";
+            const url = window.location.origin + window.location.pathname; 
+            window.open(`https://line.me/R/msg/text/?${encodeURIComponent(text + "\n" + url)}`, '_blank');
+        }
+
+        function testReset() {
+            if(confirm('重置紀錄？')) {
+                localStorage.removeItem('selected_fortune_img');
+                window.location.href = window.location.pathname;
+            }
+        }
+    </script>
+</body>
+</html>
