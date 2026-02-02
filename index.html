@@ -13,266 +13,228 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #8da4b7; 
+            background-color: #8da4b7;
             /* 請確認背景圖路徑 */
             background-image: url('bg.jpg'); 
-            background-size: cover;        
-            background-position: center;   
-            background-repeat: no-repeat; 
+            background-size: cover;       
+            background-position: center;  
+            background-repeat: no-repeat;
             font-family: "Microsoft JhengHei", sans-serif;
             color: white;
             overflow: hidden;
             flex-direction: column;
         }
 
-        /* --- 測試按鈕樣式 --- */
+        /* --- 測試按鈕 --- */
         #testResetBtn {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 9999;
-            padding: 8px 15px;
-            background: rgba(255, 0, 0, 0.7);
-            color: white;
-            border: 1px solid white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
+            position: fixed; top: 10px; left: 10px; z-index: 9999;
+            padding: 8px 15px; background: rgba(255, 0, 0, 0.7);
+            color: white; border: 1px solid white; border-radius: 5px; cursor: pointer;
         }
 
         /* --- 籤筒容器 --- */
         .shaker-container {
             position: relative;
-            width: 200px;
-            height: 320px;
+            width: 200px; height: 320px;
             cursor: pointer;
-            transition: transform 0.1s;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
             z-index: 5;
             transform-origin: center bottom;
-            overflow: visible;
         }
 
-        .shaker-container.locked {
-            cursor: not-allowed;
-            filter: grayscale(0.5);
-        }
-
-        @media (max-width: 600px) {
-            .shaker-container {
-                transform: scale(0.75); 
-                margin-top: 0px; 
-            }
-        }
-
-        /* --- 搖動動畫 (容器整體) --- */
-        .is-shaking { animation: shake 0.5s ease-in-out infinite; }
+        /* 搖動動畫 (更劇烈一點) */
+        .is-shaking { animation: shake 0.1s ease-in-out infinite; }
         
         @keyframes shake {
             0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(-5px, 0) rotate(-3deg); }
-            50% { transform: translate(5px, 0) rotate(3deg); }
-            75% { transform: translate(-5px, 0) rotate(-3deg); }
+            25% { transform: translate(-3px, 0) rotate(-2deg); }
+            50% { transform: translate(3px, 0) rotate(2deg); }
+            75% { transform: translate(-3px, 0) rotate(-2deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
         @media (max-width: 600px) {
-            @keyframes shake {
+            .shaker-container { transform: scale(0.75); }
+            /* 修正手機縮放後的動畫 */
+            .is-shaking { animation: shake-mobile 0.1s ease-in-out infinite; }
+            @keyframes shake-mobile {
                 0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
-                25% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
-                50% { transform: scale(0.75) translate(5px, 0) rotate(3deg); }
-                75% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
+                50% { transform: scale(0.75) translate(3px, 0) rotate(2deg); }
                 100% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
             }
         }
 
-        /* --- 籤筒視覺 --- */
+        /* --- 籤筒組件 --- */
         .cylinder-body {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 240px;
+            position: absolute; bottom: 0; width: 100%; height: 240px;
             background: linear-gradient(to right, #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, #b30000 60%, #7a0000 85%, #4a0000 100%);
             border-radius: 10px;
             box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 2;
-            pointer-events: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            z-index: 2; pointer-events: none;
+            display: flex; justify-content: center; align-items: center;
             border-bottom: 3px solid #2a0000;
         }
-        
         .cylinder-ring-top {
-            position: absolute;
-            top: 70px;
-            width: 102%;
-            left: -1%;
-            height: 20px;
+            position: absolute; top: 70px; width: 102%; left: -1%; height: 20px;
             background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
-            z-index: 3;
-            pointer-events: none;
-            border-radius: 4px;
+            z-index: 3; pointer-events: none; border-radius: 4px;
         }
-
         .cylinder-text {
-            color: #fffacd;
-            font-size: 3.5rem;
-            font-weight: bold;
-            writing-mode: vertical-rl;
-            text-orientation: upright;
-            letter-spacing: 15px;
-            text-shadow: 2px 2px 0px #3a0000;
-            font-family: "Kaiti TC", "楷體", serif;
+            color: #fffacd; font-size: 3.5rem; font-weight: bold;
+            writing-mode: vertical-rl; text-orientation: upright; letter-spacing: 15px;
+            text-shadow: 2px 2px 0px #3a0000; font-family: "Kaiti TC", "楷體", serif;
         }
-
         .cylinder-mouth {
-            position: absolute;
-            top: 55px;
-            left: 2%;
-            width: 96%;
-            height: 40px;
+            position: absolute; top: 55px; left: 2%; width: 96%; height: 40px;
             background: radial-gradient(ellipse at center, #1a0000 0%, #3a0000 60%, #5a0000 100%);
-            border-radius: 50%;
-            z-index: 1;
-            border: 4px solid #8a0000;
+            border-radius: 50%; z-index: 1; border: 4px solid #8a0000;
         }
 
         /* --- 籤支 --- */
         .sticks-group {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 180px;
-            height: 200px;
-            z-index: 0;
+            position: absolute; top: 15px; left: 50%;
+            transform: translateX(-50%); width: 180px; height: 200px; z-index: 0;
         }
 
         .stick {
-            position: absolute;
-            bottom: 0;
-            width: 16px;
+            position: absolute; bottom: 0; width: 16px;
             background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
             transform-origin: bottom center;
-            /* 預設位置 */
+            /* 關鍵：增加 transition 讓任何變化都很滑順 */
+            transition: transform 0.3s ease-out; 
             transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
-            transition: transform 0.3s; /* 平滑過渡 */
         }
-
         .stick::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 50px; 
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50px; 
             background-color: #d32f2f;
             -webkit-mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
             mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
         }
 
-        /* ====== 新增動畫邏輯 Start ====== */
-        
-        /* 1. 搖晃時的亂序跳動 */
+        /* 搖動時的亂跳 */
         .is-shaking .stick {
-            animation: stick-jump 0.25s ease-in-out infinite alternate;
+            /* 使用 alternate 讓它來回跳，看起來更忙碌 */
+            animation: stick-bounce 0.15s infinite alternate;
+        }
+        @keyframes stick-bounce {
+            0% { transform: rotate(var(--r)) translateY(var(--y)); }
+            100% { transform: rotate(var(--r)) translateY(calc(var(--y) - 15px)); }
         }
 
-        @keyframes stick-jump {
-            0% { transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px)); }
-            100% { transform: rotate(var(--r, 0deg)) translateY(calc(var(--y, 0px) - 20px)); }
-        }
+        /* 籤支個別延遲，製造混亂感 */
+        .stick:nth-child(odd) { animation-delay: 0.05s; }
+        .stick:nth-child(even) { animation-delay: 0s; }
 
-        /* 給每根籤不同的跳動延遲，製造混亂感 */
-        .stick:nth-child(1) { animation-delay: 0.0s; }
-        .stick:nth-child(2) { animation-delay: 0.2s; }
-        .stick:nth-child(3) { animation-delay: 0.1s; }
-        .stick:nth-child(4) { animation-delay: 0.3s; }
-        .stick:nth-child(5) { animation-delay: 0.05s; }
-        .stick:nth-child(6) { animation-delay: 0.25s; }
-        .stick:nth-child(7) { animation-delay: 0.15s; }
-        .stick:nth-child(8) { animation-delay: 0.1s; }
-
-        /* 2. 結果出爐前的「單支升起」樣式 */
+        /* --- 🌟 關鍵優化：抽起的那根籤 --- */
         .stick.rising {
-            z-index: 20; /* 確保在最上層 */
-            /* 強制覆蓋原本的 transform，讓它轉正並升起 */
-            transform: rotate(0deg) translateY(-100px) scale(1.1) !important;
-            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 彈性緩動 */
-            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)) brightness(1.2); /* 金光 */
+            z-index: 100; /* 最上層 */
+            /* 使用 !important 覆蓋原本的角度，強制轉正並升起 */
+            /* cubic-bezier(0.18, 0.89, 0.32, 1.28) 是一個帶有彈性的曲線 */
+            transform: rotate(0deg) translateY(-140px) scale(1.2) !important;
+            transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            /* 籤本身的發光 */
+            box-shadow: 0 0 20px 5px rgba(255, 223, 0, 0.6);
+            filter: brightness(1.3);
         }
-        
-        /* ====== 新增動畫邏輯 End ====== */
 
         /* --- 手指引導 --- */
         .hand-guide {
-            position: absolute;
-            right: -30px;
-            bottom: -30px;
-            width: 60px; height: 60px;
-            z-index: 10;
-            animation: simple-click 2s infinite ease-in-out;
+            position: absolute; right: -30px; bottom: -30px; width: 60px; height: 60px; z-index: 10;
+            animation: click-hint 2s infinite ease-in-out;
         }
-
-        @keyframes simple-click {
-            0% { opacity: 0; transform: translate(0, 0) rotate(-45deg) scale(1.5); }
-            20% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
-            50% { transform: translate(-70px, -110px) rotate(-45deg) scale(1); }
-            80% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
-            100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
+        @keyframes click-hint {
+            0%, 100% { transform: translate(0,0) rotate(-45deg); opacity: 0; }
+            50% { transform: translate(-20px,-20px) rotate(-45deg); opacity: 1; }
         }
 
         /* --- 提示文字 --- */
         .hint {
-            margin-top: 50px;
-            color: #fffacd;
-            font-size: 1.1rem;
-            animation: pulse 2s infinite;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
-            font-weight: bold;
-            z-index: 10;
+            margin-top: 50px; color: #fffacd; font-size: 1.1rem;
+            animation: pulse 2s infinite; text-shadow: 0 0 5px rgba(0,0,0,0.8);
+            font-weight: bold; z-index: 10;
         }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } }
 
-        /* --- 彈窗設定 --- */
+        /* --- 🌟 彈窗與金光特效 --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); display: none;
             justify-content: center; align-items: center; z-index: 100;
-            backdrop-filter: blur(10px);
-            padding: 20px; box-sizing: border-box;
+            backdrop-filter: blur(8px);
+            opacity: 0; transition: opacity 0.3s; /* 淡入效果 */
         }
-        .modal-content {
-            background: transparent; text-align: center; max-width: 100%; 
-            animation: popInElastic 0.6s ease-out;
-        }
-        @keyframes popInElastic {
-            0% { transform: scale(0.5); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-        .result-image {
-            max-width: 100%; max-height: 70vh; border-radius: 12px; 
-            border: 4px solid #bf953f; margin-bottom: 15px;
-        }
-        .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
-        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         
+        .modal-content {
+            position: relative;
+            text-align: center; max-width: 90%; 
+            /* 彈出動畫：從下方彈上來，配合籤升起的方向 */
+            transform: translateY(50px) scale(0.8);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* 彈窗顯示時的狀態 */
+        .modal-overlay.show { opacity: 1; }
+        .modal-overlay.show .modal-content { transform: translateY(0) scale(1); }
+
+        /* --- 旋轉的佛光 (Divine Light) --- */
+        .divine-halo {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 150vw; height: 150vw; /* 夠大才能蓋住背景 */
+            max-width: 600px; max-height: 600px;
+            background: conic-gradient(
+                from 0deg, 
+                transparent 0%, rgba(255,215,0,0.1) 10%, transparent 20%, 
+                rgba(255,215,0,0.3) 30%, transparent 40%, 
+                rgba(255,215,0,0.1) 50%, transparent 60%, 
+                rgba(255,215,0,0.3) 70%, transparent 80%, 
+                rgba(255,215,0,0.1) 90%, transparent 100%
+            );
+            /* 加上中心光暈 */
+            mask-image: radial-gradient(circle, black 0%, transparent 70%);
+            -webkit-mask-image: radial-gradient(circle, black 0%, transparent 70%);
+            
+            transform: translate(-50%, -50%);
+            z-index: -1; /* 在圖片後面 */
+            animation: rotate-halo 10s linear infinite;
+            pointer-events: none;
+        }
+        
+        /* 讓光暈中間亮一點 */
+        .divine-glow-center {
+            position: absolute; top: 50%; left: 50%;
+            width: 120%; height: 120%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(255,223,0,0.4) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes rotate-halo { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        .result-image {
+            max-width: 100%; max-height: 65vh; border-radius: 12px; 
+            border: 4px solid #bf953f; margin-bottom: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; text-shadow: 0 2px 4px black; }
+        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .action-btn {
             border: none; padding: 12px 25px; border-radius: 50px; font-size: 1rem;
-            cursor: pointer; font-weight: bold; transition: transform 0.2s;
-            text-decoration: none; display: inline-block;
+            cursor: pointer; font-weight: bold; transition: transform 0.2s; text-decoration: none;
         }
         .close-btn { background: #555; color: white; }
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
         .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); color: white; }
         .action-btn:hover { transform: translateY(-3px); }
 
-        /* 籤支個別位置設定 */
+        /* 個別籤位置 */
         .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; }
         .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; }
         .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; }
-        /* 讓這根(第4根)在中間一點，作為我們預設升起的籤 */
         .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; } 
         .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; }
         .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; filter: brightness(0.7); }
@@ -307,6 +269,9 @@
 
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
+            <div class="divine-halo"></div>
+            <div class="divine-glow-center"></div>
+            
             <img id="resultImage" class="result-image" src="" alt="運勢結果">
             <div class="save-hint">（長按圖片即可儲存到相簿）</div>
             <div class="btn-group">
@@ -332,13 +297,14 @@
         const isNewScan = urlParams.get('from') === 'pgy';
 
         if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
-
         const savedFortune = localStorage.getItem('selected_fortune_img');
 
         if (savedFortune) {
             hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
             if(handGuide) handGuide.style.display = 'none';
-            shaker.addEventListener('click', () => openModalWithImage(savedFortune));
+            shaker.addEventListener('click', () => {
+                showResultModal(savedFortune);
+            });
         } else {
             shaker.addEventListener('click', startShakingSequence);
         }
@@ -353,25 +319,27 @@
             hintText.innerText = "🙏 誠心祈求中...";
             if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
-            // 2. 搖動 1.5 秒後停止，並執行升起動畫
+            // 2. 搖動時間縮短一點點，讓感覺更緊湊
             setTimeout(() => {
                 shaker.classList.remove('is-shaking');
                 
-                // 選定一支籤 (這裡選第4支，視覺上在中間)
-                const chosenStick = sticks[3]; 
+                // 🌟 無縫動畫關鍵：
+                // 停止搖動的瞬間，直接讓籤往上衝，不要等
+                const chosenStick = sticks[3]; // 中間那根
                 chosenStick.classList.add('rising');
 
-                // 3. 籤升起停留 1 秒後，顯示結果
+                // 3. 當籤升到頂端時 (約 0.8秒後)，直接顯示結果，不要乾等
                 setTimeout(() => {
                     generateResult();
-                    // 結果顯示後，把籤放回去 (移除 class)
+                    
+                    // 讓籤稍微延遲一下再縮回去，這樣背景才不會空掉
                     setTimeout(() => {
                         chosenStick.classList.remove('rising');
                         isShaking = false; 
-                    }, 500); 
-                }, 1200);
+                    }, 600); 
+                }, 800);
 
-            }, 1500);
+            }, 1200); // 搖動 1.2 秒
         }
 
         function generateResult() {
@@ -381,21 +349,37 @@
             
             hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
             shaker.removeEventListener('click', startShakingSequence);
-            shaker.addEventListener('click', () => openModalWithImage(selectedImg));
             
-            openModalWithImage(selectedImg);
+            // 綁定以後點擊直接看結果
+            shaker.addEventListener('click', () => showResultModal(selectedImg));
+            
+            showResultModal(selectedImg);
         }
 
-        function openModalWithImage(imgSrc) {
+        function showResultModal(imgSrc) {
             resultImage.src = imgSrc;
             downloadLink.href = imgSrc;
+            
+            // 顯示彈窗
             modal.style.display = 'flex';
+            
+            // 強制瀏覽器重繪 (Reflow) 以確保 transition 生效
+            void modal.offsetWidth; 
+            
+            // 加上 show class 觸發淡入和彈跳動畫
+            modal.classList.add('show');
+            
             fireConfetti();
         }
 
-        function closeModal() { modal.style.display = 'none'; }
+        function closeModal() { 
+            modal.classList.remove('show');
+            // 等動畫跑完再隱藏 display
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
 
-        // --- LINE 分享功能 ---
         function shareToLine() {
             const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？看看神明跟你說什麼👇";
             const url = window.location.href; 
@@ -412,7 +396,7 @@
 
         function fireConfetti() {
             var count = 200;
-            var defaults = { origin: { y: 0.7 } };
+            var defaults = { origin: { y: 0.7 }, zIndex: 150 }; // 確保撒花在最上面
             function fire(particleRatio, opts) {
                 confetti(Object.assign({}, defaults, opts, {
                     particleCount: Math.floor(count * particleRatio)
