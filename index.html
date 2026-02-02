@@ -229,10 +229,10 @@
             100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
         }
 
-        /* --- 提示文字 (香火暖橘 + 置中) --- */
+        /* --- 提示文字 (香火暖橘 + 置中 + 靠近籤筒) --- */
         .hint {
             margin-top: 20px;
-            color: #fff5e6; 
+            color: #fff5e6; /* 稍微帶暖的白 */
             font-size: 1.1rem;
             font-weight: bold;
             z-index: 10;
@@ -251,6 +251,7 @@
             }
             to {
                 opacity: 1;
+                /* 橘紅色的暖光，像燈籠的光暈 */
                 text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5);
             }
         }
@@ -354,6 +355,17 @@
         const urlParams = new URLSearchParams(window.location.search);
         const isNewScan = urlParams.get('from') === 'pgy';
 
+        // --- 預載圖片功能 (解決圖片卡頓) ---
+        function preloadImages() {
+            fortuneImages.forEach((src) => {
+                const img = new Image();
+                img.src = src;
+            });
+            console.log("圖片預載完成");
+        }
+        preloadImages();
+        // --------------------------------
+
         if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
 
         const savedFortune = localStorage.getItem('selected_fortune_img');
@@ -372,7 +384,9 @@
             isShaking = true;
             if(handGuide) handGuide.style.display = 'none';
             shaker.classList.add('is-shaking');
-            if (navigator.vibrate) navigator.vibrate(200);
+            
+            // 震動回饋
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
             setTimeout(() => {
                 shaker.classList.remove('is-shaking');
