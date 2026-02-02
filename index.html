@@ -354,11 +354,12 @@
         const handGuide = document.getElementById('handGuide'); 
         const hintText = document.getElementById('hintText');
 
-        // --- 音效設定區 ---
-        // 請確保 shake.mp3 檔案在同一層目錄
+        // --- 音效優化設定 ---
         const shakeAudio = new Audio('shake.mp3'); 
-        // 開啟循環：確保聲音能填滿 1.5秒 的動畫時間（就算音效檔很短也不會斷）
         shakeAudio.loop = true; 
+        // 強制預載：通知瀏覽器這聲音很重要，現在就下載好
+        shakeAudio.preload = 'auto'; 
+        shakeAudio.load();
         // ----------------
 
         let isShaking = false;
@@ -374,7 +375,6 @@
             console.log("圖片預載完成");
         }
         preloadImages();
-        // ------------------
 
         if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
 
@@ -389,29 +389,37 @@
 
         function startShaking() {
             if (isShaking) return;
+            
+            // --- 【極速播放關鍵】 ---
+            // 把播放邏輯移到函式的最最最上面
+            // 點擊觸發的第一瞬間就送出播放指令，不要等其他動畫運算
+            shakeAudio.currentTime = 0; 
+            const playPromise = shakeAudio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => { console.log("播放需要使用者互動", error); });
+            }
+            // ---------------------
+
             isShaking = true;
             if(handGuide) handGuide.style.display = 'none';
-            shaker.classList.add('is-shaking');
             
-            // 加入祈福文字
+            // 開始畫面動畫
+            shaker.classList.add('is-shaking');
             hintText.innerHTML = "虔誠祈福中🙏";
+            
+            // 震動 (放在聲音之後執行，避免搶資源)
             if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
-            // --- 播放音效 ---
-            shakeAudio.currentTime = 0; // 每次都從頭播放
-            shakeAudio.play().catch(e => console.log("音效自動播放被阻擋", e));
-            // ---------------
-
             setTimeout(() => {
-                // --- 停止音效 (精準配合動畫結束) ---
+                // --- 停止音效 ---
                 shakeAudio.pause();
                 shakeAudio.currentTime = 0;
-                // -------------------------------
+                // ---------------
 
                 shaker.classList.remove('is-shaking');
                 generateResult();
                 isShaking = false;
-            }, 1500); // 1.5秒後結束
+            }, 1500); 
         }
 
         function generateResult() {
