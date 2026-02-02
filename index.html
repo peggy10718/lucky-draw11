@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>321 世界唐氏症日 - 求籤活動</title>
+    <meta property="og:title" content="321 世界唐氏症日 - 求籤活動">
+    <meta property="og:description" content="點擊進入參與求籤活動，一起支持唐氏症基金會！">
+    <meta property="og:image" content="https://peggy10718.github.io/lucky-draw11/bg.jpg">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         /* --- 全局設定 --- */
@@ -14,7 +20,6 @@
             justify-content: center;
             align-items: center;
             background-color: #8da4b7; 
-            /* 請確認背景圖路徑 */
             background-image: url('bg.jpg'); 
             background-size: cover;        
             background-position: center;  
@@ -55,19 +60,10 @@
             overflow: visible;
         }
 
-        .shaker-container.locked {
-            cursor: not-allowed;
-            filter: grayscale(0.5);
-        }
-
         @media (max-width: 600px) {
-            .shaker-container {
-                transform: scale(0.75); 
-                margin-top: 0px; 
-            }
+            .shaker-container { transform: scale(0.75); }
         }
 
-        /* 搖動動畫 */
         .is-shaking { animation: shake 0.5s ease-in-out infinite; }
         
         @keyframes shake {
@@ -78,7 +74,6 @@
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
-        /* 行動裝置縮放後的動畫修正 */
         @media (max-width: 600px) {
             @keyframes shake {
                 0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
@@ -97,13 +92,12 @@
             height: 240px;
             background: linear-gradient(to right, #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, #b30000 60%, #7a0000 85%, #4a0000 100%);
             border-radius: 10px;
-            box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7);
             z-index: 2;
             pointer-events: none;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-bottom: 3px solid #2a0000;
         }
         
         .cylinder-ring-top {
@@ -114,7 +108,6 @@
             height: 20px;
             background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
             z-index: 3;
-            pointer-events: none;
             border-radius: 4px;
         }
 
@@ -125,7 +118,6 @@
             writing-mode: vertical-rl;
             text-orientation: upright;
             letter-spacing: 15px;
-            text-shadow: 2px 2px 0px #3a0000;
             font-family: "Kaiti TC", "楷體", serif;
         }
 
@@ -161,15 +153,6 @@
             transform: rotate(var(--r, 0deg)) translateY(var(--y, 0px));
         }
 
-        .stick::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 50px; 
-            background-color: #d32f2f;
-            -webkit-mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
-            mask-image: radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px);
-        }
-
         /* --- 手指引導 --- */
         .hand-guide {
             position: absolute;
@@ -188,17 +171,14 @@
             100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
         }
 
-        /* --- 提示文字 --- */
         .hint {
             margin-top: 50px;
             color: #fffacd;
             font-size: 1.1rem;
             animation: pulse 2s infinite;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
             font-weight: bold;
             z-index: 10;
         }
-        @keyframes pulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
 
         /* --- 彈窗設定 --- */
         .modal-overlay {
@@ -211,11 +191,6 @@
         .modal-content {
             background: transparent; text-align: center; max-width: 100%; 
             animation: popInElastic 0.6s ease-out;
-        }
-        @keyframes popInElastic {
-            0% { transform: scale(0.5); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
         }
         .result-image {
             max-width: 100%; max-height: 70vh; border-radius: 12px; 
@@ -232,7 +207,6 @@
         .close-btn { background: #555; color: white; }
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
         .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); color: white; }
-        .action-btn:hover { transform: translateY(-3px); }
 
         /* 籤支個別位置設定 */
         .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; }
@@ -240,133 +214,4 @@
         .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; }
         .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; }
         .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; }
-        .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; filter: brightness(0.7); }
-        .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; filter: brightness(0.7); }
-        .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; }
-    </style>
-</head>
-<body>
-
-    <button id="testResetBtn" onclick="testReset()">測試用：重置抽籤</button>
-
-    <div class="shaker-container" id="shaker">
-        <div class="sticks-group">
-            <div class="stick"></div><div class="stick"></div><div class="stick"></div>
-            <div class="stick"></div><div class="stick"></div><div class="stick"></div>
-            <div class="stick"></div><div class="stick"></div>
-        </div>
-        <div class="cylinder-mouth"></div>
-        <div class="cylinder-ring-top"></div>
-        <div class="cylinder-body">
-            <div class="cylinder-text">求籤</div>
-        </div>
-        
-        <div class="hand-guide" id="handGuide">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
-                <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/>
-            </svg>
-        </div>
-    </div>
-
-    <p class="hint" id="hintText">👇 點擊籤筒求一支籤</p>
-
-    <div class="modal-overlay" id="modal">
-        <div class="modal-content">
-            <img id="resultImage" class="result-image" src="" alt="運勢結果">
-            <div class="save-hint">（長按圖片即可儲存到相簿）</div>
-            <div class="btn-group">
-                <a id="downloadLink" class="action-btn download-btn" href="#" download="我的運勢籤.png">下載圖片</a>
-                <button class="action-btn line-btn" onclick="shareToLine()">LINE 分享</button>
-                <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const fortuneImages = ['1.png', '2.png', '3.png', '4.png'];
-        const shaker = document.getElementById('shaker');
-        const modal = document.getElementById('modal');
-        const resultImage = document.getElementById('resultImage');
-        const downloadLink = document.getElementById('downloadLink');
-        const handGuide = document.getElementById('handGuide'); 
-        const hintText = document.getElementById('hintText');
-
-        let isShaking = false;
-        const urlParams = new URLSearchParams(window.location.search);
-        const isNewScan = urlParams.get('from') === 'pgy';
-
-        if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
-
-        const savedFortune = localStorage.getItem('selected_fortune_img');
-
-        if (savedFortune) {
-            hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
-            if(handGuide) handGuide.style.display = 'none';
-            shaker.addEventListener('click', () => openModalWithImage(savedFortune));
-        } else {
-            shaker.addEventListener('click', startShaking);
-        }
-
-        function startShaking() {
-            if (isShaking) return;
-            isShaking = true;
-            if(handGuide) handGuide.style.display = 'none';
-            shaker.classList.add('is-shaking');
-            if (navigator.vibrate) navigator.vibrate(200);
-            
-            setTimeout(() => {
-                shaker.classList.remove('is-shaking');
-                generateResult();
-                isShaking = false;
-            }, 1500);
-        }
-
-        function generateResult() {
-            const randomIndex = Math.floor(Math.random() * fortuneImages.length);
-            const selectedImg = fortuneImages[randomIndex];
-            localStorage.setItem('selected_fortune_img', selectedImg);
-            hintText.innerText = "✨ 您已經求過籤囉 (點擊查看)";
-            shaker.removeEventListener('click', startShaking);
-            shaker.addEventListener('click', () => openModalWithImage(selectedImg));
-            openModalWithImage(selectedImg);
-        }
-
-        function openModalWithImage(imgSrc) {
-            resultImage.src = imgSrc;
-            downloadLink.href = imgSrc;
-            modal.style.display = 'flex';
-            fireConfetti();
-        }
-
-        function closeModal() { modal.style.display = 'none'; }
-
-        // --- LINE 分享功能 (更新版) ---
-        function shareToLine() {
-            const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？看看神明跟你說什麼👇";
-            const url = window.location.href; 
-            const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text + "\n" + url)}`;
-            window.open(lineUrl, '_blank');
-        }
-
-        function testReset() {
-            if(confirm('確定要清除紀錄並重置嗎？')) {
-                localStorage.removeItem('selected_fortune_img');
-                window.location.href = window.location.pathname; 
-            }
-        }
-
-        function fireConfetti() {
-            var count = 200;
-            var defaults = { origin: { y: 0.7 } };
-            function fire(particleRatio, opts) {
-                confetti(Object.assign({}, defaults, opts, {
-                    particleCount: Math.floor(count * particleRatio)
-                }));
-            }
-            fire(0.25, { spread: 26, startVelocity: 55, colors: ['#bf953f', '#fcf6ba'] });
-            fire(0.2, { spread: 60, colors: ['#ffffff'] });
-            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
-        }
-    </script>
-</body>
-</html>
+        .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height
