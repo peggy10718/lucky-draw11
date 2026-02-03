@@ -37,7 +37,7 @@
             justify-content: center; align-items: center;
             z-index: 20000; 
             backdrop-filter: blur(8px); 
-            transition: opacity 0.3s; /* 加入轉場效果 */
+            transition: opacity 0.3s; 
         }
         
         .promo-content {
@@ -87,23 +87,23 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* --- 新增：縮小後的懸浮 Icon 樣式 --- */
+        /* --- 修改：縮小後的懸浮 Icon 樣式 --- */
         .promo-icon-btn {
             position: fixed;
-            top: 20px;       /* 距離頂部 */
-            right: 20px;     /* 距離右邊 */
-            width: 60px;
-            height: 60px;
+            top: 20px;       
+            right: 20px;     
+            width: 45px;   /* 從 60px 改小為 45px */
+            height: 45px;  /* 從 60px 改小為 45px */
             border-radius: 50%;
             background-color: #fff;
-            background-image: url('poster.jpg'); /* 使用海報縮圖當按鈕背景 */
+            background-image: url('poster.jpg'); 
             background-size: cover;
             background-position: center;
-            border: 3px solid #fff;
+            border: 2px solid #fff; /* 邊框稍微改細一點 */
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             cursor: pointer;
-            z-index: 15000; /* 比海報低，但比其他元素高 */
-            display: none;  /* 預設隱藏，關閉海報後才顯示 */
+            z-index: 15000; 
+            display: none;  
             animation: floatIcon 3s ease-in-out infinite;
             transition: transform 0.2s;
         }
@@ -116,21 +116,21 @@
         .promo-icon-btn::after {
             content: '活動詳情';
             position: absolute;
-            bottom: -25px;
+            bottom: -22px; /* 稍微調整距離 */
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
-            font-size: 12px;
+            font-size: 11px; /* 字體稍微縮小 */
             color: #fff;
             text-shadow: 0 1px 3px rgba(0,0,0,0.8);
             background: rgba(0,0,0,0.5);
-            padding: 2px 6px;
-            border-radius: 10px;
+            padding: 2px 5px;
+            border-radius: 8px;
         }
 
         @keyframes floatIcon {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-5px); /* 浮動幅度也稍微縮小 */ }
         }
 
         /* --- 測試按鈕樣式 --- */
@@ -484,7 +484,7 @@
         preloadImages();
         // ------------------
 
-        // --- 修改：關閉宣傳海報 ---
+        // --- 關閉宣傳海報 ---
         function closePromo() {
             // 1. 海報淡出
             promoModal.style.opacity = '0';
@@ -495,7 +495,7 @@
             }, 300);
         }
 
-        // --- 新增：重新打開宣傳海報 ---
+        // --- 重新打開宣傳海報 ---
         function openPromo() {
             // 1. 隱藏懸浮按鈕
             promoIcon.style.display = 'none';
