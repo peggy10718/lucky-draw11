@@ -28,28 +28,29 @@
             flex-direction: column;
         }
 
-        /* --- 新增：宣傳海報彈窗樣式 --- */
+        /* --- 宣傳海報彈窗樣式 --- */
         .promo-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); /* 深色半透明背景，聚焦海報 */
+            background: rgba(0,0,0,0.85); 
             display: flex;
             justify-content: center; align-items: center;
-            z-index: 20000; /* 確保蓋過所有元素 (比 Modal 和 測試按鈕都高) */
-            backdrop-filter: blur(8px); /* 背景模糊效果 */
+            z-index: 20000; 
+            backdrop-filter: blur(8px); 
+            transition: opacity 0.3s; /* 加入轉場效果 */
         }
         
         .promo-content {
             position: relative;
             width: 90%;
-            max-width: 480px; /* 限制最大寬度，避免電腦版太大 */
-            animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 彈性彈出動畫 */
+            max-width: 480px; 
+            animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
         
         .promo-image {
             width: 100%;
             height: auto;
-            max-height: 85vh; /* 避免海報太長超出螢幕 */
+            max-height: 85vh; 
             object-fit: contain;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -75,8 +76,8 @@
             display: flex; justify-content: center; align-items: center;
             transition: transform 0.2s;
             z-index: 20001;
-            padding: 0; /* 修正按鈕 padding */
-            padding-bottom: 4px; /* 微調叉叉位置 */
+            padding: 0; 
+            padding-bottom: 4px;
         }
         
         .promo-close:active { transform: scale(0.9); }
@@ -84,6 +85,52 @@
         @keyframes promoPopIn {
             0% { opacity: 0; transform: scale(0.5); }
             100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- 新增：縮小後的懸浮 Icon 樣式 --- */
+        .promo-icon-btn {
+            position: fixed;
+            top: 20px;       /* 距離頂部 */
+            right: 20px;     /* 距離右邊 */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #fff;
+            background-image: url('poster.jpg'); /* 使用海報縮圖當按鈕背景 */
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            cursor: pointer;
+            z-index: 15000; /* 比海報低，但比其他元素高 */
+            display: none;  /* 預設隱藏，關閉海報後才顯示 */
+            animation: floatIcon 3s ease-in-out infinite;
+            transition: transform 0.2s;
+        }
+
+        .promo-icon-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Icon 下方的文字標籤 */
+        .promo-icon-btn::after {
+            content: '活動詳情';
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 12px;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.5);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         /* --- 測試按鈕樣式 --- */
@@ -373,6 +420,8 @@
         </div>
     </div>
 
+    <div class="promo-icon-btn" id="promoIcon" onclick="openPromo()"></div>
+
     <button id="testResetBtn" onclick="testReset()">測試用：重置抽籤</button>
 
     <div class="shaker-container" id="shaker">
@@ -417,6 +466,8 @@
         const downloadLink = document.getElementById('downloadLink');
         const handGuide = document.getElementById('handGuide'); 
         const hintText = document.getElementById('hintText');
+        const promoModal = document.getElementById('promoModal');
+        const promoIcon = document.getElementById('promoIcon');
 
         let isShaking = false;
         const urlParams = new URLSearchParams(window.location.search);
@@ -433,14 +484,27 @@
         preloadImages();
         // ------------------
 
-        // --- 新增：關閉宣傳海報函式 ---
+        // --- 修改：關閉宣傳海報 ---
         function closePromo() {
-            const promoModal = document.getElementById('promoModal');
-            promoModal.style.transition = 'opacity 0.3s'; // 淡出動畫
+            // 1. 海報淡出
             promoModal.style.opacity = '0';
             setTimeout(() => {
-                promoModal.style.display = 'none'; // 動畫跑完後隱藏
+                promoModal.style.display = 'none'; 
+                // 2. 顯示右上角懸浮按鈕
+                promoIcon.style.display = 'block'; 
             }, 300);
+        }
+
+        // --- 新增：重新打開宣傳海報 ---
+        function openPromo() {
+            // 1. 隱藏懸浮按鈕
+            promoIcon.style.display = 'none';
+            // 2. 顯示海報
+            promoModal.style.display = 'flex';
+            // 稍微延遲讓 opacity transition 有效果
+            setTimeout(() => {
+                promoModal.style.opacity = '1';
+            }, 10);
         }
 
         if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
