@@ -40,7 +40,6 @@
             transition: opacity 0.3s; 
         }
         
-        /* 動態紅金流光邊框容器 */
         .promo-content {
             position: relative;
             width: 90%;
@@ -66,7 +65,7 @@
             object-fit: contain;
             border-radius: 12px; 
             display: block;
-            background-color: #fff; 
+            background-color: #fff;
         }
         
         .promo-close {
@@ -230,14 +229,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            /* 修正：統一邊框與圓角以防止邊角溢出 */
             border-bottom: 3px solid #2a0000;
+            box-sizing: border-box;
         }
         
         .cylinder-ring-top {
             position: absolute;
             top: 70px;
-            width: 102%;
-            left: -1%;
+            /* 修正修正：寬度改回 100%，並靠左對齊，解決右側紅色凸出問題 */
+            width: 100%;
+            left: 0;
             height: 20px;
             background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
             z-index: 3;
@@ -322,12 +324,11 @@
         .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; transform: rotate(-12deg) translateY(15px); z-index: 1; }
         .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; transform: rotate(-6deg) translateY(8px); z-index: 3; }
         .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; transform: rotate(0deg) translateY(5px); z-index: 4; }
-        .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; transform: rotate(6deg) translateY(6px); z-index: 2; }
+        .stick:nth-child(4) { --r: 6deg;  --y: 6px;  left: 100px; height: 220px; transform: rotate(6deg) translateY(6px); z-index: 2; }
         .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; transform: rotate(12deg) translateY(14px); z-index: 1;}
         .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; transform: rotate(-8deg) translateY(20px); z-index: 0; filter: brightness(0.7); }
         .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; transform: rotate(4deg) translateY(18px); z-index: 0; filter: brightness(0.7); }
         .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; transform: rotate(-2deg) translateY(2px); z-index: 2; }
-        /* 新增的籤 */
         .stick:nth-child(9) { --r: 9deg;   --y: 12px; left: 115px; height: 215px; transform: rotate(9deg) translateY(12px); z-index: 3; }
         .stick:nth-child(10){ --r: 15deg;  --y: 25px; left: 140px; height: 195px; transform: rotate(15deg) translateY(25px); z-index: 0; filter: brightness(0.6); }
 
@@ -362,14 +363,8 @@
         }
 
         @keyframes hint-glow-orange {
-            from {
-                opacity: 0.8;
-                text-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
-            }
-            to {
-                opacity: 1;
-                text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5);
-            }
+            from { opacity: 0.8; text-shadow: 0 0 5px rgba(255, 165, 0, 0.3); }
+            to { opacity: 1; text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5); }
         }
 
         /* --- 彈窗設定 --- */
@@ -410,7 +405,7 @@
 
         .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
 
-        /* --- 按鈕群組排版調整（強制統一大小與風格） --- */
+        /* --- 按鈕群組排版 --- */
         .modal-buttons-container {
             display: flex;
             flex-direction: column;
@@ -420,7 +415,7 @@
         }
         
         .btn-row { 
-            display: flex; 
+            display: flex;
             justify-content: center; 
             gap: 10px; 
             flex-wrap: nowrap; 
@@ -428,16 +423,14 @@
         }
         
         .action-btn {
-            width: 100px; 
+            width: 100px;
             height: 44px; 
             border-radius: 50px; 
             border: none;
-            
             font-size: 15px !important; 
             font-family: "Microsoft JhengHei", sans-serif !important; 
             font-weight: 900 !important; 
-            color: white; 
-            
+            color: white;
             display: flex; 
             justify-content: center;
             align-items: center;
@@ -446,20 +439,18 @@
             box-sizing: border-box; 
             margin: 0;
             line-height: 1; 
-            
             -webkit-appearance: none; 
-            cursor: pointer; 
+            cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        /* 全面換上金屬漸層風格 */
         .close-btn { background: linear-gradient(90deg, #434343, #757575, #434343); }
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000 !important; }
         .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); }
         .event-btn { background: linear-gradient(90deg, #1e90ff, #63b8ff, #1e90ff); }
         
         .action-btn:hover { 
-            transform: translateY(-3px); 
+            transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
@@ -487,11 +478,9 @@
         </div>
         <div class="cylinder-mouth"></div>
         <div class="cylinder-ring-top"></div>
-     
         <div class="cylinder-body">
             <div class="cylinder-text">求籤</div>
         </div>
-       
         <div class="hand-guide" id="handGuide">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
                 <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/>
@@ -516,7 +505,6 @@
                     <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -535,7 +523,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         const isNewScan = urlParams.get('from') === 'pgy';
 
-        // --- 預載圖片功能 ---
         function preloadImages() {
             fortuneImages.forEach((src) => {
                 const img = new Image();
@@ -544,9 +531,7 @@
             console.log("圖片預載完成");
         }
         preloadImages();
-        // ------------------
 
-        // --- 關閉宣傳海報 ---
         function closePromo() {
             promoModal.style.opacity = '0';
             setTimeout(() => {
@@ -555,17 +540,13 @@
             }, 300);
         }
 
-        // --- 重新打開宣傳海報 ---
         function openPromo() {
             promoIcon.style.display = 'none';
             promoModal.style.display = 'flex';
-            
-            // 修正：強制重繪 (Reflow) 讓瀏覽器重新載入動畫
             const contentWrapper = document.querySelector('.promo-content');
-            contentWrapper.style.animation = 'none'; // 先移除動畫
-            void contentWrapper.offsetWidth;         // 觸發重繪
-            contentWrapper.style.animation = '';     // 恢復原有的 CSS 動畫設定
-
+            contentWrapper.style.animation = 'none';
+            void contentWrapper.offsetWidth;
+            contentWrapper.style.animation = '';
             setTimeout(() => {
                 promoModal.style.opacity = '1';
             }, 10);
@@ -587,10 +568,8 @@
             isShaking = true;
             if(handGuide) handGuide.style.display = 'none';
             shaker.classList.add('is-shaking');
-            
             hintText.innerHTML = "虔誠祈福中🙏";
             if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
-            
             setTimeout(() => {
                 shaker.classList.remove('is-shaking');
                 generateResult();
@@ -602,9 +581,7 @@
             const randomIndex = Math.floor(Math.random() * fortuneImages.length);
             const selectedImg = fortuneImages[randomIndex];
             localStorage.setItem('selected_fortune_img', selectedImg);
-            
             hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
-            
             shaker.removeEventListener('click', startShaking);
             shaker.addEventListener('click', () => openModalWithImage(selectedImg));
             openModalWithImage(selectedImg);
