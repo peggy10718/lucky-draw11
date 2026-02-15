@@ -40,29 +40,25 @@
             transition: opacity 0.3s; 
         }
         
-        /* 🔥全新：動態紅金流光邊框容器 */
+        /* 動態紅金流光邊框容器 */
         .promo-content {
             position: relative;
             width: 90%;
             max-width: 480px; 
-            padding: 6px; /* 這裡控制流光邊框的厚度 */
+            padding: 6px; 
             border-radius: 18px; 
-            /* 紅金漸層背景 */
             background: linear-gradient(60deg, #ff0000, #ff8c00, #ffd700, #ff8c00, #ff0000);
             background-size: 300% 300%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.5);
-            /* 結合彈出動畫與流光動畫 */
             animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, flowingGold 3s ease infinite;
         }
 
-        /* 流光動畫設定 */
         @keyframes flowingGold {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
         
-        /* 內層海報圖片 */
         .promo-image {
             width: 100%;
             height: auto;
@@ -70,7 +66,7 @@
             object-fit: contain;
             border-radius: 12px; 
             display: block;
-            background-color: #fff; /* 防止有透明底的圖片吃到背景色 */
+            background-color: #fff; 
         }
         
         .promo-close {
@@ -411,7 +407,7 @@
 
         .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
 
-        /* 🔥修改：強制按鈕文字與尺寸 100% 統一 */
+        /* --- 按鈕群組排版調整（強制統一大小與風格） --- */
         .modal-buttons-container {
             display: flex;
             flex-direction: column;
@@ -423,25 +419,22 @@
         .btn-row { 
             display: flex; 
             justify-content: center; 
-            gap: 10px; /* 按鈕左右間距 */
+            gap: 10px; 
             flex-wrap: nowrap; 
             width: 100%;
         }
         
         .action-btn {
-            /* 1. 強制固定尺寸，不用 padding 撐 */
             width: 100px; 
             height: 44px; 
             border-radius: 50px; 
             border: none;
             
-            /* 2. 強制統一字體設定，防 iOS 覆蓋 */
             font-size: 15px !important; 
             font-family: "Microsoft JhengHei", sans-serif !important; 
-            font-weight: 900 !important; /* 極致粗體 */
-            color: white; /* 預設文字顏色 */
+            font-weight: 900 !important; 
+            color: white; 
             
-            /* 3. 對齊與排版 */
             display: flex; 
             justify-content: center;
             align-items: center;
@@ -451,13 +444,13 @@
             margin: 0;
             line-height: 1; 
             
-            /* 4. 移除手機端原生按鈕樣式 */
             -webkit-appearance: none; 
             cursor: pointer; 
             transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        .close-btn { background: #555; }
+        /* 全面換上金屬漸層風格 */
+        .close-btn { background: linear-gradient(90deg, #434343, #757575, #434343); }
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000 !important; }
         .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); }
         .event-btn { background: linear-gradient(90deg, #1e90ff, #63b8ff, #1e90ff); }
@@ -562,6 +555,13 @@
         function openPromo() {
             promoIcon.style.display = 'none';
             promoModal.style.display = 'flex';
+            
+            // 修正：強制重繪 (Reflow) 讓瀏覽器重新載入動畫
+            const contentWrapper = document.querySelector('.promo-content');
+            contentWrapper.style.animation = 'none'; // 先移除動畫
+            void contentWrapper.offsetWidth;         // 觸發重繪
+            contentWrapper.style.animation = '';     // 恢復原有的 CSS 動畫設定
+
             setTimeout(() => {
                 promoModal.style.opacity = '1';
             }, 10);
