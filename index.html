@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>321 世界唐氏症日 - 求籤活動</title>
+    <title>321世界唐氏症日 - 求籤活動</title>
     
     <link rel="preload" as="image" href="bg.jpg">
     <link rel="preload" as="image" href="poster.jpg">
@@ -318,7 +318,7 @@
             border-radius: 2px;
         }
 
-        /* 排列調整 */
+        /* 排列調整 (新增 9, 10 兩支籤) */
         .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; transform: rotate(-12deg) translateY(15px); z-index: 1; }
         .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; transform: rotate(-6deg) translateY(8px); z-index: 3; }
         .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; transform: rotate(0deg) translateY(5px); z-index: 4; }
@@ -327,6 +327,9 @@
         .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; transform: rotate(-8deg) translateY(20px); z-index: 0; filter: brightness(0.7); }
         .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; transform: rotate(4deg) translateY(18px); z-index: 0; filter: brightness(0.7); }
         .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; transform: rotate(-2deg) translateY(2px); z-index: 2; }
+        /* 新增的籤 */
+        .stick:nth-child(9) { --r: 9deg;   --y: 12px; left: 115px; height: 215px; transform: rotate(9deg) translateY(12px); z-index: 3; }
+        .stick:nth-child(10){ --r: 15deg;  --y: 25px; left: 140px; height: 195px; transform: rotate(15deg) translateY(25px); z-index: 0; filter: brightness(0.6); }
 
         /* --- 手指引導 --- */
         .hand-guide {
@@ -479,6 +482,7 @@
         <div class="sticks-group">
             <div class="stick"></div><div class="stick"></div><div class="stick"></div>
             <div class="stick"></div><div class="stick"></div><div class="stick"></div>
+            <div class="stick"></div><div class="stick"></div>
             <div class="stick"></div><div class="stick"></div>
         </div>
         <div class="cylinder-mouth"></div>
@@ -644,4 +648,3 @@
     </script>
 </body>
 </html>
-
