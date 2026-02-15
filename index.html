@@ -40,35 +40,43 @@
             transition: opacity 0.3s; 
         }
         
+        /* 🔥全新：動態紅金流光邊框容器 */
         .promo-content {
             position: relative;
             width: 90%;
             max-width: 480px; 
-            animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 6px; /* 這裡控制流光邊框的厚度 */
+            border-radius: 18px; 
+            /* 紅金漸層背景 */
+            background: linear-gradient(60deg, #ff0000, #ff8c00, #ffd700, #ff8c00, #ff0000);
+            background-size: 300% 300%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.5);
+            /* 結合彈出動畫與流光動畫 */
+            animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, flowingGold 3s ease infinite;
+        }
+
+        /* 流光動畫設定 */
+        @keyframes flowingGold {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        /* 修改：更帥氣的發光呼吸邊框 */
+        /* 內層海報圖片 */
         .promo-image {
             width: 100%;
             height: auto;
-            max-height: 85vh; 
+            max-height: 83vh; 
             object-fit: contain;
-            border-radius: 16px;
+            border-radius: 12px; 
             display: block;
-            border: 3px solid #FFD700; 
-            box-shadow: 0 0 15px #FFD700, 0 0 30px #FF8C00;
-            animation: posterGlow 2s infinite alternate;
-        }
-
-        @keyframes posterGlow {
-            0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 140, 0, 0.4); border-color: #FFD700; }
-            100% { box-shadow: 0 0 25px rgba(255, 255, 0, 0.9), 0 0 50px rgba(255, 69, 0, 0.7); border-color: #FFF700; }
+            background-color: #fff; /* 防止有透明底的圖片吃到背景色 */
         }
         
         .promo-close {
             position: absolute;
-            top: -15px;
-            right: -15px;
+            top: -12px;
+            right: -12px;
             width: 40px;
             height: 40px;
             background: #fff;
@@ -79,7 +87,7 @@
             font-weight: bold;
             line-height: 1;
             cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             display: flex; justify-content: center; align-items: center;
             transition: transform 0.2s;
             z-index: 20001;
@@ -403,7 +411,7 @@
 
         .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
 
-        /* --- 修改：按鈕群組排版調整（強制統一大小） --- */
+        /* 🔥修改：強制按鈕文字與尺寸 100% 統一 */
         .modal-buttons-container {
             display: flex;
             flex-direction: column;
@@ -415,32 +423,44 @@
         .btn-row { 
             display: flex; 
             justify-content: center; 
-            gap: 10px; /* 按鈕間距 */
+            gap: 10px; /* 按鈕左右間距 */
             flex-wrap: nowrap; 
             width: 100%;
         }
         
         .action-btn {
-            border: none;
-            width: 100px; /* 強制所有按鈕寬度一模一樣 */
-            padding: 12px 0; /* 統一高度 */
+            /* 1. 強制固定尺寸，不用 padding 撐 */
+            width: 100px; 
+            height: 44px; 
             border-radius: 50px; 
-            font-size: 0.9rem; 
-            cursor: pointer; 
-            font-weight: bold; 
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none; 
-            display: flex; /* 讓內部文字完美置中 */
+            border: none;
+            
+            /* 2. 強制統一字體設定，防 iOS 覆蓋 */
+            font-size: 15px !important; 
+            font-family: "Microsoft JhengHei", sans-serif !important; 
+            font-weight: 900 !important; /* 極致粗體 */
+            color: white; /* 預設文字顏色 */
+            
+            /* 3. 對齊與排版 */
+            display: flex; 
             justify-content: center;
             align-items: center;
+            text-decoration: none; 
             white-space: nowrap; 
-            box-sizing: border-box; /* 確保 padding 不會影響寬度 */
+            box-sizing: border-box; 
+            margin: 0;
+            line-height: 1; 
+            
+            /* 4. 移除手機端原生按鈕樣式 */
+            -webkit-appearance: none; 
+            cursor: pointer; 
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
-        .close-btn { background: #555; color: white; }
-        .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
-        .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); color: white; }
-        .event-btn { background: linear-gradient(90deg, #1e90ff, #63b8ff, #1e90ff); color: white; }
+        .close-btn { background: #555; }
+        .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000 !important; }
+        .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); }
+        .event-btn { background: linear-gradient(90deg, #1e90ff, #63b8ff, #1e90ff); }
         
         .action-btn:hover { 
             transform: translateY(-3px); 
