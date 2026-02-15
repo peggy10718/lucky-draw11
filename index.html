@@ -47,15 +47,22 @@
             animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
+        /* 修改：更帥氣的發光呼吸邊框 */
         .promo-image {
             width: 100%;
             height: auto;
             max-height: 85vh; 
             object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 16px;
             display: block;
-            border: 2px solid rgba(255,255,255,0.3);
+            border: 3px solid #FFD700; 
+            box-shadow: 0 0 15px #FFD700, 0 0 30px #FF8C00;
+            animation: posterGlow 2s infinite alternate;
+        }
+
+        @keyframes posterGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 140, 0, 0.4); border-color: #FFD700; }
+            100% { box-shadow: 0 0 25px rgba(255, 255, 0, 0.9), 0 0 50px rgba(255, 69, 0, 0.7); border-color: #FFF700; }
         }
         
         .promo-close {
@@ -87,7 +94,7 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* --- 修改：縮小後的懸浮 Icon 樣式 --- */
+        /* --- 縮小後的懸浮 Icon 樣式 --- */
         .promo-icon-btn {
             position: fixed;
             top: 20px;       
@@ -112,7 +119,6 @@
             transform: scale(1.1);
         }
 
-        /* Icon 下方的文字標籤 */
         .promo-icon-btn::after {
             content: '活動詳情';
             position: absolute;
@@ -397,7 +403,7 @@
 
         .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
 
-        /* --- 按鈕群組排版調整 --- */
+        /* --- 修改：按鈕群組排版調整（強制統一大小） --- */
         .modal-buttons-container {
             display: flex;
             flex-direction: column;
@@ -409,28 +415,37 @@
         .btn-row { 
             display: flex; 
             justify-content: center; 
-            gap: 8px; /* 縮小按鈕間距以容納三個按鈕 */
-            flex-wrap: nowrap; /* 強制不換行 */
+            gap: 10px; /* 按鈕間距 */
+            flex-wrap: nowrap; 
+            width: 100%;
         }
         
         .action-btn {
             border: none;
-            padding: 10px 14px; /* 縮小左右內距 */
+            width: 100px; /* 強制所有按鈕寬度一模一樣 */
+            padding: 12px 0; /* 統一高度 */
             border-radius: 50px; 
-            font-size: 0.9rem; /* 稍微縮小字體 */
+            font-size: 0.9rem; 
             cursor: pointer; 
             font-weight: bold; 
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
             text-decoration: none; 
-            display: inline-block;
-            white-space: nowrap; /* 確保按鈕內的文字不會自己換行 */
+            display: flex; /* 讓內部文字完美置中 */
+            justify-content: center;
+            align-items: center;
+            white-space: nowrap; 
+            box-sizing: border-box; /* 確保 padding 不會影響寬度 */
         }
-        .close-btn { background: #555; color: white; padding: 10px 30px; /* 讓關閉按鈕維持一定寬度 */ }
+        
+        .close-btn { background: #555; color: white; }
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
         .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); color: white; }
         .event-btn { background: linear-gradient(90deg, #1e90ff, #63b8ff, #1e90ff); color: white; }
         
-        .action-btn:hover { transform: translateY(-3px); }
+        .action-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
 
     </style>
 </head>
@@ -476,7 +491,7 @@
             
             <div class="modal-buttons-container">
                 <div class="btn-row">
-                    <button class="action-btn line-btn" onclick="shareToLine()">LINE分享</button>
+                    <button class="action-btn line-btn" onclick="shareToLine()">LINE 分享</button>
                     <a id="downloadLink" class="action-btn download-btn" href="#" download="我的運勢籤.png">下載圖片</a>
                     <a class="action-btn event-btn" href="https://www.agoood.com/2026-wdsd" target="_blank">活動網頁</a>
                 </div>
@@ -516,22 +531,17 @@
 
         // --- 關閉宣傳海報 ---
         function closePromo() {
-            // 1. 海報淡出
             promoModal.style.opacity = '0';
             setTimeout(() => {
                 promoModal.style.display = 'none'; 
-                // 2. 顯示右上角懸浮按鈕
                 promoIcon.style.display = 'block'; 
             }, 300);
         }
 
         // --- 重新打開宣傳海報 ---
         function openPromo() {
-            // 1. 隱藏懸浮按鈕
             promoIcon.style.display = 'none';
-            // 2. 顯示海報
             promoModal.style.display = 'flex';
-            // 稍微延遲讓 opacity transition 有效果
             setTimeout(() => {
                 promoModal.style.opacity = '1';
             }, 10);
@@ -554,7 +564,6 @@
             if(handGuide) handGuide.style.display = 'none';
             shaker.classList.add('is-shaking');
             
-            // 加入祈福文字
             hintText.innerHTML = "虔誠祈福中🙏";
             if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
             
@@ -615,4 +624,3 @@
     </script>
 </body>
 </html>
-
