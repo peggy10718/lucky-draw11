@@ -36,7 +36,7 @@
             display: flex;
             justify-content: center; align-items: center;
             z-index: 20000; 
-            backdrop-filter: blur(8px); 
+            backdrop-filter: blur(8px);
             transition: opacity 0.3s; 
         }
         
@@ -44,7 +44,7 @@
             position: relative;
             width: 90%;
             max-width: 480px; 
-            animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .promo-image {
@@ -93,13 +93,13 @@
             top: 20px;       
             right: 20px;     
             width: 45px;   /* 從 60px 改小為 45px */
-            height: 45px;  /* 從 60px 改小為 45px */
+            height: 45px;
             border-radius: 50%;
             background-color: #fff;
             background-image: url('poster.jpg'); 
             background-size: cover;
             background-position: center;
-            border: 2px solid #fff; /* 邊框稍微改細一點 */
+            border: 2px solid #fff;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             cursor: pointer;
             z-index: 15000; 
@@ -130,7 +130,7 @@
 
         @keyframes floatIcon {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); /* 浮動幅度也稍微縮小 */ }
+            50% { transform: translateY(-5px); }
         }
 
         /* --- 測試按鈕樣式 --- */
@@ -396,7 +396,21 @@
         }
 
         .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
-        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+
+        /* --- 按鈕群組排版調整 --- */
+        .modal-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn-row { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+        }
         
         .action-btn {
             border: none;
@@ -407,6 +421,10 @@
         .close-btn { background: #555; color: white; }
         .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000; }
         .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); color: white; }
+        
+        /* 新增：活動網頁藍色按鈕 */
+        .event-btn { background: linear-gradient(90deg, #1e90ff, #63b8ff, #1e90ff); color: white; }
+        
         .action-btn:hover { transform: translateY(-3px); }
 
     </style>
@@ -436,7 +454,7 @@
         <div class="cylinder-body">
             <div class="cylinder-text">求籤</div>
         </div>
-        
+       
         <div class="hand-guide" id="handGuide">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
                 <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/>
@@ -450,11 +468,18 @@
         <div class="modal-content">
             <img id="resultImage" class="result-image" src="" alt="運勢結果">
             <div class="save-hint">（長按圖片即可儲存到相簿）</div>
-            <div class="btn-group">
-                <a id="downloadLink" class="action-btn download-btn" href="#" download="我的運勢籤.png">下載圖片</a>
-                <button class="action-btn line-btn" onclick="shareToLine()">LINE 分享</button>
-                <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
+            
+            <div class="modal-buttons-container">
+                <div class="btn-row">
+                    <a class="action-btn event-btn" href="https://www.agoood.com/2026-wdsd" target="_blank">活動網頁</a>
+                    <a id="downloadLink" class="action-btn download-btn" href="#" download="我的運勢籤.png">下載圖片</a>
+                    <button class="action-btn line-btn" onclick="shareToLine()">LINE 分享</button>
+                </div>
+                <div class="btn-row">
+                    <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -464,7 +489,7 @@
         const modal = document.getElementById('modal');
         const resultImage = document.getElementById('resultImage');
         const downloadLink = document.getElementById('downloadLink');
-        const handGuide = document.getElementById('handGuide'); 
+        const handGuide = document.getElementById('handGuide');
         const hintText = document.getElementById('hintText');
         const promoModal = document.getElementById('promoModal');
         const promoIcon = document.getElementById('promoIcon');
