@@ -12,298 +12,456 @@
     <style>
         /* --- 全局設定 --- */
         body {
-            margin: 0; [cite: 1]
-            height: 100vh; [cite: 2]
-            display: flex; [cite: 2]
-            justify-content: center; [cite: 2]
-            align-items: center; [cite: 2]
-            background-color: #8da4b7; [cite: 2]
-            background-image: url('bg.jpg'); [cite: 2]
-            background-size: cover; [cite: 2]
-            background-position: center; [cite: 2]
-            background-repeat: no-repeat; [cite: 2]
-            font-family: "Microsoft JhengHei", sans-serif; [cite: 3]
-            color: white; [cite: 3]
-            overflow: hidden; [cite: 3]
-            flex-direction: column; [cite: 3]
-        } [cite: 4]
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #8da4b7; 
+            background-image: url('bg.jpg'); 
+            background-size: cover;        
+            background-position: center;   
+            background-repeat: no-repeat;
+            font-family: "Microsoft JhengHei", sans-serif;
+            color: white;
+            overflow: hidden;
+            flex-direction: column;
+        }
 
         /* --- 宣傳海報彈窗樣式 --- */
         .promo-overlay {
-            position: fixed; [cite: 4]
-            top: 0; left: 0; width: 100%; height: 100%; [cite: 5]
-            background: rgba(0,0,0,0.85); [cite: 5]
-            display: flex; [cite: 5]
-            justify-content: center; align-items: center; [cite: 5]
-            z-index: 20000; [cite: 5]
-            backdrop-filter: blur(8px); [cite: 5]
-            transition: opacity 0.3s; [cite: 6]
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); 
+            display: flex;
+            justify-content: center; align-items: center;
+            z-index: 20000; 
+            backdrop-filter: blur(8px);
+            transition: opacity 0.3s; 
         }
         
+        /* 動態紅金流光邊框容器 */
         .promo-content {
-            position: relative; [cite: 6]
-            width: 90%; [cite: 7]
-            max-width: 480px; [cite: 7]
-            padding: 6px; [cite: 7]
-            border-radius: 18px; [cite: 7]
-            background: linear-gradient(60deg, #ff0000, #ff8c00, #ffd700, #ff8c00, #ff0000); [cite: 7]
-            background-size: 300% 300%; [cite: 7]
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.5); [cite: 8]
-            animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, flowingGold 3s ease infinite; [cite: 9]
-        } [cite: 10]
+            position: relative;
+            width: 90%;
+            max-width: 480px; 
+            padding: 6px; 
+            border-radius: 18px; 
+            background: linear-gradient(60deg, #ff0000, #ff8c00, #ffd700, #ff8c00, #ff0000);
+            background-size: 300% 300%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, flowingGold 3s ease infinite;
+        }
 
         @keyframes flowingGold {
-            0% { background-position: 0% 50%; } [cite: 10, 11]
-            50% { background-position: 100% 50%; } [cite: 11, 12]
-            100% { background-position: 0% 50%; } [cite: 12, 13]
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .promo-image {
-            width: 100%; [cite: 13]
-            height: auto; [cite: 14]
-            max-height: 83vh; [cite: 14]
-            object-fit: contain; [cite: 14]
-            border-radius: 12px; [cite: 14]
-            display: block; [cite: 14]
-            background-color: #fff; [cite: 14]
-        } [cite: 15]
+            width: 100%;
+            height: auto;
+            max-height: 83vh; 
+            object-fit: contain;
+            border-radius: 12px; 
+            display: block;
+            background-color: #fff; 
+        }
         
         .promo-close {
-            position: absolute; [cite: 15]
-            top: -12px; [cite: 16]
-            right: -12px; [cite: 16]
-            width: 40px; [cite: 16]
-            height: 40px; [cite: 16]
-            background: #fff; [cite: 16]
-            color: #333; [cite: 16]
-            border: 2px solid #333; [cite: 16]
-            border-radius: 50%; [cite: 16]
-            font-size: 28px; [cite: 16]
-            font-weight: bold; [cite: 17]
-            line-height: 1; [cite: 17]
-            cursor: pointer; [cite: 17]
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4); [cite: 17]
-            display: flex; justify-content: center; align-items: center; [cite: 17]
-            transition: transform 0.2s; [cite: 17]
-            z-index: 20001; [cite: 18]
-            padding: 0; [cite: 18]
-            padding-bottom: 4px; [cite: 18]
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            color: #333;
+            border: 2px solid #333;
+            border-radius: 50%;
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            display: flex; justify-content: center; align-items: center;
+            transition: transform 0.2s;
+            z-index: 20001;
+            padding: 0; 
+            padding-bottom: 4px;
         }
         
-        .promo-close:active { transform: scale(0.9); } [cite: 18, 19]
+        .promo-close:active { transform: scale(0.9); }
         
         @keyframes promoPopIn {
-            0% { opacity: 0; transform: scale(0.5); } [cite: 19, 20]
-            100% { opacity: 1; transform: scale(1); } [cite: 20, 21]
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
+        /* --- 縮小後的懸浮 Icon 樣式 --- */
         .promo-icon-btn {
-            position: fixed; [cite: 21]
-            top: 20px; right: 20px; width: 45px; height: 45px; [cite: 22]
-            border-radius: 50%; [cite: 22]
-            background-color: #fff; [cite: 22]
-            background-image: url('poster.jpg'); [cite: 22]
-            background-size: cover; [cite: 22]
-            background-position: center; [cite: 22]
-            border: 2px solid #fff; [cite: 23]
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4); [cite: 23]
-            cursor: pointer; [cite: 23]
-            z-index: 15000; [cite: 23]
-            display: none; [cite: 23]
-            animation: floatIcon 3s ease-in-out infinite; [cite: 23]
-            transition: transform 0.2s; [cite: 24]
+            position: fixed;
+            top: 20px;       
+            right: 20px;     
+            width: 45px;   
+            height: 45px;
+            border-radius: 50%;
+            background-color: #fff;
+            background-image: url('poster.jpg'); 
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            cursor: pointer;
+            z-index: 15000; 
+            display: none;  
+            animation: floatIcon 3s ease-in-out infinite;
+            transition: transform 0.2s;
+        }
+
+        .promo-icon-btn:hover {
+            transform: scale(1.1);
         }
 
         .promo-icon-btn::after {
-            content: '活動詳情'; [cite: 25]
-            position: absolute; [cite: 26]
-            bottom: -22px; left: 50%; [cite: 26]
-            transform: translateX(-50%); [cite: 26]
-            white-space: nowrap; [cite: 26]
-            font-size: 11px; [cite: 26]
-            color: #fff; [cite: 26]
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8); [cite: 26]
-            background: rgba(0,0,0,0.5); [cite: 27]
-            padding: 2px 5px; [cite: 27]
-            border-radius: 8px; [cite: 27]
+            content: '活動詳情';
+            position: absolute;
+            bottom: -22px; 
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 11px; 
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.5);
+            padding: 2px 5px;
+            border-radius: 8px;
         }
 
         @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); } [cite: 27, 28]
-            50% { transform: translateY(-5px); } [cite: 28, 29]
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
+        /* --- 測試按鈕樣式 --- */
         #testResetBtn {
-            position: fixed; [cite: 29]
-            top: 10px; left: 10px; z-index: 9999; [cite: 30]
-            padding: 8px 15px; [cite: 30]
-            background: rgba(255, 0, 0, 0.7); [cite: 30]
-            color: white; [cite: 30]
-            border: 1px solid white; [cite: 30]
-            border-radius: 5px; [cite: 31]
-            cursor: pointer; [cite: 31]
-            font-size: 14px; [cite: 31]
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 9999;
+            padding: 8px 15px;
+            background: rgba(255, 0, 0, 0.7);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
         }
 
         /* --- 籤筒容器 --- */
         .shaker-container {
-            position: relative; [cite: 31]
-            width: 200px; height: 320px; [cite: 32]
-            cursor: pointer; [cite: 32]
-            transition: transform 0.1s; [cite: 32]
-            user-select: none; [cite: 32]
-            -webkit-tap-highlight-color: transparent; [cite: 32]
-            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); [cite: 32]
-            z-index: 5; [cite: 32]
-            transform-origin: center bottom; [cite: 33]
-            overflow: visible; [cite: 33]
+            position: relative;
+            width: 200px;
+            height: 320px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+            z-index: 5;
+            transform-origin: center bottom;
+            overflow: visible;
         }
 
         @media (max-width: 600px) {
-            .shaker-container { transform: scale(0.75); margin-top: 0px; } [cite: 33, 34]
+            .shaker-container {
+                transform: scale(0.75);
+                margin-top: 0px; 
+            }
         }
 
-        .is-shaking { animation: shake 0.6s ease-in-out infinite; } [cite: 34, 35]
+        /* --- 筒身搖動動畫 --- */
+        .is-shaking { animation: shake 0.6s ease-in-out infinite; }
         
         @keyframes shake {
-            0% { transform: translate(0, 0) rotate(0deg); } [cite: 35, 36]
-            25% { transform: translate(-5px, 0) rotate(-3deg); } [cite: 36, 37]
-            50% { transform: translate(5px, 0) rotate(3deg); } [cite: 37, 38]
-            75% { transform: translate(-5px, 0) rotate(-3deg); } [cite: 38, 39]
-            100% { transform: translate(0, 0) rotate(0deg); } [cite: 39, 40]
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-5px, 0) rotate(-3deg); }
+            50% { transform: translate(5px, 0) rotate(3deg); }
+            75% { transform: translate(-5px, 0) rotate(-3deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
         }
 
         @media (max-width: 600px) {
             @keyframes shake {
-                0% { transform: scale(0.75) translate(0, 0) rotate(0deg); } [cite: 40, 41]
-                25% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); } [cite: 41, 42]
-                50% { transform: scale(0.75) translate(5px, 0) rotate(3deg); } [cite: 42, 43]
-                75% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); } [cite: 43, 44]
-                100% { transform: scale(0.75) translate(0, 0) rotate(0deg); } [cite: 44, 45]
+                0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
+                25% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
+                50% { transform: scale(0.75) translate(5px, 0) rotate(3deg); }
+                75% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
+                100% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
             }
         }
 
-        /* --- 籤支與動畫 --- */
+        /* --- 籤支跳動動畫 --- */
         @keyframes stick-jump {
-            0% { transform: rotate(var(--r)) translateY(var(--y)); } [cite: 45, 46]
-            100% { transform: rotate(var(--r)) translateY(var(--y)); } [cite: 49, 50]
+            0% { transform: rotate(var(--r)) translateY(var(--y)); }
+            25% { transform: rotate(calc(var(--r) - 3deg)) translateY(calc(var(--y) - 25px)); }
+            50% { transform: rotate(calc(var(--r) + 2deg)) translateY(calc(var(--y) - 5px)); }
+            75% { transform: rotate(calc(var(--r) - 1deg)) translateY(calc(var(--y) - 15px)); }
+            100% { transform: rotate(var(--r)) translateY(var(--y)); }
         }
-        .is-shaking .stick { animation: stick-jump 0.4s ease-in-out infinite; } [cite: 50, 51]
 
-        /* --- 籤筒視覺 (修正核心在此) --- */
+        .is-shaking .stick { animation: stick-jump 0.4s ease-in-out infinite; }
+        .is-shaking .stick:nth-child(odd) { animation-duration: 0.42s; }
+        .is-shaking .stick:nth-child(even) { animation-duration: 0.48s; animation-delay: 0.1s; }
+        .is-shaking .stick:nth-child(3n) { animation-duration: 0.38s; animation-delay: 0.15s; }
+
+
+        /* --- 籤筒視覺 --- */
         .cylinder-body {
-            position: absolute; [cite: 54]
-            bottom: 0; width: 100%; height: 240px; [cite: 55]
-            background: linear-gradient(to right, #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, #b30000 60%, #7a0000 85%, #4a0000 100%); [cite: 56]
-            border-radius: 10px; [cite: 56]
-            box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3); [cite: 56]
-            z-index: 2; [cite: 56]
-            pointer-events: none; [cite: 56]
-            display: flex; justify-content: center; align-items: center; [cite: 56, 57]
-            border-bottom: 3px solid #2a0000; [cite: 57]
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 240px;
+            background: linear-gradient(to right, #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, #b30000 60%, #7a0000 85%, #4a0000 100%);
+            border-radius: 10px;
+            box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 2;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 3px solid #2a0000;
         }
         
-        /* 強化立體感的金色飾條 */
         .cylinder-ring-top {
-            position: absolute; [cite: 57]
+            position: absolute;
             top: 70px;
-            width: 100%;            /* 修正：由 102% 改為 100% 以貼合邊緣 */ 
-            left: 0;                /* 修正：由 -1% 改為 0 */ 
-            height: 22px;           /* 稍微增加高度增加份量感 */
-            background: linear-gradient(to bottom, #8a6000 0%, #ffd700 50%, #8a6000 100%); /* 縱向漸層增加立體度 */
-            z-index: 3; 
-            pointer-events: none; 
-            border-radius: 2px;     /* 減少圓角讓其更像環繞金屬 */ [cite: 59]
-            box-shadow: 
-                0 2px 4px rgba(0,0,0,0.5),           /* 外部陰影 */
-                inset 0 1px 1px rgba(255,255,255,0.6), /* 頂部高光 */
-                inset 0 -1px 2px rgba(0,0,0,0.4);      /* 底部暗影 */
-            border-top: 1px solid rgba(0,0,0,0.3);   /* 極細邊線 */
-            border-bottom: 1px solid rgba(0,0,0,0.3);
+            width: 100%;
+            left: 0%;
+            height: 20px;
+            background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
+            z-index: 3;
+            pointer-events: none;
+            border-radius: 4px;
         }
 
         .cylinder-text {
-            color: #fffacd; [cite: 59]
-            font-size: 3.5rem; [cite: 60]
-            font-weight: bold; [cite: 60]
-            writing-mode: vertical-rl; [cite: 60]
-            text-orientation: upright; [cite: 60]
-            letter-spacing: 15px; [cite: 60]
-            text-shadow: 2px 2px 0px #3a0000; [cite: 60]
-            font-family: "Kaiti TC", "楷體", serif; [cite: 60]
+            color: #fffacd;
+            font-size: 3.5rem;
+            font-weight: bold;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            letter-spacing: 15px;
+            text-shadow: 2px 2px 0px #3a0000;
+            font-family: "Kaiti TC", "楷體", serif;
         }
 
         .cylinder-mouth {
-            position: absolute; [cite: 61]
-            top: 55px; left: 2%; width: 96%; height: 40px; [cite: 62]
-            background: radial-gradient(ellipse at center, #1a0000 0%, #3a0000 60%, #5a0000 100%); [cite: 62]
-            border-radius: 50%; [cite: 62]
-            z-index: 1; [cite: 63]
-            border: 4px solid #8a0000; [cite: 63]
+            position: absolute;
+            top: 55px;
+            left: 2%;
+            width: 96%;
+            height: 40px;
+            background: radial-gradient(ellipse at center, #1a0000 0%, #3a0000 60%, #5a0000 100%);
+            border-radius: 50%;
+            z-index: 1;
+            border: 4px solid #8a0000;
         }
 
+        /* --- 擬真籤支設定 --- */
         .sticks-group {
-            position: absolute; [cite: 63]
-            top: 15px; left: 50%; transform: translateX(-50%); width: 180px; height: 200px; [cite: 64]
-            z-index: 0; pointer-events: none; [cite: 65]
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 180px;
+            height: 200px;
+            z-index: 0;
+            pointer-events: none;
         }
 
         .stick {
-            position: absolute; [cite: 65]
-            bottom: 0; width: 16px; height: 200px; [cite: 66]
-            background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c); [cite: 66]
-            transform-origin: bottom center; [cite: 66]
-            box-shadow: 1px 1px 4px rgba(0,0,0,0.5); [cite: 66]
+            position: absolute;
+            bottom: 0;
+            width: 16px;
+            height: 200px;
+            background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
+            transform-origin: bottom center;
+            box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
         }
 
-        .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; transform: rotate(-12deg) translateY(15px); z-index: 1; } [cite: 75, 76]
-        .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; transform: rotate(-2deg) translateY(2px); z-index: 2; } [cite: 85, 86]
+        .stick::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 50px; 
+            background-color: #d32f2f;
+            background-image: 
+                radial-gradient(circle at -2px 50%, rgba(0,0,0,0.7) 4px, transparent 5px), 
+                radial-gradient(circle at 100% 50%, rgba(255,255,255,0.4) 3px, transparent 4px);
+            -webkit-mask-image: 
+                radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px),
+                radial-gradient(circle at 20px 50%, transparent 6px, black 6.5px);
+            mask-image: 
+                radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px),
+                radial-gradient(circle at 20px 50%, transparent 6px, black 6.5px);
+            -webkit-mask-size: 100% 12px;
+            mask-size: 100% 12px;
+            -webkit-mask-repeat: repeat-y;
+            mask-repeat: repeat-y;
+        }
 
-        /* --- 手指與提示 --- */
+        .stick::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 2px; width: 12px; height: 2px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 2px;
+        }
+
+        /* 排列調整 (新增 9, 10 兩支籤) */
+        .stick:nth-child(1) { --r: -12deg; --y: 15px; left: 25px; height: 210px; transform: rotate(-12deg) translateY(15px); z-index: 1; }
+        .stick:nth-child(2) { --r: -6deg;  --y: 8px;  left: 50px; height: 225px; transform: rotate(-6deg) translateY(8px); z-index: 3; }
+        .stick:nth-child(3) { --r: 0deg;   --y: 5px;  left: 75px; height: 215px; transform: rotate(0deg) translateY(5px); z-index: 4; }
+        .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; transform: rotate(6deg) translateY(6px); z-index: 2; }
+        .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; transform: rotate(12deg) translateY(14px); z-index: 1;}
+        .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; transform: rotate(-8deg) translateY(20px); z-index: 0; filter: brightness(0.7); }
+        .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; transform: rotate(4deg) translateY(18px); z-index: 0; filter: brightness(0.7); }
+        .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; transform: rotate(-2deg) translateY(2px); z-index: 2; }
+        /* 新增的籤 */
+        .stick:nth-child(9) { --r: 9deg;   --y: 12px; left: 115px; height: 215px; transform: rotate(9deg) translateY(12px); z-index: 3; }
+        .stick:nth-child(10){ --r: 15deg;  --y: 25px; left: 140px; height: 195px; transform: rotate(15deg) translateY(25px); z-index: 0; filter: brightness(0.6); }
+
+        /* --- 手指引導 --- */
         .hand-guide {
-            position: absolute; [cite: 89]
-            right: -30px; bottom: -30px; width: 60px; height: 60px; [cite: 90]
-            z-index: 10; animation: simple-click 2s infinite ease-in-out; [cite: 90]
+            position: absolute;
+            right: -30px;
+            bottom: -30px;
+            width: 60px; height: 60px;
+            z-index: 10;
+            animation: simple-click 2s infinite ease-in-out;
         }
+
         @keyframes simple-click {
-            0% { opacity: 0; transform: translate(0, 0) rotate(-45deg) scale(1.5); } [cite: 91, 92]
-            100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); } [cite: 95, 96]
+            0% { opacity: 0; transform: translate(0, 0) rotate(-45deg) scale(1.5); }
+            20% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
+            50% { transform: translate(-70px, -110px) rotate(-45deg) scale(1); }
+            80% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
+            100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
         }
 
+        /* --- 提示文字 --- */
         .hint {
-            margin-top: 20px; color: #fff5e6; font-size: 1.1rem; font-weight: bold; [cite: 96, 97]
-            z-index: 10; text-align: center; line-height: 1.6; [cite: 97]
-            animation: hint-glow-orange 2s infinite alternate; [cite: 97]
+            margin-top: 20px;
+            color: #fff5e6; 
+            font-size: 1.1rem;
+            font-weight: bold;
+            z-index: 10;
+            text-align: center;
+            line-height: 1.6;
+            animation: hint-glow-orange 2s infinite alternate;
         }
 
-        /* --- 彈窗 --- */
+        @keyframes hint-glow-orange {
+            from {
+                opacity: 0.8;
+                text-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
+            }
+            to {
+                opacity: 1;
+                text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5);
+            }
+        }
+
+        /* --- 彈窗設定 --- */
         .modal-overlay {
-            position: fixed; [cite: 101]
-            top: 0; left: 0; width: 100%; height: 100%; [cite: 102]
-            background: rgba(0,0,0,0.85); display: none; [cite: 102]
-            justify-content: center; align-items: center; z-index: 100; [cite: 102]
-            backdrop-filter: blur(10px); [cite: 102]
-            padding: 20px; box-sizing: border-box; [cite: 103]
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none;
+            justify-content: center; align-items: center; z-index: 100;
+            backdrop-filter: blur(10px);
+            padding: 20px; box-sizing: border-box;
         }
-        .modal-content { background: transparent; text-align: center; max-width: 100%; animation: popInElastic 0.6s ease-out; } [cite: 103, 104]
-        
-        .result-image {
-            max-width: 100%; max-height: 70vh; border-radius: 12px; [cite: 107, 108]
-            border: 4px solid #bf953f; margin-bottom: 15px; [cite: 108]
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3); [cite: 108]
-            animation: glowingPulse 3s infinite alternate; [cite: 109]
+        .modal-content {
+            background: transparent;
+            text-align: center; max-width: 100%; 
+            animation: popInElastic 0.6s ease-out;
+        }
+        @keyframes popInElastic {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
         }
 
-        .action-btn {
-            width: 100px; height: 44px; border-radius: 50px; border: none; [cite: 114, 115]
-            font-size: 15px !important; font-weight: 900 !important; color: white; [cite: 115]
-            display: flex; justify-content: center; align-items: center; [cite: 116]
-            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; [cite: 116, 117]
+        /* --- 會呼吸的金光外暈 --- */
+        .result-image {
+            max-width: 100%;
+            max-height: 70vh; 
+            border-radius: 12px; 
+            border: 4px solid #bf953f; 
+            margin-bottom: 15px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            animation: glowingPulse 3s infinite alternate;
         }
-        .close-btn { background: linear-gradient(90deg, #434343, #757575, #434343); } [cite: 117, 118]
-        .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000 !important; } [cite: 118, 119]
-        .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); } [cite: 119, 120]
-        .event-btn { background: linear-gradient(90deg, #1e90ff, #63b8ff, #1e90ff); } [cite: 120, 121]
+
+        @keyframes glowingPulse {
+            0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(191, 149, 63, 0.2); }
+            100% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.9), 0 0 80px rgba(255, 223, 0, 0.5); }
+        }
+
+        .save-hint { font-size: 0.8rem; color: #fcf6ba; margin-bottom: 15px; }
+
+        /* --- 按鈕群組排版調整（強制統一大小與風格） --- */
+        .modal-buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .btn-row { 
+            display: flex; 
+            justify-content: center; 
+            gap: 10px; 
+            flex-wrap: nowrap; 
+            width: 100%;
+        }
+        
+        .action-btn {
+            width: 100px; 
+            height: 44px; 
+            border-radius: 50px; 
+            border: none;
+            
+            font-size: 15px !important; 
+            font-family: "Microsoft JhengHei", sans-serif !important; 
+            font-weight: 900 !important; 
+            color: white; 
+            
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            text-decoration: none; 
+            white-space: nowrap; 
+            box-sizing: border-box; 
+            margin: 0;
+            line-height: 1; 
+            
+            -webkit-appearance: none; 
+            cursor: pointer; 
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        /* 全面換上金屬漸層風格 */
+        .close-btn { background: linear-gradient(90deg, #434343, #757575, #434343); }
+        .download-btn { background: linear-gradient(90deg, #bf953f, #fcf6ba, #bf953f); color: #3a0000 !important; }
+        .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); }
+        .event-btn { background: linear-gradient(90deg, #1e90ff, #63b8ff, #1e90ff); }
+        
+        .action-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
 
     </style>
 </head>
@@ -324,15 +482,20 @@
         <div class="sticks-group">
             <div class="stick"></div><div class="stick"></div><div class="stick"></div>
             <div class="stick"></div><div class="stick"></div><div class="stick"></div>
-            <div class="stick"></div><div class="stick"></div><div class="stick"></div><div class="stick"></div>
+            <div class="stick"></div><div class="stick"></div>
+            <div class="stick"></div><div class="stick"></div>
         </div>
         <div class="cylinder-mouth"></div>
         <div class="cylinder-ring-top"></div>
+     
         <div class="cylinder-body">
             <div class="cylinder-text">求籤</div>
         </div>
+       
         <div class="hand-guide" id="handGuide">
-            <svg viewBox="0 0 24 24" fill="white"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/></svg>
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
+                <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/>
+            </svg>
         </div>
     </div>
 
@@ -342,6 +505,7 @@
         <div class="modal-content">
             <img id="resultImage" class="result-image" src="" alt="運勢結果">
             <div class="save-hint">（長按圖片即可儲存到相簿）</div>
+            
             <div class="modal-buttons-container">
                 <div class="btn-row">
                     <button class="action-btn line-btn" onclick="shareToLine()">LINE分享</button>
@@ -352,86 +516,134 @@
                     <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
                 </div>
             </div>
+
         </div>
     </div>
 
     <script>
-        const fortuneImages = ['1.png', '2.png', '3.png', '4.png']; [cite: 127, 128]
-        const shaker = document.getElementById('shaker'); [cite: 128]
-        const modal = document.getElementById('modal'); [cite: 128]
-        const resultImage = document.getElementById('resultImage'); [cite: 128]
-        const downloadLink = document.getElementById('downloadLink'); [cite: 128]
-        const hintText = document.getElementById('hintText'); [cite: 129]
-        const promoModal = document.getElementById('promoModal'); [cite: 129]
-        const promoIcon = document.getElementById('promoIcon'); [cite: 129]
-        const handGuide = document.getElementById('handGuide'); [cite: 129]
+        const fortuneImages = ['1.png', '2.png', '3.png', '4.png'];
+        const shaker = document.getElementById('shaker');
+        const modal = document.getElementById('modal');
+        const resultImage = document.getElementById('resultImage');
+        const downloadLink = document.getElementById('downloadLink');
+        const handGuide = document.getElementById('handGuide');
+        const hintText = document.getElementById('hintText');
+        const promoModal = document.getElementById('promoModal');
+        const promoIcon = document.getElementById('promoIcon');
 
-        let isShaking = false; [cite: 129]
-        const urlParams = new URLSearchParams(window.location.search); [cite: 130]
-        const isNewScan = urlParams.get('from') === 'pgy'; [cite: 130]
+        let isShaking = false;
+        const urlParams = new URLSearchParams(window.location.search);
+        const isNewScan = urlParams.get('from') === 'pgy';
 
+        // --- 預載圖片功能 ---
+        function preloadImages() {
+            fortuneImages.forEach((src) => {
+                const img = new Image();
+                img.src = src;
+            });
+            console.log("圖片預載完成");
+        }
+        preloadImages();
+        // ------------------
+
+        // --- 關閉宣傳海報 ---
         function closePromo() {
-            promoModal.style.opacity = '0'; [cite: 133]
-            setTimeout(() => { promoModal.style.display = 'none'; promoIcon.style.display = 'block'; }, 300); [cite: 134]
+            promoModal.style.opacity = '0';
+            setTimeout(() => {
+                promoModal.style.display = 'none'; 
+                promoIcon.style.display = 'block'; 
+            }, 300);
         }
 
+        // --- 重新打開宣傳海報 ---
         function openPromo() {
-            promoIcon.style.display = 'none'; [cite: 135]
-            promoModal.style.display = 'flex'; [cite: 136]
-            setTimeout(() => { promoModal.style.opacity = '1'; }, 10); [cite: 139]
+            promoIcon.style.display = 'none';
+            promoModal.style.display = 'flex';
+            
+            // 修正：強制重繪 (Reflow) 讓瀏覽器重新載入動畫
+            const contentWrapper = document.querySelector('.promo-content');
+            contentWrapper.style.animation = 'none'; // 先移除動畫
+            void contentWrapper.offsetWidth;         // 觸發重繪
+            contentWrapper.style.animation = '';     // 恢復原有的 CSS 動畫設定
+
+            setTimeout(() => {
+                promoModal.style.opacity = '1';
+            }, 10);
         }
 
-        if (isNewScan) localStorage.removeItem('selected_fortune_img'); [cite: 140]
+        if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
 
-        const savedFortune = localStorage.getItem('selected_fortune_img'); [cite: 141]
+        const savedFortune = localStorage.getItem('selected_fortune_img');
         if (savedFortune) {
-            hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)"; [cite: 142]
-            if(handGuide) handGuide.style.display = 'none'; [cite: 143]
-            shaker.addEventListener('click', () => openModalWithImage(savedFortune)); [cite: 143]
+            hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
+            if(handGuide) handGuide.style.display = 'none';
+            shaker.addEventListener('click', () => openModalWithImage(savedFortune));
         } else {
-            shaker.addEventListener('click', startShaking); [cite: 143]
+            shaker.addEventListener('click', startShaking);
         }
 
         function startShaking() {
-            if (isShaking) return; [cite: 144]
-            isShaking = true; [cite: 145]
-            if(handGuide) handGuide.style.display = 'none'; [cite: 145]
-            shaker.classList.add('is-shaking'); [cite: 145]
-            hintText.innerHTML = "虔誠祈福中🙏"; [cite: 145]
-            setTimeout(() => { shaker.classList.remove('is-shaking'); generateResult(); isShaking = false; }, 1500); [cite: 146]
+            if (isShaking) return;
+            isShaking = true;
+            if(handGuide) handGuide.style.display = 'none';
+            shaker.classList.add('is-shaking');
+            
+            hintText.innerHTML = "虔誠祈福中🙏";
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
+            
+            setTimeout(() => {
+                shaker.classList.remove('is-shaking');
+                generateResult();
+                isShaking = false;
+            }, 1500);
         }
 
         function generateResult() {
-            const randomIndex = Math.floor(Math.random() * fortuneImages.length); [cite: 147]
-            const selectedImg = fortuneImages[randomIndex]; [cite: 148]
-            localStorage.setItem('selected_fortune_img', selectedImg); [cite: 148]
-            hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)"; [cite: 148]
-            shaker.removeEventListener('click', startShaking); [cite: 148]
-            shaker.addEventListener('click', () => openModalWithImage(selectedImg)); [cite: 148]
-            openModalWithImage(selectedImg); [cite: 148]
+            const randomIndex = Math.floor(Math.random() * fortuneImages.length);
+            const selectedImg = fortuneImages[randomIndex];
+            localStorage.setItem('selected_fortune_img', selectedImg);
+            
+            hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
+            
+            shaker.removeEventListener('click', startShaking);
+            shaker.addEventListener('click', () => openModalWithImage(selectedImg));
+            openModalWithImage(selectedImg);
         }
 
         function openModalWithImage(imgSrc) {
-            resultImage.src = imgSrc; [cite: 149]
-            downloadLink.href = imgSrc; [cite: 150]
-            modal.style.display = 'flex'; [cite: 150]
-            fireConfetti(); [cite: 150]
+            resultImage.src = imgSrc;
+            downloadLink.href = imgSrc;
+            modal.style.display = 'flex';
+            fireConfetti();
         }
 
-        function closeModal() { modal.style.display = 'none'; } [cite: 150]
+        function closeModal() { modal.style.display = 'none'; }
 
         function shareToLine() {
-            const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？看看神明跟你說什麼👇"; [cite: 151]
-            const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text + "\n" + window.location.href)}`; [cite: 152]
-            window.open(lineUrl, '_blank'); [cite: 152]
+            const text = "驚喜！！✨我在『唐氏症基金會』321世界唐氏症日抽到神明運勢籤！🧧\n你要不要也來求一支？看看神明跟你說什麼👇";
+            const url = window.location.href; 
+            const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text + "\n" + url)}`;
+            window.open(lineUrl, '_blank');
         }
 
         function testReset() {
-            if(confirm('確定要清除紀錄並重置嗎？')) { localStorage.removeItem('selected_fortune_img'); window.location.href = window.location.pathname; } [cite: 153, 154]
+            if(confirm('確定要清除紀錄並重置嗎？')) {
+                localStorage.removeItem('selected_fortune_img');
+                window.location.href = window.location.pathname; 
+            }
         }
 
         function fireConfetti() {
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#bf953f', '#fcf6ba', '#FFD700'] });
+            var count = 200;
+            var defaults = { origin: { y: 0.7 } };
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+            fire(0.25, { spread: 26, startVelocity: 55, colors: ['#bf953f', '#fcf6ba'] });
+            fire(0.2, { spread: 60, colors: ['#ffffff'] });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
         }
     </script>
 </body>
