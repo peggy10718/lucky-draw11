@@ -236,13 +236,14 @@
         .cylinder-ring-top {
             position: absolute;
             top: 70px;
-            width: 102%;
-            left: -1%;
+            width: 110%;
+            left: -5%;
             height: 20px;
             background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
             z-index: 3;
             pointer-events: none;
             border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
         }
 
         .cylinder-text {
@@ -276,7 +277,7 @@
             transform: translateX(-50%);
             width: 180px;
             height: 200px;
-            z-index: 0;
+            z-index: 2;
             pointer-events: none;
         }
 
@@ -325,11 +326,10 @@
         .stick:nth-child(4) { --r: 6deg;   --y: 6px;  left: 100px; height: 220px; transform: rotate(6deg) translateY(6px); z-index: 2; }
         .stick:nth-child(5) { --r: 12deg;  --y: 14px; left: 125px; height: 205px; transform: rotate(12deg) translateY(14px); z-index: 1;}
         .stick:nth-child(6) { --r: -8deg;  --y: 20px; left: 40px; height: 200px; transform: rotate(-8deg) translateY(20px); z-index: 0; filter: brightness(0.7); }
-        .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 90px; height: 205px; transform: rotate(4deg) translateY(18px); z-index: 0; filter: brightness(0.7); }
+        .stick:nth-child(7) { --r: 4deg;   --y: 18px; left: 85px; height: 205px; transform: rotate(4deg) translateY(18px); z-index: 0; filter: brightness(0.7); }
         .stick:nth-child(8) { --r: -2deg;  --y: 2px;  left: 65px; height: 230px; transform: rotate(-2deg) translateY(2px); z-index: 2; }
-        /* 新增的籤 */
         .stick:nth-child(9) { --r: 9deg;   --y: 12px; left: 115px; height: 215px; transform: rotate(9deg) translateY(12px); z-index: 3; }
-        .stick:nth-child(10){ --r: 15deg;  --y: 25px; left: 140px; height: 195px; transform: rotate(15deg) translateY(25px); z-index: 0; filter: brightness(0.6); }
+        .stick:nth-child(10){ --r: 15deg;  --y: 25px; left: 136px; height: 195px; transform: rotate(15deg) translateY(25px); z-index: 0; filter: brightness(0.6); }
 
         /* --- 手指引導 --- */
         .hand-guide {
@@ -648,3 +648,4 @@
     </script>
 </body>
 </html>
+
