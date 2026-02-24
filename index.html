@@ -441,14 +441,15 @@ width: 100%;
             width: 100%;
         }
 
-        .action-btn {
-            flex: 1; /* 🌟 讓同一行的按鈕自動平分寬度 */
-            padding: 0 5px; /* 取消固定寬度，改用內距 */
+    .action-btn {
+            /* 拿掉自動拉長，改用固定寬度讓 4 個按鈕完全統一大小 */
+            width: 110px; 
             height: 44px;
             border-radius: 50px;
             border: none;
             
-            font-size: 14px !important; /* 稍微縮小一點字體確保六個字放得下 */
+            /* 字體微調為 14px，確保「前往FB貼文」6個字能完美塞進 110px 裡 */
+            font-size: 14px !important; 
             font-family: "Microsoft JhengHei", sans-serif !important;
             font-weight: 900 !important;
             color: white !important;
@@ -723,4 +724,5 @@ fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
 </script>
 </body>
 </html>
+
 
