@@ -12,202 +12,202 @@
 <style>
 /* --- 全局設定 --- */
 body {
-margin: 0;
-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-background-color: #8da4b7;
-background-image: url('bg.jpg');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-font-family: "Microsoft JhengHei", sans-serif;
-color: white;
-overflow: hidden;
-flex-direction: column;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #8da4b7;
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: "Microsoft JhengHei", sans-serif;
+    color: white;
+    overflow: hidden;
+    flex-direction: column;
 }
 
 /* --- 宣傳海報彈窗樣式 --- */
 .promo-overlay {
-position: fixed;
-top: 0; left: 0; width: 100%; height: 100%;
-background: rgba(0,0,0,0.85);
-display: flex;
-justify-content: center; align-items: center;
-z-index: 20000;
-backdrop-filter: blur(8px);
-transition: opacity 0.3s;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center; align-items: center;
+    z-index: 20000;
+    backdrop-filter: blur(8px);
+    transition: opacity 0.3s;
 }
 
 /* 動態紅金流光邊框容器 */
 .promo-content {
-position: relative;
-width: 90%;
-max-width: 480px;
-padding: 6px;
-border-radius: 18px;
-background: linear-gradient(60deg, #ff0000, #ff8c00, #ffd700, #ff8c00, #ff0000);
-background-size: 300% 300%;
-box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.5);
-animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, flowingGold 3s ease infinite;
+    position: relative;
+    width: 90%;
+    max-width: 480px;
+    padding: 6px;
+    border-radius: 18px;
+    background: linear-gradient(60deg, #ff0000, #ff8c00, #ffd700, #ff8c00, #ff0000);
+    background-size: 300% 300%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.5);
+    animation: promoPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, flowingGold 3s ease infinite;
 }
 
 @keyframes flowingGold {
-0% { background-position: 0% 50%; }
-50% { background-position: 100% 50%; }
-100% { background-position: 0% 50%; }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .promo-image {
-width: 100%;
-height: auto;
-max-height: 83vh;
-object-fit: contain;
-border-radius: 12px;
-display: block;
-background-color: #fff;
+    width: 100%;
+    height: auto;
+    max-height: 83vh;
+    object-fit: contain;
+    border-radius: 12px;
+    display: block;
+    background-color: #fff;
 }
 
 .promo-close {
-position: absolute;
-top: -12px;
-right: -12px;
-width: 40px;
-height: 40px;
-background: #fff;
-color: #333;
-border: 2px solid #333;
-border-radius: 50%;
-font-size: 28px;
-font-weight: bold;
-line-height: 1;
-cursor: pointer;
-box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-display: flex; justify-content: center; align-items: center;
-transition: transform 0.2s;
-z-index: 20001;
-padding: 0;
-padding-bottom: 4px;
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    color: #333;
+    border: 2px solid #333;
+    border-radius: 50%;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    display: flex; justify-content: center; align-items: center;
+    transition: transform 0.2s;
+    z-index: 20001;
+    padding: 0;
+    padding-bottom: 4px;
 }
 
 .promo-close:active { transform: scale(0.9); }
 
 @keyframes promoPopIn {
-0% { opacity: 0; transform: scale(0.5); }
-100% { opacity: 1; transform: scale(1); }
+    0% { opacity: 0; transform: scale(0.5); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 /* --- 縮小後的懸浮 Icon 樣式 --- */
 .promo-icon-btn {
-position: fixed;
-top: 20px;
-right: 20px;
-width: 45px;
-height: 45px;
-border-radius: 50%;
-background-color: #fff;
-background-image: url('poster.jpg');
-background-size: cover;
-background-position: center;
-border: 2px solid #fff;
-box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-cursor: pointer;
-z-index: 15000;
-display: none;
-animation: floatIcon 3s ease-in-out infinite;
-transition: transform 0.2s;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #fff;
+    background-image: url('poster.jpg');
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    cursor: pointer;
+    z-index: 15000;
+    display: none;
+    animation: floatIcon 3s ease-in-out infinite;
+    transition: transform 0.2s;
 }
 
 .promo-icon-btn:hover {
-transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .promo-icon-btn::after {
-content: '活動詳情';
-position: absolute;
-bottom: -22px;
-left: 50%;
-transform: translateX(-50%);
-white-space: nowrap;
-font-size: 11px;
-color: #fff;
-text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-background: rgba(0,0,0,0.5);
-padding: 2px 5px;
-border-radius: 8px;
+    content: '活動詳情';
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 11px;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.5);
+    padding: 2px 5px;
+    border-radius: 8px;
 }
 
 @keyframes floatIcon {
-0%, 100% { transform: translateY(0); }
-50% { transform: translateY(-5px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
 /* --- 測試按鈕樣式 --- */
 #testResetBtn {
-position: fixed;
-top: 10px;
-left: 10px;
-z-index: 9999;
-padding: 8px 15px;
-background: rgba(255, 0, 0, 0.7);
-color: white;
-border: 1px solid white;
-border-radius: 5px;
-cursor: pointer;
-font-size: 14px;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    padding: 8px 15px;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 /* --- 籤筒容器 --- */
 .shaker-container {
-position: relative;
-width: 200px;
-height: 320px;
-cursor: pointer;
-transition: transform 0.1s;
-user-select: none;
--webkit-tap-highlight-color: transparent;
-filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
-z-index: 5;
-transform-origin: center bottom;
-overflow: visible;
+    position: relative;
+    width: 200px;
+    height: 320px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+    z-index: 5;
+    transform-origin: center bottom;
+    overflow: visible;
 }
 
 @media (max-width: 600px) {
-.shaker-container {
-transform: scale(0.75);
-margin-top: 0px;
-}
+    .shaker-container {
+        transform: scale(0.75);
+        margin-top: 0px;
+    }
 }
 
 /* --- 筒身搖動動畫 --- */
 .is-shaking { animation: shake 0.6s ease-in-out infinite; }
 
 @keyframes shake {
-0% { transform: translate(0, 0) rotate(0deg); }
-25% { transform: translate(-5px, 0) rotate(-3deg); }
-50% { transform: translate(5px, 0) rotate(3deg); }
-75% { transform: translate(-5px, 0) rotate(-3deg); }
-100% { transform: translate(0, 0) rotate(0deg); }
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-5px, 0) rotate(-3deg); }
+    50% { transform: translate(5px, 0) rotate(3deg); }
+    75% { transform: translate(-5px, 0) rotate(-3deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
 }
 
 @media (max-width: 600px) {
-@keyframes shake {
-0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
-25% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
-50% { transform: scale(0.75) translate(5px, 0) rotate(3deg); }
-75% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
-100% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
-}
+    @keyframes shake {
+        0% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
+        25% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
+        50% { transform: scale(0.75) translate(5px, 0) rotate(3deg); }
+        75% { transform: scale(0.75) translate(-5px, 0) rotate(-3deg); }
+        100% { transform: scale(0.75) translate(0, 0) rotate(0deg); }
+    }
 }
 
 /* --- 籤支跳動動畫 --- */
 @keyframes stick-jump {
-0% { transform: rotate(var(--r)) translateY(var(--y)); }
-25% { transform: rotate(calc(var(--r) - 3deg)) translateY(calc(var(--y) - 25px)); }
-50% { transform: rotate(calc(var(--r) + 2deg)) translateY(calc(var(--y) - 5px)); }
-75% { transform: rotate(calc(var(--r) - 1deg)) translateY(calc(var(--y) - 15px)); }
-100% { transform: rotate(var(--r)) translateY(var(--y)); }
+    0% { transform: rotate(var(--r)) translateY(var(--y)); }
+    25% { transform: rotate(calc(var(--r) - 3deg)) translateY(calc(var(--y) - 25px)); }
+    50% { transform: rotate(calc(var(--r) + 2deg)) translateY(calc(var(--y) - 5px)); }
+    75% { transform: rotate(calc(var(--r) - 1deg)) translateY(calc(var(--y) - 15px)); }
+    100% { transform: rotate(var(--r)) translateY(var(--y)); }
 }
 
 .is-shaking .stick { animation: stick-jump 0.4s ease-in-out infinite; }
@@ -218,105 +218,105 @@ margin-top: 0px;
 
 /* --- 籤筒視覺 --- */
 .cylinder-body {
-position: absolute;
-bottom: 0;
-width: 100%;
-height: 240px;
-background: linear-gradient(to right, #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, #b30000 60%, #7a0000 85%, #4a0000 100%);
-border-radius: 10px;
-box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3);
-z-index: 2;
-pointer-events: none;
-display: flex;
-justify-content: center;
-align-items: center;
-border-bottom: 3px solid #2a0000;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 240px;
+    background: linear-gradient(to right, #4a0000 0%, #7a0000 15%, #b30000 40%, #e60000 50%, #b30000 60%, #7a0000 85%, #4a0000 100%);
+    border-radius: 10px;
+    box-shadow: inset 0 -10px 30px rgba(0,0,0,0.7), 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px solid #2a0000;
 }
 
 .cylinder-ring-top {
-position: absolute;
-top: 70px;
-width: 110%;
-left: -5%;
-height: 20px;
-background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
-z-index: 3;
-pointer-events: none;
-border-radius: 4px;
-border: 1px solid rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 70px;
+    width: 110%;
+    left: -5%;
+    height: 20px;
+    background: linear-gradient(to right, #8a6000, #fffacd, #ffd700, #fffacd, #8a6000);
+    z-index: 3;
+    pointer-events: none;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .cylinder-text {
-color: #fffacd;
-font-size: 3.5rem;
-font-weight: bold;
-writing-mode: vertical-rl;
-text-orientation: upright;
-letter-spacing: 15px;
-text-shadow: 2px 2px 0px #3a0000;
-font-family: "Kaiti TC", "楷體", serif;
+    color: #fffacd;
+    font-size: 3.5rem;
+    font-weight: bold;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 15px;
+    text-shadow: 2px 2px 0px #3a0000;
+    font-family: "Kaiti TC", "楷體", serif;
 }
 
 .cylinder-mouth {
-position: absolute;
-top: 55px;
-left: 2%;
-width: 96%;
-height: 40px;
-background: radial-gradient(ellipse at center, #1a0000 0%, #3a0000 60%, #5a0000 100%);
-border-radius: 50%;
-z-index: 1;
-border: 4px solid #8a0000;
+    position: absolute;
+    top: 55px;
+    left: 2%;
+    width: 96%;
+    height: 40px;
+    background: radial-gradient(ellipse at center, #1a0000 0%, #3a0000 60%, #5a0000 100%);
+    border-radius: 50%;
+    z-index: 1;
+    border: 4px solid #8a0000;
 }
 
 /* --- 擬真籤支設定 --- */
 .sticks-group {
-position: absolute;
-top: 15px;
-left: 50%;
-transform: translateX(-50%);
-width: 180px;
-height: 200px;
-z-index: 2;
-pointer-events: none;
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 200px;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .stick {
-position: absolute;
-bottom: 0;
-width: 16px;
-height: 200px;
-background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
-transform-origin: bottom center;
-box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+    position: absolute;
+    bottom: 0;
+    width: 16px;
+    height: 200px;
+    background: linear-gradient(90deg, #b71c1c, #e53935, #b71c1c);
+    transform-origin: bottom center;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.5);
 }
 
 .stick::before {
-content: '';
-position: absolute;
-top: 0; left: 0; width: 100%; height: 50px;
-background-color: #d32f2f;
-background-image:
-radial-gradient(circle at -2px 50%, rgba(0,0,0,0.7) 4px, transparent 5px),
-radial-gradient(circle at 100% 50%, rgba(255,255,255,0.4) 3px, transparent 4px);
--webkit-mask-image:
-radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px),
-radial-gradient(circle at 20px 50%, transparent 6px, black 6.5px);
-mask-image:
-radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px),
-radial-gradient(circle at 20px 50%, transparent 6px, black 6.5px);
--webkit-mask-size: 100% 12px;
-mask-size: 100% 12px;
--webkit-mask-repeat: repeat-y;
-mask-repeat: repeat-y;
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 50px;
+    background-color: #d32f2f;
+    background-image:
+        radial-gradient(circle at -2px 50%, rgba(0,0,0,0.7) 4px, transparent 5px),
+        radial-gradient(circle at 100% 50%, rgba(255,255,255,0.4) 3px, transparent 4px);
+    -webkit-mask-image:
+        radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px),
+        radial-gradient(circle at 20px 50%, transparent 6px, black 6.5px);
+    mask-image:
+        radial-gradient(circle at -4px 50%, transparent 6px, black 6.5px),
+        radial-gradient(circle at 20px 50%, transparent 6px, black 6.5px);
+    -webkit-mask-size: 100% 12px;
+    mask-size: 100% 12px;
+    -webkit-mask-repeat: repeat-y;
+    mask-repeat: repeat-y;
 }
 
 .stick::after {
-content: '';
-position: absolute;
-top: 0; left: 2px; width: 12px; height: 2px;
-background: rgba(255,255,255,0.5);
-border-radius: 2px;
+    content: '';
+    position: absolute;
+    top: 0; left: 2px; width: 12px; height: 2px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 2px;
 }
 
 /* 排列調整 (新增 9, 10 兩支籤) */
@@ -333,82 +333,82 @@ border-radius: 2px;
 
 /* --- 手指引導 --- */
 .hand-guide {
-position: absolute;
-right: -30px;
-bottom: -30px;
-width: 60px; height: 60px;
-z-index: 10;
-animation: simple-click 2s infinite ease-in-out;
+    position: absolute;
+    right: -30px;
+    bottom: -30px;
+    width: 60px; height: 60px;
+    z-index: 10;
+    animation: simple-click 2s infinite ease-in-out;
 }
 
 @keyframes simple-click {
-0% { opacity: 0; transform: translate(0, 0) rotate(-45deg) scale(1.5); }
-20% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
-50% { transform: translate(-70px, -110px) rotate(-45deg) scale(1); }
-80% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
-100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
+    0% { opacity: 0; transform: translate(0, 0) rotate(-45deg) scale(1.5); }
+    20% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
+    50% { transform: translate(-70px, -110px) rotate(-45deg) scale(1); }
+    80% { opacity: 1; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
+    100% { opacity: 0; transform: translate(-70px, -110px) rotate(-45deg) scale(1.5); }
 }
 
 /* --- 提示文字 --- */
 .hint {
-margin-top: 20px;
-color: #fff5e6;
-font-size: 1.1rem;
-font-weight: bold;
-z-index: 10;
-text-align: center;
-line-height: 1.6;
-animation: hint-glow-orange 2s infinite alternate;
+    margin-top: 20px;
+    color: #fff5e6;
+    font-size: 1.1rem;
+    font-weight: bold;
+    z-index: 10;
+    text-align: center;
+    line-height: 1.6;
+    animation: hint-glow-orange 2s infinite alternate;
 }
 
 @keyframes hint-glow-orange {
-from {
-opacity: 0.8;
-text-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
-}
-to {
-opacity: 1;
-text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5);
-}
+    from {
+        opacity: 0.8;
+        text-shadow: 0 0 5px rgba(255, 165, 0, 0.3);
+    }
+    to {
+        opacity: 1;
+        text-shadow: 0 0 10px rgba(255, 140, 0, 0.9), 0 0 20px rgba(255, 69, 0, 0.5);
+    }
 }
 
 /* --- 彈窗設定 --- */
 .modal-overlay {
-position: fixed;
-top: 0; left: 0; width: 100%; height: 100%;
-background: rgba(0,0,0,0.85); display: none;
-justify-content: center; align-items: center; z-index: 100;
-backdrop-filter: blur(10px);
-padding: 20px; box-sizing: border-box;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); display: none;
+    justify-content: center; align-items: center; z-index: 100;
+    backdrop-filter: blur(10px);
+    padding: 20px; box-sizing: border-box;
 }
 .modal-content {
-background: transparent;
-text-align: center; max-width: 100%;
-animation: popInElastic 0.6s ease-out;
+    background: transparent;
+    text-align: center; max-width: 100%;
+    animation: popInElastic 0.6s ease-out;
 }
 @keyframes popInElastic {
-0% { transform: scale(0.5); opacity: 0; }
-60% { transform: scale(1.1); opacity: 1; }
-100% { transform: scale(1); }
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
 }
 
 /* --- 會呼吸的金光外暈 --- */
 .result-image {
-max-width: 100%;
-max-height: 65vh; /* 稍微縮小圖片讓下方文字與按鈕有空間 */
-border-radius: 12px;
-border: 4px solid #bf953f;
-margin-bottom: 15px;
-box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
-animation: glowingPulse 3s infinite alternate;
+    max-width: 100%;
+    max-height: 60vh;
+    border-radius: 12px;
+    border: 4px solid #bf953f;
+    margin-bottom: 10px;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    animation: glowingPulse 3s infinite alternate;
 }
 
 @keyframes glowingPulse {
-0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(191, 149, 63, 0.2); }
-100% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.9), 0 0 80px rgba(255, 223, 0, 0.5); }
+    0% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(191, 149, 63, 0.2); }
+    100% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.9), 0 0 80px rgba(255, 223, 0, 0.5); }
 }
 
-/* --- 新增/修改的提示文字 --- */
+/* --- 提示文字 --- */
 .save-hint { 
     font-size: 0.8rem; 
     color: #fcf6ba; 
@@ -420,63 +420,68 @@ animation: glowingPulse 3s infinite alternate;
     color: #ffeb3b;
     margin-bottom: 15px;
     font-weight: bold;
-    line-height: 1.4;
+    line-height: 1.5;
+    text-align: center;
     animation: hint-glow-orange 2s infinite alternate; 
 }
 
-/* --- 按鈕群組排版調整（強制統一大小與風格） --- */
+/* --- 按鈕群組排版調整（強制統一大小與絕對置中） --- */
 .modal-buttons-container {
-display: flex;
-flex-direction: column;
-gap: 12px;
-align-items: center;
-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    padding: 0 5px;
+    box-sizing: border-box;
 }
 
-.btn-row {
-            display: flex;
-            justify-content: center;
-            gap: 6px; /* 稍微縮小按鈕之間的間距 */
-            flex-wrap: nowrap;
-            width: 100%;
-        }
+.btn-row { 
+    display: flex;
+    justify-content: center; 
+    gap: 3%; 
+    flex-wrap: nowrap; 
+    width: 100%;
+}
 
-    .action-btn {
-            /* 拿掉自動拉長，改用固定寬度讓 4 個按鈕完全統一大小 */
-            width: 110px; 
-            height: 44px;
-            border-radius: 50px;
-            border: none;
-            
-            /* 字體微調為 14px，確保「前往FB貼文」6個字能完美塞進 110px 裡 */
-            font-size: 14px !important; 
-            font-family: "Microsoft JhengHei", sans-serif !important;
-            font-weight: 900 !important;
-            color: white !important;
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            white-space: nowrap;
-            box-sizing: border-box;
-            margin: 0;
-            line-height: 1;
-            
-            -webkit-appearance: none;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+.action-btn {
+    width: 31%; 
+    max-width: 110px; 
+    height: 44px; 
+    border-radius: 50px; 
+    border: none;
+    padding: 0 !important; 
+    
+    font-size: 13px !important; 
+    font-family: "Microsoft JhengHei", sans-serif !important; 
+    font-weight: 900 !important; 
+    color: white !important;
+    letter-spacing: 0 !important; 
+    
+    display: flex !important; 
+    justify-content: center !important;
+    align-items: center !important;
+    
+    text-decoration: none; 
+    white-space: nowrap; 
+    box-sizing: border-box; 
+    margin: 0;
+    line-height: normal !important; 
+    
+    -webkit-appearance: none; 
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 
-/* 全面換上金屬漸層風格 */
+/* 漸層風格按鈕 */
 .fb-btn { background: linear-gradient(90deg, #1877F2, #4796fb, #1877F2); }
 .line-btn { background: linear-gradient(90deg, #06C755, #67e696, #06C755); }
-.event-btn { background: linear-gradient(90deg, #ff5e62, #ff9966, #ff5e62); } /* 活動網頁珊瑚橘 */
+.event-btn { background: linear-gradient(90deg, #ff5e62, #ff9966, #ff5e62); }
 .close-btn { background: linear-gradient(90deg, #434343, #757575, #434343); }
 
 .action-btn:hover {
-transform: translateY(-3px);
-box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 </style>
@@ -484,10 +489,10 @@ box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 <body>
 
 <div class="promo-overlay" id="promoModal">
-<div class="promo-content">
-<button class="promo-close" onclick="closePromo()">×</button>
-<img src="poster.jpg" alt="活動宣傳海報" class="promo-image">
-</div>
+    <div class="promo-content">
+        <button class="promo-close" onclick="closePromo()">×</button>
+        <img src="poster.jpg" alt="活動宣傳海報" class="promo-image">
+    </div>
 </div>
 
 <div class="promo-icon-btn" id="promoIcon" onclick="openPromo()"></div>
@@ -495,46 +500,51 @@ box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 <button id="testResetBtn" onclick="testReset()">測試用：重置抽籤</button>
 
 <div class="shaker-container" id="shaker">
-<div class="sticks-group">
-<div class="stick"></div><div class="stick"></div><div class="stick"></div>
-<div class="stick"></div><div class="stick"></div><div class="stick"></div>
-<div class="stick"></div><div class="stick"></div>
-<div class="stick"></div><div class="stick"></div>
-</div>
-<div class="cylinder-mouth"></div>
-<div class="cylinder-ring-top"></div>
+    <div class="sticks-group">
+        <div class="stick"></div><div class="stick"></div><div class="stick"></div>
+        <div class="stick"></div><div class="stick"></div><div class="stick"></div>
+        <div class="stick"></div><div class="stick"></div>
+        <div class="stick"></div><div class="stick"></div>
+    </div>
+    <div class="cylinder-mouth"></div>
+    <div class="cylinder-ring-top"></div>
 
-<div class="cylinder-body">
-<div class="cylinder-text">求籤</div>
+    <div class="cylinder-body">
+        <div class="cylinder-text">求籤</div>
+    </div>
+
+    <div class="hand-guide" id="handGuide">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
+            <path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/>
+        </svg>
+    </div>
 </div>
 
-<div class="hand-guide" id="handGuide">
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
-<path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.28-.06-.58.02-.81.21l-1.63 1.53 4.58 4.59c.29.29.68.45 1.09.45h9.26c.68 0 1.27-.45 1.44-1.1l1.34-5.36c.21-.85-.43-1.69-1.28-1.84z"/>
-</svg>
-</div>
-</div>
-
-<p class="hint" id="hintText">👆點擊籤筒求一支籤</p>
+<p class="hint" id="hintText">👆點擊籤筒抽限定悠遊卡</p>
 
 <div class="modal-overlay" id="modal">
-<div class="modal-content">
-<img id="resultImage" class="result-image" src="" alt="運勢結果">
-<div class="save-hint">（長按圖片即可儲存到相簿）</div>
-<div class="fb-hint">✨請截圖此畫面！✨到FB指定貼文留言，即可加碼抽限量悠遊卡！</div>
+    <div class="modal-content">
+        <img id="resultImage" class="result-image" src="" alt="運勢結果">
+        
+        <div class="save-hint">（長按圖片即可儲存到相簿）</div>
+        
+        <div class="fb-hint">
+            ✨請截圖此畫面！✨<br>
+            到FB指定貼文留言，即可加碼抽限量悠遊卡！
+        </div>
 
-<div class="modal-buttons-container">
-                <div class="btn-row">
-                    <a id="fbLink" class="action-btn fb-btn" href="這裡請貼上FB貼文網址" target="_blank">前往FB貼文</a>
-                    <button class="action-btn line-btn" onclick="shareToLine()">LINE分享</button>
-                    <a id="eventLink" class="action-btn event-btn" href="https://www.agoood.com/2026-wdsd" target="_blank">活動網頁</a>
-                </div>
-                <div class="btn-row">
-                    <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
-                </div>
+        <div class="modal-buttons-container">
+            <div class="btn-row">
+                <a id="fbLink" class="action-btn fb-btn" href="這裡請貼上FB貼文網址" target="_blank">前往FB貼文</a>
+                <button class="action-btn line-btn" onclick="shareToLine()">LINE分享</button>
+                <a id="eventLink" class="action-btn event-btn" href="https://www.agoood.com/2026-wdsd" target="_blank">活動網頁</a>
             </div>
+            <div class="btn-row">
+                <button class="action-btn close-btn" onclick="closeModal()">關閉</button>
+            </div>
+        </div>
 
-</div>
+    </div>
 </div>
 
 <script type="module">
@@ -543,12 +553,12 @@ import { getFirestore, doc, setDoc, increment } from "https://www.gstatic.com/fi
 
 // 🔥🔥🔥 請將這裡替換成你的 Firebase 設定碼 🔥🔥🔥
 const firebaseConfig = {
-apiKey: "AIzaSyDPlj6ZNnVj5i1RLgFyzw8rvVE4FJKfA5o",
-authDomain: "draw-a-fortune-stick.firebaseapp.com",
-projectId: "draw-a-fortune-stick",
-storageBucket: "draw-a-fortune-stick.firebasestorage.app",
-messagingSenderId: "820550034310",
-appId: "1:820550034310:web:f4283d2512740c2dbcc207"
+    apiKey: "AIzaSyDPlj6ZNnVj5i1RLgFyzw8rvVE4FJKfA5o",
+    authDomain: "draw-a-fortune-stick.firebaseapp.com",
+    projectId: "draw-a-fortune-stick",
+    storageBucket: "draw-a-fortune-stick.firebasestorage.app",
+    messagingSenderId: "820550034310",
+    appId: "1:820550034310:web:f4283d2512740c2dbcc207"
 };
 
 // 初始化 Firebase 與 Firestore
@@ -557,22 +567,22 @@ const db = getFirestore(app);
 
 // --- Firebase 統計函數 (綁定到 window 以供全域使用) ---
 window.trackEvent = async function(eventName) {
-try {
-const statsRef = doc(db, "campaign", "clicks");
-await setDoc(statsRef, { [eventName]: increment(1) }, { merge: true });
-console.log(`成功記錄事件: ${eventName}`);
-} catch (e) {
-console.error("統計寫入失敗: ", e);
-}
+    try {
+        const statsRef = doc(db, "campaign", "clicks");
+        await setDoc(statsRef, { [eventName]: increment(1) }, { merge: true });
+        console.log(`成功記錄事件: ${eventName}`);
+    } catch (e) {
+        console.error("統計寫入失敗: ", e);
+    }
 };
 
-// --- 綁定「前往 FB 貼文」與「活動網頁」的統計點擊事件 ---
+// 綁定「前往 FB 貼文」與「活動網頁」的統計點擊事件
 document.getElementById('fbLink').addEventListener('click', () => {
-window.trackEvent('fb_clicks');
+    window.trackEvent('fb_clicks');
 });
 
 document.getElementById('eventLink').addEventListener('click', () => {
-window.trackEvent('event_clicks');
+    window.trackEvent('event_clicks');
 });
 
 
@@ -592,138 +602,124 @@ const isNewScan = urlParams.get('from') === 'pgy';
 
 // 預載圖片功能
 function preloadImages() {
-fortuneImages.forEach((src) => {
-const img = new Image();
-img.src = src;
-});
-console.log("圖片預載完成");
+    fortuneImages.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+    });
+    console.log("圖片預載完成");
 }
 preloadImages();
 
-// 關閉宣傳海報 (因為是 module，需掛載到 window 才能支援 HTML 的 onclick)
+// 關閉宣傳海報
 window.closePromo = function() {
-promoModal.style.opacity = '0';
-setTimeout(() => {
-promoModal.style.display = 'none';
-promoIcon.style.display = 'block';
-}, 300);
+    promoModal.style.opacity = '0';
+    setTimeout(() => {
+        promoModal.style.display = 'none';
+        promoIcon.style.display = 'block';
+    }, 300);
 }
 
 // 重新打開宣傳海報
 window.openPromo = function() {
-promoIcon.style.display = 'none';
-promoModal.style.display = 'flex';
+    promoIcon.style.display = 'none';
+    promoModal.style.display = 'flex';
 
-const contentWrapper = document.querySelector('.promo-content');
-contentWrapper.style.animation = 'none';
-void contentWrapper.offsetWidth;
-contentWrapper.style.animation = '';
+    const contentWrapper = document.querySelector('.promo-content');
+    contentWrapper.style.animation = 'none';
+    void contentWrapper.offsetWidth;
+    contentWrapper.style.animation = '';
 
-setTimeout(() => {
-promoModal.style.opacity = '1';
-}, 10);
+    setTimeout(() => {
+        promoModal.style.opacity = '1';
+    }, 10);
 }
 
 if (isNewScan) { localStorage.removeItem('selected_fortune_img'); }
 
 const savedFortune = localStorage.getItem('selected_fortune_img');
 if (savedFortune) {
-hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
-if(handGuide) handGuide.style.display = 'none';
-shaker.addEventListener('click', () => openModalWithImage(savedFortune));
+    hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
+    if(handGuide) handGuide.style.display = 'none';
+    shaker.addEventListener('click', () => openModalWithImage(savedFortune));
 } else {
-shaker.addEventListener('click', startShaking);
+    shaker.addEventListener('click', startShaking);
 }
 
 function startShaking() {
-if (isShaking) return;
-isShaking = true;
+    if (isShaking) return;
+    isShaking = true;
 
-// 🌟 觸發「點擊籤筒求籤」的 Firebase 統計
-window.trackEvent('draw_clicks');
+    // 觸發「點擊籤筒求籤」的 Firebase 統計
+    window.trackEvent('draw_clicks');
 
-if(handGuide) handGuide.style.display = 'none';
-shaker.classList.add('is-shaking');
+    if(handGuide) handGuide.style.display = 'none';
+    shaker.classList.add('is-shaking');
 
-hintText.innerHTML = "虔誠祈福中🙏";
-if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
+    hintText.innerHTML = "虔誠祈福中🙏";
+    if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
 
-setTimeout(() => {
-shaker.classList.remove('is-shaking');
-generateResult();
-isShaking = false;
-}, 1500);
+    setTimeout(() => {
+        shaker.classList.remove('is-shaking');
+        generateResult();
+        isShaking = false;
+    }, 1500);
 }
 
 function generateResult() {
-const randomIndex = Math.floor(Math.random() * fortuneImages.length);
-const selectedImg = fortuneImages[randomIndex];
-localStorage.setItem('selected_fortune_img', selectedImg);
+    const randomIndex = Math.floor(Math.random() * fortuneImages.length);
+    const selectedImg = fortuneImages[randomIndex];
+    localStorage.setItem('selected_fortune_img', selectedImg);
 
-hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
+    hintText.innerHTML = "✨您已經求過籤囉✨<br>(點擊查看)";
 
-shaker.removeEventListener('click', startShaking);
-shaker.addEventListener('click', () => openModalWithImage(selectedImg));
-openModalWithImage(selectedImg);
+    shaker.removeEventListener('click', startShaking);
+    shaker.addEventListener('click', () => openModalWithImage(selectedImg));
+    openModalWithImage(selectedImg);
 }
 
 function openModalWithImage(imgSrc) {
-resultImage.src = imgSrc;
-modal.style.display = 'flex';
-fireConfetti();
+    resultImage.src = imgSrc;
+    modal.style.display = 'flex';
+    fireConfetti();
 }
 
 window.closeModal = function() { modal.style.display = 'none'; }
 
-// === 修改分享邏輯：動態對應 4 個不同的 HTML ===
+// 分享邏輯
 window.shareToLine = function() {
-window.trackEvent('line_shares');
+    window.trackEvent('line_shares');
 
-// 取得目前使用者抽到的圖片 (例如：'bubbletea.png')
-const currentFortune = localStorage.getItem('selected_fortune_img');
+    const currentFortune = localStorage.getItem('selected_fortune_img');
+    const htmlName = currentFortune.replace('.png', '');
+    const baseUrl = window.location.origin; 
+    const version = "2";
+    const shareUrl = `${baseUrl}/share-${htmlName}.html?v=${version}`;
 
-// 把 '.png' 去掉，變成 'bubbletea'，用來組合網址
-const htmlName = currentFortune.replace('.png', '');
+    const text = "驚喜！！✨我在『唐氏症基金會』抽到專屬運勢籤！🧧\n快來看看神明跟我說什麼，換你也來求一支👇";
 
-// 組合出獨立分享頁面的網址 (例如：https://xxx.web.app/share-bubbletea.html)
-const baseUrl = window.location.origin; // 會自動抓取 https://你的專案名稱.web.app
-
-// 自己決定目前的版本號
-const version = "2";
-
-// 網址變成：.../share-kuaikuai.html?v=m0abx9z
-const shareUrl = `${baseUrl}/share-${htmlName}.html?v=${version}`;
-// const shareUrl = `${baseUrl}/shares-${htmlName}.html`;
-
-const text = "驚喜！！✨我在『唐氏症基金會』抽到專屬運勢籤！🧧\n快來看看神明跟我說什麼，換你也來求一支👇";
-
-// 將網址與文字合併並編碼，送給 LINE
-const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text + "\n" + shareUrl)}`;
-window.open(lineUrl, '_blank');
+    const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent(text + "\n" + shareUrl)}`;
+    window.open(lineUrl, '_blank');
 }
 
 window.testReset = function() {
-if(confirm('確定要清除紀錄並重置嗎？')) {
-localStorage.removeItem('selected_fortune_img');
-window.location.href = window.location.pathname;
-}
+    if(confirm('確定要清除紀錄並重置嗎？')) {
+        localStorage.removeItem('selected_fortune_img');
+        window.location.href = window.location.pathname;
+    }
 }
 
 function fireConfetti() {
-var count = 200;
-var defaults = { origin: { y: 0.7 } };
-function fire(particleRatio, opts) {
-confetti(Object.assign({}, defaults, opts, {
-particleCount: Math.floor(count * particleRatio)
-}));
-}
-fire(0.25, { spread: 26, startVelocity: 55, colors: ['#bf953f', '#fcf6ba'] });
-fire(0.2, { spread: 60, colors: ['#ffffff'] });
-fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
+    var count = 200;
+    var defaults = { origin: { y: 0.7 } };
+    function fire(particleRatio, opts) {
+        confetti(Object.assign({}, defaults, opts, {
+            particleCount: Math.floor(count * particleRatio)
+        }));
+    }
+    fire(0.25, { spread: 26, startVelocity: 55, colors: ['#bf953f', '#fcf6ba'] });
+    fire(0.2, { spread: 60, colors: ['#ffffff'] });
+    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8, colors: ['#FFD700'] });
 }
 </script>
 </body>
 </html>
-
-
-
